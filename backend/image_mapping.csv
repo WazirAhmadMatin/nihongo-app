@@ -1,0 +1,1331 @@
+word_id,kanji,romaji,english,level,filename,generated
+f5e6b9834f48,上,ue,up / above,N5,f5e6b9834f48.png,✅
+ed2b4f23a71c,下,shita,down/below,N5,ed2b4f23a71c.png,✅
+b13fb6369b70,前,mae,front,N5,b13fb6369b70.png,✅
+e8c499c969ec,後ろ,ushiro,behind,N5,e8c499c969ec.png,✅
+ccade0bd2e97,左,hidari,left,N5,ccade0bd2e97.png,✅
+f896f709fa57,右,migi,right,N5,f896f709fa57.png,✅
+ca3fb01ae7d8,中,naka,in / inside,N5,ca3fb01ae7d8.png,✅
+cc7d1a6776f8,外,soto,outside,N5,cc7d1a6776f8.png,✅
+0fe8d8e61e37,間,aida,between,N5,0fe8d8e61e37.png,✅
+2e30c71f1aea,机,tsukue,desk / table,N5,2e30c71f1aea.png,✅
+a632f028f9a5,大学,daigaku,university,N5,a632f028f9a5.png,✅
+3e1703f511fe,駅,eki,station,N5,3e1703f511fe.png,✅
+9e25c7258836,銀行,ginkō,bank,N5,9e25c7258836.png,✅
+4d6688f19f44,郵便局,yūbin kyoku,post office,N5,4d6688f19f44.png,✅
+dacedb7bdacf,本屋,hon'ya,bookstore,N5,dacedb7bdacf.png,✅
+3f23e4693829,花屋,hana ya,flower shop,N5,3f23e4693829.png,✅
+c301f4350dd9,病院,byōin,hospital,N5,c301f4350dd9.png,✅
+b5c511ca1884,パン屋,pan ya,bakery,N5,b5c511ca1884.png,✅
+4d62709d65d6,近く,chikaku,nearby,N5,4d62709d65d6.png,✅
+01ba05dfd21c,入口,iriguchi,entrance,N5,01ba05dfd21c.png,✅
+4da86908fc47,出口,deguchi,exit,N5,4da86908fc47.png,✅
+5a87706e9ca5,階段,kaidan,stairs,N5,5a87706e9ca5.png,✅
+3ff941fe0cc9,廊下,roka,hallway / corridor,N5,3ff941fe0cc9.png,✅
+6ad0e3332a97,ぎゅうにゅう,gyūnyū,milk,N5,6ad0e3332a97.png,✅
+91f3e652457f,（お）さけ,(o)sake,alcohol / alcoholic beverage,N5,91f3e652457f.png,✅
+acb2edbeb854,（お）かし,(o)kashi,candy / snack,N5,acb2edbeb854.png,✅
+7b133534b401,おきる,okiru,to get up / wake up,N5,7b133534b401.png,✅
+891d7e312bd3,ねる,neru,to sleep / go to sleep,N5,891d7e312bd3.png,✅
+ddc684ff20ec,なんじかん,nanjikan,how many hours,N5,ddc684ff20ec.png,✅
+c68eeb034104,そうですね,sō desu ne,I suppose / that’s right,N5,c68eeb034104.png,✅
+5b840667330e,～じかん,~jikan,hours,N5,5b840667330e.png,✅
+ade63df75a64,～じかんはん,~jikankan,and a half hours,N5,ade63df75a64.png,✅
+f54b8a395c6b,たべる,taberu,to eat,N5,f54b8a395c6b.png,✅
+fac1a9b7618e,tsu,~hai,cups / glasses,N5,fac1a9b7618e.png,✅
+1d89ce010597,toki toku,tokidoki,sometimes,N5,1d89ce010597.png,✅
+cc2f2df50bf8,たばこ,tobako,cigarette,N5,cc2f2df50bf8.png,✅
+851609b7c6be,すう,sū,to smoke,N5,851609b7c6be.png,✅
+51a264c409b4,どのくらい,dono kurai,how many / how much,N5,51a264c409b4.png,✅
+6479d60d79f1,〜本,~hons,"counter for long, thin objects (cigarettes, pens, bottles)",N5,6479d60d79f1.png,✅
+623e12b5e378,くすり,kusi,medicine,N5,623e12b5e378.png,✅
+d588af079d05,のむ,nomu,to drink / to take (medicine),N5,d588af079d05.png,✅
+7ae7f4b5b0b2,ごはん,gohan,meal / rice / food,N5,7ae7f4b5b0b2.png,✅
+ba88e27f26a2,まえ,mae,before,N5,ba88e27f26a2.png,✅
+ebf790863c09,あと,ato,after,N5,ebf790863c09.png,✅
+7be736d18c04,のむ,nomu,to drink,N5,7be736d18c04.png,✅
+61f689885367,つくる,tsukuru,to make / cook,N5,61f689885367.png,✅
+90870e83a3a6,りょうりする,ryōri suru,to cook,N5,90870e83a3a6.png,✅
+e913280ab565,はじめる,hajimeru,to start,N5,e913280ab565.png,✅
+9b5191d8e009,おわる,owaru,to finish,N5,9b5191d8e009.png,✅
+62047c1f00e1,あつめる,atsumeru,to gather / collect,N5,62047c1f00e1.png,✅
+d2a95ea6e082,あける,akeru,to open,N5,d2a95ea6e082.png,✅
+b72526034d80,しめる,shimeru,to close,N5,b72526034d80.png,✅
+e3c6616be7db,あらう,arau,to wash,N5,e3c6616be7db.png,✅
+3dca12b19c2e,きる,kiru,to cut,N5,3dca12b19c2e.png,✅
+081b7bdc7368,もつ,motsu,to hold,N5,081b7bdc7368.png,✅
+1ca58fe1ec98,はこぶ,hakobu,to carry,N5,1ca58fe1ec98.png,✅
+a4091a644a05,えらぶ,erabu,to choose,N5,a4091a644a05.png,✅
+5eea62aaaff6,すてる,suteru,to throw away,N5,5eea62aaaff6.png,✅
+89d39246cb13,家,ie,home / house,N5,89d39246cb13.png,✅
+0ed2c099020f,へや,heya,room,N5,0ed2c099020f.png,✅
+6881bae76fbc,事台砘,toshokan,library,N5,6881bae76fbc.png,✅
+6b791a2c210b,昈外审,shokudou,cafeteria / dining hall,N5,6b791a2c210b.png,✅
+70ffd7eb17f5,困詰本王,konbini,convenience store,N5,70ffd7eb17f5.png,✅
+c9cdf4ee8362,マーケット,suupaa,supermarket,N5,c9cdf4ee8362.png,✅
+6bdec282cd17,（お）みせ（お店）,(o)mise(o-misen),shop / store / restaurant,N5,6bdec282cd17.png,✅
+0f3260818ffb,肉屋,nikuya,butcher shop,N5,0f3260818ffb.png,✅
+5b964bd97bf9,魚屋,sakanay,fishmonger,N5,5b964bd97bf9.png,✅
+e6955cd3862d,やおや,yaoiya,greengrocer / produce store,N5,e6955cd3862d.png,✅
+bee1f1b0092b,ドラッグストア,doraggu sutoa,drugstore,N5,bee1f1b0092b.png,✅
+d3dfd1516879,薬屋,kusuriya,pharmacy,N5,d3dfd1516879.png,✅
+f0606347ce78,いつも,itsu-mo,always / usually,N5,f0606347ce78.png,✅
+cdc17843a8b8,する,benkyou,study,N5,cdc17843a8b8.png,✅
+c66cde196836,テレビ,te rebi,TV,N5,c66cde196836.png,✅
+b9a4ea0c42d3,見る,miru,see / watch,N5,b9a4ea0c42d3.png,✅
+70b26a5b4e3b,よく,yoku,often,N5,70b26a5b4e3b.png,✅
+d7b69fd01488,本,hon,book,N5,d7b69fd01488.png,✅
+209ff3331df5,読む,yomu,read,N5,209ff3331df5.png,✅
+c9a4cb908749,きら぀,arima,(not) much / (not) many,N5,c9a4cb908749.png,✅
+ecc0864077da,する,ryouri,cooking / cook,N5,ecc0864077da.png,✅
+db8f5af727e5,まさい」とおゃ』,zenzen,not at all,N5,db8f5af727e5.png,✅
+97d696241333,見海,ongaku,music,N5,97d696241333.png,✅
+b7095185e9b8,聞く,ki-ku,listen,N5,b7095185e9b8.png,✅
+130e9d4eddee,買う,kaou,buy,N5,130e9d4eddee.png,✅
+ddcfee1f94d5,する,souji,clean,N5,ddcfee1f94d5.png,✅
+99760291c3c9,とおます,sorekara,then / after that,N5,99760291c3c9.png,✅
+67682273e4ff,する,sentaku,laundry,N5,67682273e4ff.png,✅
+7a1d607f1f21,(o)furo,ofuro,bath,N5,7a1d607f1f21.png,✅
+e3f576565f34,入る,hairu,enter / take (a bath),N5,e3f576565f34.png,✅
+09a446ec3842,shan,shāwa,shower,N5,09a446ec3842.png,✅
+22271ee72282,あびる,abiru,take (a shower),N5,22271ee72282.png,✅
+9c3a699c0a38,する,kaimono,shopping,N5,9c3a699c0a38.png,✅
+2c7e4d4aac70,repu-to,repōto,report,N5,2c7e4d4aac70.png,✅
+041fbc5ff55c,書く,kaku,write,N5,041fbc5ff55c.png,✅
+ee060e75e999,ニュース,nyūsu,news,N5,ee060e75e999.png,✅
+83fdffb9c036,(inta)netto,(intā)netto,internet,N5,83fdffb9c036.png,✅
+a62d4a66a80d,する,denwa,phone / call,N5,a62d4a66a80d.png,✅
+b692c7e9d256,作る,tsukuru,make / create,N5,b692c7e9d256.png,✅
+544d431754a6,浦を,arau,wash / clean,N5,544d431754a6.png,✅
+cd5c2c8e228f,四をな,isogu,hurry / rush,N5,cd5c2c8e228f.png,✅
+9898aaf7bab6,安を嶄,matsu,wait / wait for,N5,9898aaf7bab6.png,✅
+a9dae92d8a54,歴,au,meet / encounter,N5,a9dae92d8a54.png,✅
+cfe81407d1c6,だ,deru,leave / go out,N5,cfe81407d1c6.png,✅
+ca3016c68cc3,はいる,hairu,enter / go into,N5,ca3016c68cc3.png,✅
+89334c3cba38,しす,tsuku,arrive / reach,N5,89334c3cba38.png,✅
+240c387fe4a1,渵だ,tomaru,stop / stay,N5,240c387fe4a1.png,✅
+70121e04ffae,開,akeru,to open,N5,70121e04ffae.png,✅
+e1bc8b50593c,閉,shimeru,to close,N5,e1bc8b50593c.png,✅
+3751f38b5e7a,消,kesu,turn off/erase,N5,3751f38b5e7a.png,✅
+8dc550cdc664,じかん,jikan,time,N5,8dc550cdc664.png,✅
+e923d7c2123e,よてい,yotei,plan/schedule,N5,e923d7c2123e.png,✅
+ce06dee449a4,近,chikaku,near,N5,ce06dee449a4.png,✅
+051e83f1adc1,遠,tōi,far,N5,051e83f1adc1.png,✅
+c2c2b2601ae3,しゅみ,shumi,hobby/interest,N5,c2c2b2601ae3.png,✅
+64e2f7a82f50,映画,eiga,movie,N5,64e2f7a82f50.png,✅
+a44db5294117,ギター,gita,guitar,N5,a44db5294117.png,✅
+40dea8dcca27,２京,piano,a musical instrument played by pressing keys,N5,40dea8dcca27.png,✅
+f03fe10883ea,うた,uta,a short poem or a short melody,N5,f03fe10883ea.png,✅
+6cf49ddbea9e,スポーツ,supōtsu,an activity involving physical exertion and skill,N5,6cf49ddbea9e.png,✅
+10b1d3017049,する,dance,dancing / dance,N5,10b1d3017049.png,✅
+f982472bb5e4,アニメ,anime,animation / cartoon,N5,f982472bb5e4.png,✅
+b97943032838,まんが,manga,comic book / graphic novel,N5,b97943032838.png,✅
+734e4e8d89e0,町,machi,town / village,N5,734e4e8d89e0.png,✅
+016bcf75b451,えいがかん,eiga-kan,movie theater,N5,016bcf75b451.png,✅
+0b92df7f30c2,レストラン,resutoran,restaurant,N5,0b92df7f30c2.png,✅
+f3f8930b0383,きっさてん,kissaten,café / coffee shop,N5,f3f8930b0383.png,✅
+8139edb33fab,カフェ,kafe,café,N5,8139edb33fab.png,✅
+86bbcd10f982,公園,kouen,park,N5,86bbcd10f982.png,✅
+ff246977de91,びじゅつかん,bijutsukan,art gallery / museum,N5,ff246977de91.png,✅
+9660cd71c400,プール,puuru,pool (swimming),N5,9660cd71c400.png,✅
+a521d9d545bf,寺,(o)tera,temple,N5,a521d9d545bf.png,✅
+eefc764d4659,美容院,biyouin,hair salon,N5,eefc764d4659.png,✅
+dac80e4451bf,カラオケ,karaoke,karaoke,N5,dac80e4451bf.png,✅
+ade630c0a3ce,神社,jinja,shrine,N5,ade630c0a3ce.png,✅
+915cd07308aa,弾く,hiku,play (an instrument),N5,915cd07308aa.png,✅
+94dfde907751,な,suki,like,N5,94dfde907751.png,✅
+196d6e7fd6e6,書く,kaku,draw / write,N5,196d6e7fd6e6.png,✅
+6acac23f2e19,何,donna,what kind of,N5,6acac23f2e19.png,✅
+169589dc1d3f,ポップス,poppusu,pop music,N5,169589dc1d3f.png,✅
+f5fb457c0dd0,クラシック,kurasshiku,classical music,N5,f5fb457c0dd0.png,✅
+aa9bff82a25a,休み,yasumi,day off / holiday,N5,aa9bff82a25a.png,✅
+f65216f4e4b8,泳ぐ,oyogu,swim,N5,f65216f4e4b8.png,✅
+97d03ec05c40,遊ぶ,asobu,hang out / play,N5,97d03ec05c40.png,✅
+379129417aa7,する,shokujii,eat a meal,N5,379129417aa7.png,✅
+62a758b2056e,出かける,dakeru,go out,N5,62a758b2056e.png,✅
+057f15410ef1,する,aruku,walk / stroll,N5,057f15410ef1.png,✅
+e14eccb4cd00,登る,noboru,climb / hike,N5,e14eccb4cd00.png,✅
+c02f68c4d117,撮る,toru,take (a photo),N5,c02f68c4d117.png,✅
+cf8d7e275d32,動物,dōbutsu,animal,N5,cf8d7e275d32.png,✅
+b0ef09e9b523,な,daisuki,love / really like,N5,b0ef09e9b523.png,✅
+e55f232c7fbb,一人で,hitoride,alone / by oneself,N5,e55f232c7fbb.png,✅
+864d2fd1d1e7,いっしょに,issyo ni,together,N5,864d2fd1d1e7.png,✅
+a4d0bb3f7dba,ぜひ,zehi,definitely,N5,a4d0bb3f7dba.png,✅
+ae2b2b3ecd37,なんかい,nanka i,how many times,N5,ae2b2b3ecd37.png,✅
+c7db1da8469c,应,hashiru,run,N5,c7db1da8469c.png,✅
+afa1d9514796,後ら,chotto,a little / not really,N5,afa1d9514796.png,✅
+fd1b2dbc317d,な,kira i,dislike,N5,fd1b2dbc317d.png,✅
+e95c64284116,な,dai kira i,hate,N5,e95c64284116.png,✅
+45e879bba550,後に正杲い,taku s an,a lot,N5,45e879bba550.png,✅
+38f3c8fbb3b3,竕に込た,aruku,walk,N5,38f3c8fbb3b3.png,✅
+6375969f1d33,年,su-koshi,a bit,N5,6375969f1d33.png,✅
+1870a137ad35,する,ryo-kou,travel,N5,1870a137ad35.png,✅
+918e77006c13,しゃしん,shashin,photo,N5,918e77006c13.png,✅
+04a3c71a020e,え,e,picture / drawing,N5,04a3c71a020e.png,✅
+914c3a53978d,バンド,bando,band,N5,914c3a53978d.png,✅
+3751a054954b,コンサート,kon-sa-to,concert,N5,3751a054954b.png,✅
+7298e457e182,カメラ,kamera,camera,N5,7298e457e182.png,✅
+8017afd30280,つり,tsuri,fishing,N5,8017afd30280.png,✅
+3dc6a4683e59,キャンプ,kyamu-pu,camping,N5,3dc6a4683e59.png,✅
+5d8775b230d6,ハイキング,hai-ki-n-gu,hiking,N5,5d8775b230d6.png,✅
+1d9071cf786a,りくじょう,rikujō,track and field,N5,1d9071cf786a.png,✅
+bfcfd6ed4af9,スタジアム,sutajiamu,stadium,N5,bfcfd6ed4af9.png,✅
+5b916855ae05,こうえんち,kōenchi,amusement park,N5,5b916855ae05.png,✅
+acf34b5de30c,ライブ,raibu,live show,N5,acf34b5de30c.png,✅
+a92dd1babbef,する,ensō,musical performance,N5,a92dd1babbef.png,✅
+49a74ca58354,たのしむ,tanoshimu,enjoy,N5,49a74ca58354.png,✅
+15d1077d61ba,テーブル,tēburu,table,N5,15d1077d61ba.png,✅
+34dac0fec9da,ソファー,sofā,sofa,N5,34dac0fec9da.png,✅
+3ed5714180ca,ベッド,beddo,bed,N5,3ed5714180ca.png,✅
+dead8c2c61eb,電話,denwa,telephone,N5,dead8c2c61eb.png,✅
+ecc3798c8dea,ごみばこ,gomi-bako,trash can,N5,ecc3798c8dea.png,✅
+4d850ba058cf,ラジオ,radio,radio,N5,4d850ba058cf.png,✅
+080d8d9ce61e,エアコン,ea-kon,air conditioner,N5,080d8d9ce61e.png,✅
+cfb93c1431b6,れいぞうこ,reizouko,refrigerator,N5,cfb93c1431b6.png,✅
+8bf66ea35814,ドア,doa,door,N5,8bf66ea35814.png,✅
+53bee446d425,まど,mado,window,N5,53bee446d425.png,✅
+4a5f6840873c,カーテン,katten,curtain,N5,4a5f6840873c.png,✅
+8bb03a4b97ca,にわ,niwa,garden,N5,8bb03a4b97ca.png,✅
+07d38f776321,かさ,kasa,umbrella,N5,07d38f776321.png,✅
+e17384a59069,さいふ,saifu,wallet,N5,e17384a59069.png,✅
+f045be8f7b39,（お）かね（お金）,okane,money,N5,f045be8f7b39.png,✅
+2a7942f51165,かぎ,kagi,key,N5,2a7942f51165.png,✅
+2edd665d6d44,とけい,tokei,watch / clock,N5,2edd665d6d44.png,✅
+38e5465b1872,新聞,shinbun,newspaper,N5,38e5465b1872.png,✅
+f9277b0eba1c,ノートパソコン,nōtapasokon,laptop,N5,f9277b0eba1c.png,✅
+aaac985b1e4e,ノート,nōto,notebook,N5,aaac985b1e4e.png,✅
+7eea24df9db3,えんぴつ,enpitsu,pencil,N5,7eea24df9db3.png,✅
+d39481791950,けしゴム,kesigomu,eraser,N5,d39481791950.png,✅
+398fc4e21c1b,ハンカチ,hanqaçi,handkerchief,N5,398fc4e21c1b.png,✅
+15dc715a6fdd,ティッシュ,tisshu,tissue,N5,15dc715a6fdd.png,✅
+d619afd2f636,だれ,dare,who,N5,d619afd2f636.png,✅
+c9cf4dd310e2,たぶん,tabun,probably,N5,c9cf4dd310e2.png,✅
+6c5f54e53ff9,かわいい,kawaii,cute,N5,6c5f54e53ff9.png,✅
+b8c1987dd84b,わかりません,wakaranai,I don’t know,N5,b8c1987dd84b.png,✅
+4f9b216959cd,持っている,moteiru,to have / own,N5,4f9b216959cd.png,✅
+86c37b1795af,何冊,nan-satsu,how many (books),N5,86c37b1795af.png,✅
+af059f7a309e,何台,nanda-i,how many (machines),N5,af059f7a309e.png,✅
+6402115c6edc,〜まい,~mai,counter for flat objects,N5,6402115c6edc.png,✅
+2dec34d1bdaa,〜だい,~dai,counter for machines,N5,2dec34d1bdaa.png,✅
+a7660ef45231,ゆか,yuka,floor,N5,a7660ef45231.png,✅
+92192583db7a,てんじょう,tenjou,ceiling,N5,92192583db7a.png,✅
+8ac357d841b3,かべ,kabe,wall,N5,8ac357d841b3.png,✅
+8ebf1dcea36a,ドアノブ,dōra nobu,doorknob,N5,8ebf1dcea36a.png,✅
+24b17f62723c,かがみ,kagami,mirror,N5,24b17f62723c.png,✅
+2c1fdbb42c0b,クローゼット,kurōesetto,closet,N5,2c1fdbb42c0b.png,✅
+0c2dbea17a99,おしいれ,oshiire,storage closet,N5,0c2dbea17a99.png,✅
+7e4f2245e3b9,ふとん,futon,futon / bedding,N5,7e4f2245e3b9.png,✅
+c4c0056965f4,まくら,mukura,pillow,N5,c4c0056965f4.png,✅
+5bbb1c0701bc,もうふ,mofu,blanket,N5,5bbb1c0701bc.png,✅
+4ff5323e5fdb,本食,jŭutan,carpet,N5,4ff5323e5fdb.png,✅
+3ae5d27c6751,ラグ,ragu,rug,N5,3ae5d27c6751.png,✅
+583f880171f4,スリッパ,suppara,slippers,N5,583f880171f4.png,✅
+7c7d8896ae6f,かいだん,kaidan,stairs,N5,7c7d8896ae6f.png,✅
+6dd61012832c,ちゃわん,chawan,rice bowl,N5,6dd61012832c.png,✅
+6d4f33a64c07,の,hashi,chopsticks,N5,6d4f33a64c07.png,✅
+2190bb808438,フライパン,furaipan,frying pan,N5,2190bb808438.png,✅
+e1ed4f07e96b,に,nabe,pot,N5,e1ed4f07e96b.png,✅
+a41f6f781cec,せんたくき,sentakuki,washing machine,N5,a41f6f781cec.png,✅
+c11613e5c753,大きい,ookii,big,N5,c11613e5c753.png,✅
+fbcb00006366,小さい,chisai,small,N5,fbcb00006366.png,✅
+19ab5fbda465,新しい,atarashii,new,N5,19ab5fbda465.png,✅
+8f6d32d1904d,古い,furui,old,N5,8f6d32d1904d.png,✅
+8f504740959c,安い,yasui,inexpensive,N5,8f504740959c.png,✅
+12b67b3adf23,低い,hikui,low,N5,12b67b3adf23.png,✅
+59bedc1a174e,明るい,akarui,bright,N5,59bedc1a174e.png,✅
+a2bf2b26362c,暗い,kurai,dark,N5,a2bf2b26362c.png,✅
+a5ec1514b2b1,広い,hiroi,wide / spacious,N5,a5ec1514b2b1.png,✅
+534ded425a1c,狭い,semai,narrow,N5,534ded425a1c.png,✅
+fed5c835ec31,いい,ii,good,N5,fed5c835ec31.png,✅
+8a454c63bec5,わるい,warui,bad,N5,8a454c63bec5.png,✅
+444ffe50f101,きれいな,kireina,beautiful / clean,N5,444ffe50f101.png,✅
+72f3e1798bcc,かっこいい,kakkoii,cool / stylish,N5,72f3e1798bcc.png,✅
+0f0736bd7d32,かるい,karui,light (weight),N5,0f0736bd7d32.png,✅
+c8b614c7d858,おもい,omoi,heavy,N5,c8b614c7d858.png,✅
+f852986cd003,長い,nagai,long (length),N5,f852986cd003.png,✅
+7a8f0f101f65,短い,mijikai,short (length),N5,7a8f0f101f65.png,✅
+dc06d91b26f4,太い,futoui,thick (thickness),N5,dc06d91b26f4.png,✅
+cdec34dcf05d,細い,hosoii,thin (thickness),N5,cdec34dcf05d.png,✅
+c1d7162495d5,強い,tsuyoi,strong,N5,c1d7162495d5.png,✅
+0b6b95e8f7e0,弱い,yowai,weak,N5,0b6b95e8f7e0.png,✅
+84bf1bd61d81,丸い,marui,round (shape),N5,84bf1bd61d81.png,✅
+493edddcbffb,じょうぶな,jo-ubuna,sturdy,N5,493edddcbffb.png,✅
+13aa7369afe6,デザイン,dezain,design,N5,13aa7369afe6.png,✅
+c8ac6a265a0e,どう,dou,how,N5,c8ac6a265a0e.png,✅
+6e7ff3268a79,とても,totemo,very,N5,6e7ff3268a79.png,✅
+53ea9c07aaef,でも,demo,but,N5,53ea9c07aaef.png,✅
+e59a778c4760,いかが,ikaga,how (polite),N5,e59a778c4760.png,✅
+59702925d90d,もう,mou,more / already,N5,59702925d90d.png,✅
+db9626dc72bc,少し,sukoshi,a little,N5,db9626dc72bc.png,✅
+650529a03aa5,ほう,hou,side / option,N5,650529a03aa5.png,✅
+148a0c1267bc,おもしろい,omoshiroi,interesting / funny,N5,148a0c1267bc.png,✅
+f5a637aae2f2,合ね,tsumaranai,boring,N5,f5a637aae2f2.png,✅
+9983363d1254,安やたけ,muzukashii,difficult,N5,9983363d1254.png,✅
+7e171a0a3a45,好でます,yasashii,easy / kind,N5,7e171a0a3a45.png,✅
+15ad9a5c701f,安わりる,benrina,convenient,N5,15ad9a5c701f.png,✅
+c618f155e362,がしりる,fuben-na,inconvenient,N5,c618f155e362.png,✅
+37be61397fd8,徍つます,shizuka-na,quiet,N5,37be61397fd8.png,✅
+ef87e59d6d92,反るます,nigiyanaka-na,lively,N5,ef87e59d6d92.png,✅
+7c6649f07724,合か,atsui,hot,N5,7c6649f07724.png,✅
+344f1bead46f,口か,samui,cold,N5,344f1bead46f.png,✅
+144ba99c5ad4,水たりる,atatakai,warm,N5,144ba99c5ad4.png,✅
+7c70ca1bef38,すずしい,suzushii,cool (weather),N5,7c70ca1bef38.png,✅
+519285329fee,おいしい,oishii,delicious,N5,519285329fee.png,✅
+afa0b08ab4c7,まずい,mazui,bad-tasting,N5,afa0b08ab4c7.png,✅
+43d9f0f79d83,たのしい,tanoshii,fun,N5,43d9f0f79d83.png,✅
+d732be320514,いそがしい,isogashii,busy,N5,d732be320514.png,✅
+3489dd193b30,ひまな,himana,free / not busy,N5,3489dd193b30.png,✅
+af1a2733d6b8,すごい,sugoi,amazing,N5,af1a2733d6b8.png,✅
+f0ec0a29e47b,たいへんな,taihen na,tough / hard,N5,f0ec0a29e47b.png,✅
+47a2de520717,じみな,jimina,plain / simple,N5,47a2de520717.png,✅
+539af11f912d,ちかい,chikai,near,N5,539af11f912d.png,✅
+b36255f664f2,べんりな,benrina,convenient / handy,N5,b36255f664f2.png,✅
+5e333c3e2e99,きたない,kitanai,dirty,N5,5e333c3e2e99.png,✅
+4aab9df94532,まずい,mazui,tasting,N5,4aab9df94532.png,✅
+fa1b8c455040,おおい,ooi,many,N5,fa1b8c455040.png,✅
+63f2bb4cf4be,すくない,sukunai,few,N5,63f2bb4cf4be.png,✅
+c283925775aa,うるさい,urasaai,loud / noisy,N5,c283925775aa.png,✅
+02439a2e7764,ゆうめいな,yuumenai,famous,N5,02439a2e7764.png,✅
+95ed92e93cde,あぶない,abunai,dangerous,N5,95ed92e93cde.png,✅
+ef95d18fcef9,たいせつな,taisetsu na,important,N5,ef95d18fcef9.png,✅
+f43869e73ba5,かんたんな,kantan na,simple / easy,N5,f43869e73ba5.png,✅
+c1afef995789,ひまな,himana,free / relaxed,N5,c1afef995789.png,✅
+fdb5739d114b,たいへんな,taihennan,hard / tough,N5,fdb5739d114b.png,✅
+63734157c58e,おもしろい,omoshiroi,interesting,N5,63734157c58e.png,✅
+641cfb526046,おもしろい,omoshiori,interesting / fun,N5,641cfb526046.png,✅
+44511bf736f4,たのしい,tanoshii,fun / enjoyable,N5,44511bf736f4.png,✅
+476d223bd5e6,かんたんな,kantan na,easy / simple,N5,476d223bd5e6.png,✅
+f308e1744f07,へたな,heta na,bad at / unskilled,N5,f308e1744f07.png,✅
+abb3388bf9f8,しんせつな,shinsetsu na,kind / friendly,N5,abb3388bf9f8.png,✅
+f2c2e9e25ef7,だめな,dame na,no good / not allowed,N5,f2c2e9e25ef7.png,✅
+077dc563bd38,だいじょうぶな,daijoubu na,all right / okay,N5,077dc563bd38.png,✅
+3efadabf87aa,じ,ji,time,N5,3efadabf87aa.png,✅
+86a5f6954a6b,痛い,itai,painful,N5,86a5f6954a6b.png,✅
+f9d3faaedb0a,疲れた,tsukareta,tired,N5,f9d3faaedb0a.png,✅
+d125bd26e13e,怖い,kowai,scary,N5,d125bd26e13e.png,✅
+4813be677b1e,嬉しい,urei,happy,N5,4813be677b1e.png,✅
+2ec2db98ba33,悲しい,kanashi,sad,N5,2ec2db98ba33.png,✅
+2f765a90471c,すごい,sugoi,amazing / great,N5,2f765a90471c.png,✅
+a59d79b8da9f,ひどい,hidoi,terrible / awful,N5,a59d79b8da9f.png,✅
+cc9c2096bb5c,厳しい,kibishii,strict,N5,cc9c2096bb5c.png,✅
+4c9ab11c156a,緩い,yurui,loose,N5,4c9ab11c156a.png,✅
+2ccf2366502a,硬い,katii,hard (solid),N5,2ccf2366502a.png,✅
+70ff91ae4b68,柔らかい,yawarakai,soft,N5,70ff91ae4b68.png,✅
+8954803bce37,深い,fukai,deep,N5,8954803bce37.png,✅
+fb700a9391ae,浅い,asai,shallow,N5,fb700a9391ae.png,✅
+0fd3860c83ff,貧しい,hinai,poor,N5,0fd3860c83ff.png,✅
+21dc1e956b81,退屈な,tai-kusu na,boring,N5,21dc1e956b81.png,✅
+f5948ca986c2,冷たい,suijou,cold (to touch),N5,f5948ca986c2.png,✅
+dcb32569c86f,一月,ichigatsu,January,N5,dcb32569c86f.png,✅
+3f4154bdc9d3,二月,nigatsu,February,N5,3f4154bdc9d3.png,✅
+ad8491292177,三月,sangatsu,March,N5,ad8491292177.png,✅
+f10eb1d1bcc4,四月,shigatsu,April,N5,f10eb1d1bcc4.png,✅
+587f91caef14,五月,gogatsu,May,N5,587f91caef14.png,✅
+27ef69bf2d27,六月,rokugatsu,June,N5,27ef69bf2d27.png,✅
+ab25b22c7fc8,七月,nanaatsu,July,N5,ab25b22c7fc8.png,✅
+3461f319fb1d,八月,hachigatsu,August,N5,3461f319fb1d.png,✅
+39d16857eabe,九月,kugatsu,September,N5,39d16857eabe.png,✅
+554c0505b3f7,十月,juugatsu,October,N5,554c0505b3f7.png,✅
+012d8f272796,十一月,juuichi-gatsu,November,N5,012d8f272796.png,✅
+1f5bad634870,十二月,juuni-gatsu,December,N5,1f5bad634870.png,✅
+a03311459d97,何月,nangatsu,what month?,N5,a03311459d97.png,✅
+3fab188f1f6f,一日,tsuitachi,1st day of the month,N5,3fab188f1f6f.png,✅
+1e5c305aec3e,二日,futsuka,2nd day of the month,N5,1e5c305aec3e.png,✅
+8187e5450163,三日,mikka,3rd day of the month,N5,8187e5450163.png,✅
+0ae5071993b4,四日,yokka,4th day of the month,N5,0ae5071993b4.png,✅
+d4aa268c9f8b,五日,itsuka,5th day of the month,N5,d4aa268c9f8b.png,✅
+60422560b2f5,六日,muika,6th (day of the week),N5,60422560b2f5.png,✅
+bdca0fa07115,七日,nanoka,7th (day of the week),N5,bdca0fa07115.png,✅
+60f3ca123733,八日,yōka,8th (day of the week),N5,60f3ca123733.png,✅
+cd063d9407e5,九日,kokonoka,9th (day of the week),N5,cd063d9407e5.png,✅
+932f8c03a009,十日,tōka,10th (day of the week),N5,932f8c03a009.png,✅
+4ae821ddee84,十一日,juuichi-nichi,11th (day of the week),N5,4ae821ddee84.png,✅
+efa510c2c578,十二日,juuni-nichi,12th (day of the week),N5,efa510c2c578.png,✅
+0b54ecc83acf,十三日,juu-san-nichi,13th (day of the week),N5,0b54ecc83acf.png,✅
+f2c1cc3437de,十四日,juuyokka,14th (day of the week),N5,f2c1cc3437de.png,✅
+7ce37bed545c,十五日,juugo-nichi,15th (day of the week),N5,7ce37bed545c.png,✅
+8b2651d857d0,十六日,juuroku nichi,16th day,N5,8b2651d857d0.png,✅
+d9ebbb610a11,十七日,juushichi nichi,17th day,N5,d9ebbb610a11.png,✅
+c56c6b20b7ce,十八日,juuhachi nichi,18th day,N5,c56c6b20b7ce.png,✅
+425f338ecab6,十九日,juukyu nichi,19th day,N5,425f338ecab6.png,✅
+7be5a2802dc5,二十日,hatsuka,20th day,N5,7be5a2802dc5.png,✅
+c08d72d4ba4f,二十一日,nijuuichi nichi,21st day,N5,c08d72d4ba4f.png,✅
+cf293629f285,二十二日,nijunini nichi,22nd day,N5,cf293629f285.png,✅
+622c6104f979,二十三日,nijusan nichi,23rd day,N5,622c6104f979.png,✅
+43023296e67b,二十四日,nijuu yoka,24th day,N5,43023296e67b.png,✅
+0792f44d27d4,二十五日,nijugonichi,25th day,N5,0792f44d27d4.png,✅
+99010cf37ffd,二十六日,nijūroku-nichi,the twenty-sixth day,N5,99010cf37ffd.png,✅
+9bd287ec20aa,二十七日,nijūshichi-nichi,the twenty-seventh day,N5,9bd287ec20aa.png,✅
+6e893b61b0f2,二十八日,nijūhachi-nichi,the twenty-eighth day,N5,6e893b61b0f2.png,✅
+4868aa367893,二十九日,nijūkyū-nichi,the twenty-ninth day,N5,4868aa367893.png,✅
+18dd4a19ac8a,三十日,sanjū-nichi,the thirtieth day,N5,18dd4a19ac8a.png,✅
+21b8a8bd8c3c,三十一日,sanjyuuichi,31st,N5,21b8a8bd8c3c.png,✅
+2a57b3f9a93a,何年,nan-nen,what year?,N5,2a57b3f9a93a.png,✅
+fa4f41716eb1,春,haru,spring,N5,fa4f41716eb1.png,✅
+b8cf44c153a3,夏,natsu,summer,N5,b8cf44c153a3.png,✅
+57a484b86a4b,秋,aki,autumn,N5,57a484b86a4b.png,✅
+5c2736235775,冬,fuyu,winter,N5,5c2736235775.png,✅
+4f81f0be97c4,寒い,samui,cold,N5,4f81f0be97c4.png,✅
+17e8eb514847,涼しい,suzushii,cool,N5,17e8eb514847.png,✅
+ec3f796d2a98,誕生日,tanjoubi,birthday,N5,ec3f796d2a98.png,✅
+5f2bcd7a07d0,今年,kotoshi,this year,N5,5f2bcd7a07d0.png,✅
+fd9815ed637b,去年,kyonen,last year,N5,fd9815ed637b.png,✅
+1d4daf29697f,来年,rainen,next year,N5,1d4daf29697f.png,✅
+b615f7ca199a,夏休み,natsuyasumi,summer break,N5,b615f7ca199a.png,✅
+bbc2d4c39ced,冬休み,fuyu-yasumi,winter break,N5,bbc2d4c39ced.png,✅
+0c95e535d568,日,hi,day,N5,0c95e535d568.png,✅
+87fb47c538a4,休日,kyūjisutsu,holiday,N5,87fb47c538a4.png,✅
+06bacd27c333,享,mōsugu,soon,N5,06bacd27c333.png,✅
+ec01b0cd8f86,享,dandan,gradually,N5,ec01b0cd8f86.png,✅
+edd1713c774b,アシヨニエルトスタカ,Ōsutoraria,Australia,N5,edd1713c774b.png,✅
+5c884586cae1,代,naru,become,N5,5c884586cae1.png,✅
+9439bd71986c,一人,hitori,1 person,N5,9439bd71986c.png,✅
+d21aa21138bf,二人,futari,2 people,N5,d21aa21138bf.png,✅
+e73aa12f75e3,三人,san'nin,3 people,N5,e73aa12f75e3.png,✅
+a61069d695e3,四人,yon'nin,4 people,N5,a61069d695e3.png,✅
+e03148185d5d,五人,goin'n,5 people,N5,e03148185d5d.png,✅
+8c984039d875,六人,roku-nin,6 people,N5,8c984039d875.png,✅
+3137c918a8ef,八人,hachi-nin,8 people,N5,3137c918a8ef.png,✅
+936ab370f58e,十人,jū-nin,10 people,N5,936ab370f58e.png,✅
+62023ebbeeda,何人,nanNin,how many people,N5,62023ebbeeda.png,✅
+1d28bc7a269c,家族,kazoku,family,N5,1d28bc7a269c.png,✅
+5ad6f7e7f949,父,chichi,father,N5,5ad6f7e7f949.png,✅
+e4e9e46d3e65,母,haha,mother,N5,e4e9e46d3e65.png,✅
+cddb8b1b2bc6,兄,ani,older brother,N5,cddb8b1b2bc6.png,✅
+c6fe55a75b27,姉,ane,older sister,N5,c6fe55a75b27.png,✅
+baf46afa94cf,弟,otōto,younger brother,N5,baf46afa94cf.png,✅
+5dc011e267c9,妹,imōto,younger sister,N5,5dc011e267c9.png,✅
+ae93615238e4,祖父,sofu,grandfather,N5,ae93615238e4.png,✅
+0a450c9719c0,祖母,sobou,grandmother,N5,0a450c9719c0.png,✅
+f00b591451a2,両親,ryoushin,parents,N5,f00b591451a2.png,✅
+36a380d26d60,お父さん,otousan,father,N5,36a380d26d60.png,✅
+36d1caa7e2da,お母さん,okaasan,mother,N5,36d1caa7e2da.png,✅
+5fac5c63861c,お兄さん,oniisan,older brother,N5,5fac5c63861c.png,✅
+9e5f4ca9f9c9,お姉さん,oneesan,older sister,N5,9e5f4ca9f9c9.png,✅
+09f46734507f,弟さん,otouto-san,younger brother,N5,09f46734507f.png,✅
+d111853618e8,妹さん,imouto-san,younger sister,N5,d111853618e8.png,✅
+7e9a4e005ca6,お祖父さん,ojiisan,grandfather,N5,7e9a4e005ca6.png,✅
+a57ad0d5b657,お祖母さん,obasan,grandmother,N5,a57ad0d5b657.png,✅
+9364131b72f9,兄弟,kyoudai,siblings,N5,9364131b72f9.png,✅
+1b46db04f405,上げる,ageru,give,N5,1b46db04f405.png,✅
+987d23fe51e7,する,purezento,"present, gift",N5,987d23fe51e7.png,✅
+32b96c39606e,こんない,morau,"get, receive",N5,32b96c39606e.png,✅
+fdb71116f98d,こんまちい,kureru,give (to me),N5,fdb71116f98d.png,✅
+b00bed7a4644,会う,au,meet,N5,b00bed7a4644.png,✅
+d83d71e86396,話す,hanasu,"speak, talk",N5,d83d71e86396.png,✅
+5908964de115,こんなわい,kariru,borrow,N5,5908964de115.png,✅
+901a52a14055,さんまちい,kasu,lend,N5,901a52a14055.png,✅
+0141b418574a,さんなわい,kaesu,return (something),N5,0141b418574a.png,✅
+eeb9c0157210,子ども,kodomo,"child, children",N5,eeb9c0157210.png,✅
+d81f85c1a2f2,英語,eigo,English,N5,d81f85c1a2f2.png,✅
+ece8fe4e8db0,パーランタエル,furansu,France,N5,ece8fe4e8db0.png,✅
+a74609b37c7d,ならう,naraou,learn,N5,a74609b37c7d.png,✅
+b9b3d9262f63,韓国,kankoku,South Korea,N5,b9b3d9262f63.png,✅
+ee95581d5e3e,おみやげ,omiyage,souvenir,N5,ee95581d5e3e.png,✅
+3ebbf46047af,わたす,watasu,"hand over, pass on",N5,3ebbf46047af.png,✅
+bf6d878466e4,沖縄,oki-nawa,Okinawa,N5,bf6d878466e4.png,✅
+e82c2578ad8e,見せる,miseru,show,N5,e82c2578ad8e.png,✅
+81ee520d9d04,つれていく,tsureteiku,take (someone),N5,81ee520d9d04.png,✅
+067da50ef861,つれてくる,tsureteku,bring (someone),N5,067da50ef861.png,✅
+bac01537afca,待つ,matsu,wait,N5,bac01537afca.png,✅
+c205ad8cc9dc,手,tetudau,help,N5,c205ad8cc9dc.png,✅
+8dd6b08ea4ec,する,mēru,email,N5,8dd6b08ea4ec.png,✅
+0ca065990de5,送る,okuru,send,N5,0ca065990de5.png,✅
+cc4003d4d065,了解,wakarimashita,I understand,N5,cc4003d4d065.png,✅
+ef2250dda38e,ほしい,hoshii,want,N5,ef2250dda38e.png,✅
+b60df6bd0d72,物,mono,thing,N5,b60df6bd0d72.png,✅
+9f8b84552ad3,また,mata,again,N5,9f8b84552ad3.png,✅
+af56896fc2a1,あとで,atode,later,N5,af56896fc2a1.png,✅
+16810197e81a,食べ物,tabemono,food,N5,16810197e81a.png,✅
+92e5031b3d75,鶏肉,toriniku,chicken,N5,92e5031b3d75.png,✅
+7a20191712eb,豚肉,butaniku,pork,N5,7a20191712eb.png,✅
+56b126bb6cb3,牛肉,gyuniku,beef,N5,56b126bb6cb3.png,✅
+6dacba5c6e71,りんご,ringo,apple,N5,6dacba5c6e71.png,✅
+6dabc4821e7d,みかん,mikan,mandarin orange,N5,6dabc4821e7d.png,✅
+8e2c14473698,バナナ,bananā,banana,N5,8e2c14473698.png,✅
+fd41e436d475,すいか,suika,watermelon,N5,fd41e436d475.png,✅
+6db37efb0470,メロン,meron,melon,N5,6db37efb0470.png,✅
+6f6a75bf3808,(お)すし,(o)sushi,sushi,N5,6f6a75bf3808.png,✅
+e253332a52a7,ラーメン,rāmen,ramen,N5,e253332a52a7.png,✅
+922fa4f6b948,パスタ,pasuta,pasta,N5,922fa4f6b948.png,✅
+eaff3eaa1dcb,スパゲティ,supageiti,spaghetti,N5,eaff3eaa1dcb.png,✅
+186e443ef10b,ぎゅうどん,gyūdon,gyudon (beef bowl),N5,186e443ef10b.png,✅
+6b9fbedf3a36,なっとう,nattō,natto (fermented soybeans),N5,6b9fbedf3a36.png,✅
+a3b4bf0a7ec3,チョコレート,chokorēto,chocolate,N5,a3b4bf0a7ec3.png,✅
+62c682394e82,アイスクリーム,aisu kurīmu,ice cream,N5,62c682394e82.png,✅
+ded2c1da112f,しお,shio,salt,N5,ded2c1da112f.png,✅
+99d1d28c0e95,しょうゆ,shōyu,soy sauce,N5,99d1d28c0e95.png,✅
+5f69a2944574,バター,bataa,butter,N5,5f69a2944574.png,✅
+4ca1815aa241,あまい,amai,sweet,N5,4ca1815aa241.png,✅
+acf997897977,からい,karakai,"hot, spicy",N5,acf997897977.png,✅
+6e6bd776df8c,スプーン,supoon,spoon,N5,6e6bd776df8c.png,✅
+11a4d3f6d696,フォーク,fooku,fork,N5,11a4d3f6d696.png,✅
+b09da459c931,ナイフ,naifu,knife,N5,b09da459c931.png,✅
+77290c7aca5f,(お)さら,osa ra,"dish, plate",N5,77290c7aca5f.png,✅
+9b103d31a141,グラス,garasu,glass,N5,9b103d31a141.png,✅
+6bf46d2b1ade,カップ,kappu,cup,N5,6bf46d2b1ade.png,✅
+21cd9d4485b7,コップ,koppu,cup,N5,21cd9d4485b7.png,✅
+150ab2b346fd,いちばん,ichiban,most,N5,150ab2b346fd.png,✅
+b612527c3f76,どれ,dore,which (among three or more),N5,b612527c3f76.png,✅
+16c0006b66dc,?,dono,"what kind, which",N5,16c0006b66dc.png,✅
+392b31fe0880,飲み物,nomimono,"beverage, drink",N5,392b31fe0880.png,✅
+ec67b418937f,入れる,ireru,put in,N5,ec67b418937f.png,✅
+cefcdbbaf6c7,nai,nai,don't have,N5,cefcdbbaf6c7.png,✅
+c4337b285435,?,kashikomarimashita,certainly (in request),N5,c4337b285435.png,✅
+4088d768e914,けっこうです,kekkou desu,"it's fine, it's okay",N5,4088d768e914.png,✅
+eac85f75c981,sametai,sametai,cold (things),N5,eac85f75c981.png,✅
+0de299655027,zenbu,zenbu,"all, entire",N5,0de299655027.png,✅
+28f076639dad,hanbun,hanbun,half,N5,28f076639dad.png,✅
+7397f8ed503a,が,onakappai,full (stomach),N5,7397f8ed503a.png,✅
+816ba180ca37,体に いい,karada ni ii,healthy,N5,816ba180ca37.png,✅
+16d045beb46a,する,yōyaku,"booking, reservation",N5,16d045beb46a.png,✅
+9aa82805e5e6,いっぱい,ippai,full,N5,9aa82805e5e6.png,✅
+e9117376f84a,いってらっしゃい,itte ra sai,go (and come back safely),N4,e9117376f84a.png,✅
+e28fa1a3a2e8,いってきます,itte kimasu,I'm going,N4,e28fa1a3a2e8.png,✅
+afe75e077cf3,～すぎ,~sugui,too much,N4,afe75e077cf3.png,✅
+60b33096f689,おさら,ohara,plate,N4,60b33096f689.png,✅
+c5796ab82e15,ちゃいろ,cha iro,brown,N4,c5796ab82e15.png,✅
+0ed7b7ef4d09,うすい,usui,thin / light,N4,0ed7b7ef4d09.png,✅
+8374d5e32b03,すごく,sugoku,very,N4,8374d5e32b03.png,✅
+a8325d999b0d,うわぎ,ujagi,coat / outerwear,N4,a8325d999b0d.png,✅
+0b20d1a5193a,コート,kōto,coat,N4,0b20d1a5193a.png,✅
+63d6f0d4a63d,めだまやき,mema yaki,fried egg,N4,63d6f0d4a63d.png,✅
+71ca8f68bcd0,かける,kakeru,to put on,N4,71ca8f68bcd0.png,✅
+272c0d4aeade,ケチャップ,kechapu,ketchup,N4,272c0d4aeade.png,✅
+44de3fbb785d,おしいれ,oshiire,closet,N4,44de3fbb785d.png,✅
+3442589003ce,もの,mono,things,N4,3442589003ce.png,✅
+e081eb44614e,いっぱい,i-pppai,full / many,N4,e081eb44614e.png,✅
+f3502f318939,はいる,hairu,to be inside,N4,f3502f318939.png,✅
+357aa8f6ec87,むすめ,musume,daughter,N4,357aa8f6ec87.png,✅
+1e2a6795781f,まんが,manga,comics,N4,1e2a6795781f.png,✅
+79e2534d1759,ほんだな,hon da na,bookshelf,N4,79e2534d1759.png,✅
+085f44ccacd8,あげる,ageru,to raise / turn up,N4,085f44ccacd8.png,✅
+fbdca0c2a17c,おねがいします,onegaishimasu,please,N4,fbdca0c2a17c.png,✅
+2c08813fcd9e,ゆうはん,yūhan,dinner,N4,2c08813fcd9e.png,✅
+1092fd2defdf,なんでも,nandemo,anything,N4,1092fd2defdf.png,✅
+97dfda13d7d1,やきざかな,yakizaka na,grilled fish,N4,97dfda13d7d1.png,✅
+51777b1e19e2,やさいいため,yasaiitame,fried vegetables,N4,51777b1e19e2.png,✅
+410279108356,入れる,iru,to make (coffee/tea),N4,410279108356.png,✅
+79e1ca7204dd,お湯,otyu,hot water,N4,79e1ca7204dd.png,✅
+ac8c832e4ed6,沸かす,wakasu,to boil,N4,ac8c832e4ed6.png,✅
+4588b587dae1,ただいま,tadaima,I'm home,N4,4588b587dae1.png,✅
+89a026f120e9,お帰りなさい,ogirinasshai,welcome back,N4,89a026f120e9.png,✅
+58b7aaa15a5d,てんぷら,tenpura,tempura,N4,58b7aaa15a5d.png,✅
+ab6e784fc952,充電器,jūdenki,charger,N4,ab6e784fc952.png,✅
+ec5dfb9ded36,スマホ,sumaho,smartphone,N4,ec5dfb9ded36.png,✅
+cef90a4bdb11,引き出し,hikidasu,drawer,N4,cef90a4bdb11.png,✅
+ccc461f7c7cb,やる,yaru,to do,N4,ccc461f7c7cb.png,✅
+a266e824a3f5,番組,bangumi,show / program,N4,a266e824a3f5.png,✅
+cb973fca4ead,終わる,owaru,to finish,N4,cb973fca4ead.png,✅
+0ffd887c289c,起こす,okosu,to wake (someone) up,N4,0ffd887c289c.png,✅
+e8d675ec7dbd,クリスマス,Kurisumasu,Christmas,N4,e8d675ec7dbd.png,✅
+666c9c9f34da,する,suru,to have / choose / decide on,N4,666c9c9f34da.png,✅
+1f01812b15d6,焼く,yaku,to roast / grill / bake,N4,1f01812b15d6.png,✅
+e19cc9722cb3,チキン,Chikin,chicken,N4,e19cc9722cb3.png,✅
+5654aac2d00d,いちご,itsugai,strawberry,N4,5654aac2d00d.png,✅
+b9d6197c47ff,ケーキ,Kéki,cake,N4,b9d6197c47ff.png,✅
+1bc67775343e,洗濯機,Sentakuki,washing machine,N4,1bc67775343e.png,✅
+af8c2a1737f3,閉める,shimeru,to close,N4,af8c2a1737f3.png,✅
+f15ed13037eb,出る,deru,to flow / come out (water),N4,f15ed13037eb.png,✅
+c7ae885acb53,そうしたら,sōshitarā,then / after that,N4,c7ae885acb53.png,✅
+5aa046bfa584,消える,keru,to go out (lights) / disappear,N4,5aa046bfa584.png,✅
+6fba5b4b8eb4,懐中電灯,kai chū den tō,flashlight,N4,6fba5b4b8eb4.png,✅
+4933d9b92f2c,玄関,genkan,foyer / entrance,N4,4933d9b92f2c.png,✅
+8a68dda227cb,届く,todoku,to arrive / be delivered (packages),N4,8a68dda227cb.png,✅
+6aef654bf9ec,ネット,netto,internet / online,N4,6aef654bf9ec.png,✅
+6814fa9a6396,へえ,hee,Oh? / Really!,N4,6814fa9a6396.png,✅
+71ede4d6b505,ワンピース,wan pīsu,dress,N4,71ede4d6b505.png,✅
+45ad8b5917a1,クッキー,kakkī,cookie,N4,45ad8b5917a1.png,✅
+eacbe62a8297,グラム,guramu,grams,N4,eacbe62a8297.png,✅
+c79d69cdf570,遅くまで,osoku made,until late,N4,c79d69cdf570.png,✅
+1f9e39e35608,眠る,nemuru,to sleep,N4,1f9e39e35608.png,✅
+b778b70ff13b,夢,yume,dream,N4,b778b70ff13b.png,✅
+b516740a7ee5,人形,ningyou,doll,N4,b516740a7ee5.png,✅
+fbed5956575a,汚れる,yogoreru,to become dirty,N4,fbed5956575a.png,✅
+57cda302ab66,せっけん,sekkenshu,soap,N4,57cda302ab66.png,✅
+e7a939b884e5,思う,omou,to think,N4,e7a939b884e5.png,✅
+36a3a73f3a0a,掃除機,soujiki,vacuum cleaner,N4,36a3a73f3a0a.png,✅
+4bb495df362a,ごみ箱,gomi-bako,wastebasket,N4,4bb495df362a.png,✅
+a968ec94785b,ごみ,gomi,trash,N4,a968ec94785b.png,✅
+c781200754c7,捨てる,suteru,to throw out,N4,c781200754c7.png,✅
+61467d94d188,棚,tana,shelf,N4,61467d94d188.png,✅
+952514a8a692,片付ける,katadukeru,to tidy up,N4,952514a8a692.png,✅
+5b37a0402c76,～代,~dai,bill / fee / charge,N4,5b37a0402c76.png,✅
+37a16c40c5ad,ガス,gas,gas,N4,37a16c40c5ad.png,✅
+020b9f9fa7d2,水道,suidou,water (supply),N4,020b9f9fa7d2.png,✅
+35c5e4c2e862,生活する,seikatsu suru,to live / get by in life,N4,35c5e4c2e862.png,✅
+4991fb465e6d,冷房,reibou,air conditioner (cooling),N4,4991fb465e6d.png,✅
+736823b8241d,あったかい,attakai,warm,N4,736823b8241d.png,✅
+d09d2f9afa19,暖房,danbou,heater (heating),N4,d09d2f9afa19.png,✅
+c558466a9f17,サラダ,sarada,salad,N4,c558466a9f17.png,✅
+4a5d0e7da330,納豆,natto,natto (fermented soybeans),N4,4a5d0e7da330.png,✅
+09038545ccc1,体にいい,karada ni ii,healthy / good for the body,N4,09038545ccc1.png,✅
+3a474132267b,冷蔵庫,reizouko,refrigerator,N4,3a474132267b.png,✅
+93a8bae469b0,電子レンジ,denshi renji,microwave,N4,93a8bae469b0.png,✅
+ce65965bf92f,お皿,osara,plate / dish,N4,ce65965bf92f.png,✅
+10f5badeae72,コップ,koppu,glass / cup,N4,10f5badeae72.png,✅
+f5f42e47a4cb,箸,hashi,chopsticks,N4,f5f42e47a4cb.png,✅
+d89f5fc1d4bd,料理する,ryouri suru,to cook,N4,d89f5fc1d4bd.png,✅
+93e3362b4b44,洗濯物を干す,sentaku mono o hosu,to hang out the laundry,N4,93e3362b4b44.png,✅
+604390b2eb0d,服をたたむ,fuku o tatamu,to fold clothes,N4,604390b2eb0d.png,✅
+1a664b3f6c4f,床を拭く,yuka o fuku,to wipe/mop the floor,N4,1a664b3f6c4f.png,✅
+a800ac9c0c95,窓を開ける,mado o akeru,to open the window,N4,a800ac9c0c95.png,✅
+0ea786efc812,鍵をかける,kagi o kakeru,to lock the door,N4,0ea786efc812.png,✅
+b62d41953e4e,鏡,kagami,mirror,N4,b62d41953e4e.png,✅
+ffccd8c3e474,ゴミ袋,gomi bukuro,trash bag,N4,ffccd8c3e474.png,✅
+2cffc5e4a44f,タオル,taoru,towel,N4,2cffc5e4a44f.png,✅
+aed54777f109,電気,denki,light / electricity,N4,aed54777f109.png,✅
+a0455a83fc23,シャワーを浴びる,shawaa o abiru,to take a shower,N4,a0455a83fc23.png,✅
+c2d33193d655,お風呂に入る,ofuro ni iru,to take a bath,N4,c2d33193d655.png,✅
+45318ed054bb,歯を磨く,ha o miragu,to brush teeth,N4,45318ed054bb.png,✅
+56e1c40cb974,ドライヤー,doraiyaa,hair dryer,N4,56e1c40cb974.png,✅
+2ad556b8b22c,ウイスキー,uisukii,whiskey,N4,2ad556b8b22c.png,✅
+6f35dafb78a6,売り場,uriba,section (of a store),N4,6f35dafb78a6.png,✅
+1e6d32d7f0ef,地下,chika,basement / underground,N4,1e6d32d7f0ef.png,✅
+bc0b00271cfc,（お）しはらい（（お）支払い）,oshiharai (oshiatsui),payment,N4,bc0b00271cfc.png,✅
+3742a5ad807b,カード,kaado,credit card,N4,3742a5ad807b.png,✅
+2923b43539be,メッセージ,messeiji,message,N4,2923b43539be.png,✅
+e0fbc9480f83,暗証番号,anshou bangou,PIN,N4,e0fbc9480f83.png,✅
+15914c064336,アルコール,arukōru,alcohol,N4,15914c064336.png,✅
+bf6752711f1b,返品［する］,henpin [suru],return (an item),N4,bf6752711f1b.png,✅
+cba0753658fc,かしこまりました,kashikomarimashita,"Certainly, Agreed",N4,cba0753658fc.png,✅
+f02d5a5506ff,並ぶ,narabu,"to line up, to stand in a line",N4,f02d5a5506ff.png,✅
+a116e29238d4,ラーメン,rāmen,"ramen, a type of Japanese noodle soup dish",N4,a116e29238d4.png,✅
+53296fae9cd9,今度,kon do,"another time, next time",N4,53296fae9cd9.png,✅
+790a45faad68,いらっしゃいませ,irasshaimase,Welcome (to a store/restaurant),N4,790a45faad68.png,✅
+5ee180ea64ed,腕時計,ude dōkei,"wristwatch, watch for the wrist",N4,5ee180ea64ed.png,✅
+e7a2dba9b7d4,壊れる,koware,to break,N4,e7a2dba9b7d4.png,✅
+273a401c9459,直る,naoru,"to be fixed, to repair",N4,273a401c9459.png,✅
+6f8a4b29e80e,予約［する］,yoyaku [suru],"reservation, to make a reservation",N4,6f8a4b29e80e.png,✅
+d38f0fe2de77,～名様,~meisho,[number] of people,N4,d38f0fe2de77.png,✅
+6770a3fc1900,りょうり,kōsu,course (meal),N4,6770a3fc1900.png,✅
+dc55c2e255ea,なさる,nasaru,to do / choose (honorific form of suru),N4,dc55c2e255ea.png,✅
+b2bc7e1e4743,席,seki,table / seat,N4,b2bc7e1e4743.png,✅
+97503b960e1a,お客さん,okyaku-san,customer / guest,N4,97503b960e1a.png,✅
+ca85c0d8b4b0,お釣り,otsuri,change (money),N4,ca85c0d8b4b0.png,✅
+10b971a38abf,忘れる,wasure ru,to forget,N4,10b971a38abf.png,✅
+c665864611ca,指輪,yubiwa,ring,N4,c665864611ca.png,✅
+44ad469f8bc9,プレゼント［する］,purezento [suru],present / to give a present,N4,44ad469f8bc9.png,✅
+f967218ac484,大きさ,ōkisa,size,N4,f967218ac484.png,✅
+ca147c9228da,うまい,umai,great / tasty,N4,ca147c9228da.png,✅
+1db6dbe8eefb,ビール,bīru,beer,N4,1db6dbe8eefb.png,✅
+b9e37c00c40f,よく,yoku,very / well / often,N4,b9e37c00c40f.png,✅
+d085e72d7778,ネクタイ,nekutai,(neck)tie,N4,d085e72d7778.png,✅
+f1fbb785dc18,合う,au,to go with / match,N4,f1fbb785dc18.png,✅
+266b80059b4c,紫,murasaki,purple,N4,266b80059b4c.png,✅
+7456a5bb9110,メニュー,menyuu,menu,N4,7456a5bb9110.png,✅
+3c5e12c06117,ステーキ,sutei-ki,steak,N4,3c5e12c06117.png,✅
+de9ac4920dd2,セット,setto,set (meal),N4,de9ac4920dd2.png,✅
+c30c60a889af,食事［する］,shokuji,meal / to dine,N4,c30c60a889af.png,✅
+416e0629bf8d,クリーム,kuriimu,ice cream,N4,416e0629bf8d.png,✅
+ce9b2ac3b92a,虫,mushi,bug,N4,ce9b2ac3b92a.png,✅
+bf476b2f3242,店員,tenin,server / waiter / clerk,N4,bf476b2f3242.png,✅
+6b905c25c6a7,あっ,ah,Oh!,N4,6b905c25c6a7.png,✅
+8430d8e0148c,申し訳ございません,moushiwakegozaimasen,I'm sorry (extra polite),N4,8430d8e0148c.png,✅
+553bab38d7c9,申し訳ありません,moushiwakearimasen,I'm sorry,N4,553bab38d7c9.png,✅
+d65c13b1187d,ハンバーガー,hanbāgā,hamburger,N4,d65c13b1187d.png,✅
+8b02ef31d059,ミルク,miruku,milk / (coffee) cream,N4,8b02ef31d059.png,✅
+25d609d70474,つける,tsukeru,to give with / add / attach,N4,25d609d70474.png,✅
+acab7248ce7d,じゃがいも,jagaimo,potato,N4,acab7248ce7d.png,✅
+f2dc88959c3c,にんじん,ninjin,carrot,N4,f2dc88959c3c.png,✅
+eb0b000483d0,マイバッグ,maibaggu,one's own bag / reusable bag,N4,eb0b000483d0.png,✅
+ed11ed8926ff,引越し［する］,hikkoshi[suru],moving / to move house,N4,ed11ed8926ff.png,✅
+fda47c84da33,手伝う,tetsudau,to help,N4,fda47c84da33.png,✅
+db758b849bd2,～後,~go,after ~,N4,db758b849bd2.png,✅
+c4c7d53a377e,城,(o)shiroi ( (o)jō),castle,N4,c4c7d53a377e.png,✅
+85c4e38e347d,建てる,tateru,to build,N4,85c4e38e347d.png,✅
+158fb0741105,祝い,(o)iwai ((o)shukui),celebration / gift,N4,158fb0741105.png,✅
+1d6a4e923395,あげる,ageru,to give,N4,1d6a4e923395.png,✅
+7bbc4d3bd0cd,ワイン,Wain,wine,N4,7bbc4d3bd0cd.png,✅
+e254f4b88fe2,開ける,akeru,to open,N4,e254f4b88fe2.png,✅
+e1ea9f072473,決める,kimeru,to decide,N4,e1ea9f072473.png,✅
+b560d611c459,（お）てら（（お）寺）,(o)tera ((o)terai),temple,N4,b560d611c459.png,✅
+86e7ae4675ad,見える,mieru,to be visible / can see,N4,86e7ae4675ad.png,✅
+dc865316673b,近い,chikai,near / close,N4,dc865316673b.png,✅
+54bf91f2d5c5,～メートル,~mētoru,meters,N4,54bf91f2d5c5.png,✅
+a8d8754b244f,歩く,aruku,to walk,N4,a8d8754b244f.png,✅
+c0c3f99565bd,～分,minutes,minutes,N4,c0c3f99565bd.png,✅
+6b2e5a36469c,不便,fuben,inconvenient,N4,6b2e5a36469c.png,✅
+839195a03d2b,探す,sagasu,to look for,N4,839195a03d2b.png,✅
+9caa1b3d40ae,（お）やさん（大家さん）,(o) yasan (daiya-san),landlord / landlady,N4,9caa1b3d40ae.png,✅
+15b15711263f,親切,shinsetsu,kind,N4,15b15711263f.png,✅
+a79a567a32d2,庭,niwa,garden / yard,N4,a79a567a32d2.png,✅
+9ff163b85f23,広い,hiroi,spacious / wide,N4,9ff163b85f23.png,✅
+5069f26ff3f6,～台,dai,[counter for machines/vehicles],N4,5069f26ff3f6.png,✅
+50aebe41e858,置く,oku,to put / place,N4,50aebe41e858.png,✅
+bf1be12d0190,～室,shitsu,[counter for rooms],N4,bf1be12d0190.png,✅
+f7e5f296c34b,畳,jou,[counter for tatami mats / room size],N4,f7e5f296c34b.png,✅
+82b5e55f67ec,～万円,ma-men-en,ten thousand yen,N4,82b5e55f67ec.png,✅
+93d33aef0d72,～以上,ijou,more than / or more,N4,93d33aef0d72.png,✅
+09690397a8bd,～たち,tachi,[plural marker for people],N4,09690397a8bd.png,✅
+066bd769cdcd,習う,narau,to learn,N4,066bd769cdcd.png,✅
+f1e80022c8aa,～回,kai,[counter for times/frequency],N4,f1e80022c8aa.png,✅
+9ce46c4e285a,上手,jouzou,skillful / good at,N4,9ce46c4e285a.png,✅
+d5c337e62f24,若い,wakai,young,N4,d5c337e62f24.png,✅
+7c22fb97e80b,～歳,~sai,years old,N4,7c22fb97e80b.png,✅
+5456be535109,～の時,~no toki,when ~ / at the time of ~,N4,5456be535109.png,✅
+d2e9f292bcbc,～ごろ,~goro,around (time),N4,d2e9f292bcbc.png,✅
+a1309009bbc9,～前,~mae,before ~ / ago,N4,a1309009bbc9.png,✅
+033375c896c2,家賃,yachin,rent,N4,033375c896c2.png,✅
+db67dadb925c,不動産屋,fudousan-ya,real estate agent,N4,db67dadb925c.png,✅
+3cbf8643f031,オートロック,otouroku,automatic lock (security entrance),N4,3cbf8643f031.png,✅
+ff293c174146,階,kai,"floor / level (e.g., 2nd floor)",N4,ff293c174146.png,✅
+89da552cf59d,日当たりがいい,hiatari ga ii,gets good sunlight,N4,89da552cf59d.png,✅
+ff99e42f6e17,ペット可,petto ka,pets allowed,N4,ff99e42f6e17.png,✅
+6701d91d7d0f,近所,kinjou,neighborhood,N4,6701d91d7d0f.png,✅
+f6fcc2b8ff9a,注文［する］,chuumon [suru],order / to order,N4,f6fcc2b8ff9a.png,✅
+964f253d5294,お会計,okaikei,the bill / check,N4,964f253d5294.png,✅
+b490bee82b75,税込み,zeikomi,tax included,N4,b490bee82b75.png,✅
+bfc050f1d9cd,消費税,shouhizei,sales tax,N4,bfc050f1d9cd.png,✅
+c6a7eba0777a,おもちかえり,omokae ri,takeout / to go,N4,c6a7eba0777a.png,✅
+669a289f6b16,試着［する］,shishoku [suru],trying on clothes,N4,669a289f6b16.png,✅
+c2efa78d7b59,探しています,sagasite imasu,I am looking for...,N4,c2efa78d7b59.png,✅
+d2c902a2a291,別の色,betsu no iro,a different color,N4,d2c902a2a291.png,✅
+af7cf9e7bfef,鍵をかける,kagi o kakeru,to lock (a door),N4,af7cf9e7bfef.png,✅
+e80ca5fec57e,窓を開ける,mado o akеру,to open a window,N4,e80ca5fec57e.png,✅
+469dea02c89e,ゴミを置く,gomi o oku,to put out the trash,N4,469dea02c89e.png,✅
+6eb79ad6c89d,～階,~kai,floor / level,N4,6eb79ad6c89d.png,✅
+4e2560fb7cd7,～屋,~ya,"[suffix for shops] (e.g., shoe shop)",N4,4e2560fb7cd7.png,✅
+51329f54bbb6,靴屋,kutsuya,shoe shop,N4,51329f54bbb6.png,✅
+ca3306a1f8c3,自動,shi dou,automatic,N4,ca3306a1f8c3.png,✅
+f24997c52ec6,開く,aku,to open (intransitive),N4,f24997c52ec6.png,✅
+1fbde6c17d3f,嬉しい,ureshii,happy / glad,N4,1fbde6c17d3f.png,✅
+bbf56f34b223,祭り,omatsuri,festival,N4,bbf56f34b223.png,✅
+44355f6a4dd9,行う,okonau,to hold / carry out / perform,N4,44355f6a4dd9.png,✅
+1e54d7faf5fa,場所,basho,place / location,N4,1e54d7faf5fa.png,✅
+84e8930d6a01,地図,chizu,map,N4,84e8930d6a01.png,✅
+cfde40d029fb,送る,oku,to send,N4,cfde40d029fb.png,✅
+1feaad33d165,～中,chuu,during ~ / in the middle of ~,N4,1feaad33d165.png,✅
+bd4fe9ead259,渋滞,jutai,traffic jam,N4,bd4fe9ead259.png,✅
+5271d07eda4b,動く,ugoku,to move,N4,5271d07eda4b.png,✅
+6f6cf6fa62cf,タカゾール,okyaku-sama,customer / guest (polite),N4,6f6cf6fa62cf.png,✅
+5aa6dfd42640,知らせる,shiraseru,to inform / notify,N4,5aa6dfd42640.png,✅
+ae02b883ce70,事故,jiko,accident,N4,ae02b883ce70.png,✅
+fa0be02e2e60,～のため,no tame,because of ~ / due to ~,N4,fa0be02e2e60.png,✅
+0e09c0a0a180,止まる,tomaru,to stop,N4,0e09c0a0a180.png,✅
+4257a94f4dba,安全［な］,anzen,safe,N4,4257a94f4dba.png,✅
+7a70985e15ba,確認［する］,akashi,confirmation / to check,N4,7a70985e15ba.png,✅
+f9242c2a4ca0,しばらく,shibaraku,for a while,N4,f9242c2a4ca0.png,✅
+c2b453193919,お待ちください,omachi,please wait (polite),N4,c2b453193919.png,✅
+c3ab2bd1ba8c,～行き,ik(i),bound for ~ (train/bus),N4,c3ab2bd1ba8c.png,✅
+7e94833bd6d8,急行,kyuukou,express (train),N4,7e94833bd6d8.png,✅
+0dc7672d1bce,乗り換える,norikaeru,to transfer / change (trains/buses),N4,0dc7672d1bce.png,✅
+e0b7eebf93b4,ホーム,hōmu,platform,N4,e0b7eebf93b4.png,✅
+9b87f186f03f,反対,hantai,opposite,N4,9b87f186f03f.png,✅
+77197788278c,（お）みせ（（お）店）,(o)mise(o)ten,shop / store,N4,77197788278c.png,✅
+d38a2b19235c,閉まる,shimarunai,to close (intransitive),N4,d38a2b19235c.png,✅
+60e86c9cd3ae,～の方,~no hō,towards ~ / the direction of ~,N4,60e86c9cd3ae.png,✅
+ce350fcc46fd,～すると,~shite,when you do that / then,N4,ce350fcc46fd.png,✅
+50099669b22a,橋,hashi,bridge,N4,50099669b22a.png,✅
+8c41ce014315,渡る,wataru,to cross,N4,8c41ce014315.png,✅
+d22de7260877,曲がる,mageru,to turn,N4,d22de7260877.png,✅
+8e4ccf1dfd42,（お）はなみ（（お）花見）,(o)hanami,cherry blossom viewing,N4,8e4ccf1dfd42.png,✅
+78ed19e320b7,～始まる,hajimaru,to begin / start,N4,78ed19e320b7.png,✅
+c03642751810,込む,komu,to be crowded,N4,c03642751810.png,✅
+eb8c5111ae7d,早い,hayai,early,N4,eb8c5111ae7d.png,✅
+afe1ac6779df,～うちに,uchinika,while ~ / before ~,N4,afe1ac6779df.png,✅
+c2f1a48a8245,～前,mae,in front of ~,N4,c2f1a48a8245.png,✅
+d8256d37b736,待つ,matsu,to wait,N4,d8256d37b736.png,✅
+88ccaa8c40a9,訪ねる,tanuneru,to visit,N4,88ccaa8c40a9.png,✅
+7a2468543555,～の中で,naka de,among ~ / out of ~,N4,7a2468543555.png,✅
+035864b2c37f,一番,ichiban,the most / number one,N4,035864b2c37f.png,✅
+0d9e3f2660cd,賑やか［な］,nigiyaka [na],lively / bustling,N4,0d9e3f2660cd.png,✅
+0abac457ce44,忘れ物,wasuremono,forgotten item / lost property,N4,0abac457ce44.png,✅
+990407d03282,気づく,kitoku,to notice / realize,N4,990407d03282.png,✅
+95f1cbb040a1,慌てる,awateru,to panic / be in a hurry,N4,95f1cbb040a1.png,✅
+7091cf53b4a3,～そう,~sō,looks like ~ / appears ~,N4,7091cf53b4a3.png,✅
+eb8b0562390a,落ちる,ochiru,to fall / be dropped,N4,eb8b0562390a.png,✅
+376d5985e51a,～ている,~te iru,"[state of being] (e.g., is dropped)",N4,376d5985e51a.png,✅
+1f26c2efc0ab,て,~shimasu(~(te) shimau),to do something completely / unfortunately,N4,1f26c2efc0ab.png,✅
+9cff28f97b6d,て,~yokatta(~(te) yokatta),I'm glad that ~,N4,9cff28f97b6d.png,✅
+f4af54f4ca62,参り,~mai ri(suru),visiting a shrine or temple / to pray,N4,f4af54f4ca62.png,✅
+e4c2309c057f,て,~kara(~(te) kara),after doing ~,N4,e4c2309c057f.png,✅
+bb465058df13,に,~tsuku(~(ni) tsuku),to arrive (at),N4,bb465058df13.png,✅
+8d8b6f14723e,～側,~ga wa,~ side,N4,8d8b6f14723e.png,✅
+68a38bf4fb13,に,~ga aru (~ (ni) aru),to be located (at),N4,68a38bf4fb13.png,✅
+2b1c8b207458,売り切れ,uriki re,sold out,N4,2b1c8b207458.png,✅
+c1151f5fb9d7,て,~ mo ii (~ (te) mo ii),may ~ / it is okay to ~,N4,c1151f5fb9d7.png,✅
+928222401f06,駅員,eki-in,station staff,N4,928222401f06.png,✅
+26dcf51d99fc,改札,kaisatsu,ticket gate,N4,26dcf51d99fc.png,✅
+9891c54842c1,切符,kippu,ticket,N4,9891c54842c1.png,✅
+6e2b16ca2b9e,構内,konnai,station premises/inside the station,N4,6e2b16ca2b9e.png,✅
+b761b73966ba,時刻表,jikokuhyo,timetable,N4,b761b73966ba.png,✅
+9c1ee321bdbd,満員電車,man'indensha,packed/crowded train,N4,9c1ee321bdbd.png,✅
+5a1ad619cec1,優先席,yosen,priority seat,N4,5a1ad619cec1.png,✅
+d729d2245780,交差点,kousa ten,intersection,N4,d729d2245780.png,✅
+dfca24c11f60,信号,shin gou,traffic light,N4,dfca24c11f60.png,✅
+9bbfd8e90fbc,角,kado,corner,N4,9bbfd8e90fbc.png,✅
+f752c3d13bb6,突き当たり,tsukiatari,the end of a street/dead end,N4,f752c3d13bb6.png,✅
+2db59430b740,真っ直ぐ,massugu,straight ahead,N4,2db59430b740.png,✅
+66215dd8b7a5,横,yoko,next to / beside,N4,66215dd8b7a5.png,✅
+d35679a8eff6,向かい,mukai,opposite side / across from,N4,d35679a8eff6.png,✅
+a425748a7f06,人気がある,niki ga aru,to be popular,N4,a425748a7f06.png,✅
+e8ad715c07c5,景色,kesiki,scenery / view,N4,e8ad715c07c5.png,✅
+ef42a7e82324,神社,jinja,Shinto shrine,N4,ef42a7e82324.png,✅
+72ced94b745e,お寺,otera,Buddhist temple,N4,72ced94b745e.png,✅
+ac79c4f9b332,屋台,yatai,food stall (common at festivals),N4,ac79c4f9b332.png,✅
+1e1afa06d42e,桜,sakura,cherry blossom,N4,1e1afa06d42e.png,✅
+55d4a26cc344,綺麗［な］,kirei [na],beautiful / clean,N4,55d4a26cc344.png,✅
+df09fe22dfdc,ピンク,pinku,pink,N4,df09fe22dfdc.png,✅
+4dfdab17ec64,緑,midori,green,N4,4dfdab17ec64.png,✅
+880f2225c355,白,shiro,white,N4,880f2225c355.png,✅
+dc216250cd3c,黄色,kiro,yellow,N4,dc216250cd3c.png,✅
+2aa1f95a8b2e,海,umi,sea / ocean,N4,2aa1f95a8b2e.png,✅
+e6d7942e4d0c,青い,aoi,blue,N4,e6d7942e4d0c.png,✅
+b10fd4905e7a,空,sora,sky,N4,b10fd4905e7a.png,✅
+81011d679ca6,雲,kumo,cloud,N4,81011d679ca6.png,✅
+47670d7803c1,太陽,taiyou,sun,N4,47670d7803c1.png,✅
+d009e7308b48,光る,Hikaru,To shine / sparkle,N4,d009e7308b48.png,✅
+618253622dbc,風,kaze,wind,N4,618253622dbc.png,✅
+f34870fab4cb,吹く,fuku,to blow,N4,f34870fab4cb.png,✅
+c635c984f4b1,気持ちがいい,kimochi ga ii,to feel good / pleasant,N4,c635c984f4b1.png,✅
+a781fe40863e,木,ki,tree,N4,a781fe40863e.png,✅
+3929bc170629,森,mori,forest,N4,3929bc170629.png,✅
+f1eca9d173fd,湖,mizuumi,lake,N4,f1eca9d173fd.png,✅
+f956c3026dbb,山,yama,mountain,N4,f956c3026dbb.png,✅
+0f33e916c030,～登る,~ noboru,to climb ~,N4,0f33e916c030.png,✅
+c7d454c73560,空気,kūki,air,N4,c7d454c73560.png,✅
+a8dfaf377445,～美味しい,+ oishii,[air is] fresh (tasty),N4,a8dfaf377445.png,✅
+ac76b6aaf0d0,星,hoshi,star,N4,ac76b6aaf0d0.png,✅
+64ed8c29a406,月,tsuki,moon,N4,64ed8c29a406.png,✅
+c3de571292ee,～見える,+ mieru,to be visible / can see,N4,c3de571292ee.png,✅
+e282701aa9ef,天気,tenki,weather,N4,e282701aa9ef.png,✅
+962e95b819d2,晴れる,hirasu,to clear up / be sunny,N4,962e95b819d2.png,✅
+d0040ef4169f,雨,ame,rain,N4,d0040ef4169f.png,✅
+0bebf1389b63,降る,fur-u,to fall (rain/snow),N4,0bebf1389b63.png,✅
+f1bda06307df,雪,yuki,snow,N4,f1bda06307df.png,✅
+5eb4721642c0,傘,kasa,umbrella,N4,5eb4721642c0.png,✅
+a16c974501dd,さす,sasu,to hold (an umbrella),N4,a16c974501dd.png,✅
+6206c769e67c,曇り,kumori,cloudy,N4,6206c769e67c.png,✅
+7b603559b952,曇る,kumoru,to become cloudy,N4,7b603559b952.png,✅
+f1fa64de0c69,気温,ki-on,temperature,N4,f1fa64de0c69.png,✅
+799e93b6ead7,～度,~do,[counter for degrees],N4,799e93b6ead7.png,✅
+4ebc89bf2596,暑い,atsui,hot (weather),N4,4ebc89bf2596.png,✅
+7a58f8d087a3,寒い,samui,cold (weather),N4,7a58f8d087a3.png,✅
+af4f25ce92dc,涼しい,suzushii,cool (weather),N4,af4f25ce92dc.png,✅
+7701f1c20cb8,暖かい,atatakai,warm (weather),N4,7701f1c20cb8.png,✅
+c962ae983dde,蒸し暑い,mushiatsui,humid / muggy,N4,c962ae983dde.png,✅
+9d505b1e1a00,秋,ak,autumn / fall,N4,9d505b1e1a00.png,✅
+daf6760f2495,パンダ,panda,panda,N4,daf6760f2495.png,✅
+de5425ef5678,馬,uma,horse,N4,de5425ef5678.png,✅
+7ff1f7ef1b6d,象,zō,elephant,N4,7ff1f7ef1b6d.png,✅
+df638dc3df36,きりん,kirin,giraffe,N4,df638dc3df36.png,✅
+70b601845695,猿,saruu,monkey,N4,70b601845695.png,✅
+e24d692556ce,が,ga,to be born,N4,e24d692556ce.png,✅
+c1d4d1e26c9a,赤ちゃん,akachan,baby,N4,c1d4d1e26c9a.png,✅
+831455064ff3,が,ga,to die,N4,831455064ff3.png,✅
+658869c5fbd5,を,sau(woto) kau (woto) kaeru,to keep (a pet) / raise (an animal),N4,658869c5fbd5.png,✅
+1e352d5f6df3,えさ,esa,food (for animals) / bait,N4,1e352d5f6df3.png,✅
+a65aa78d8632,やる,yaru,to give (to an animal/plant),N4,a65aa78d8632.png,✅
+55e40be8de8a,散歩［する］,sanpo(su),a walk / to take a walk,N4,55e40be8de8a.png,✅
+8a76511b0199,鼠,nezumi,mouse/rat,N4,8a76511b0199.png,✅
+23e57f2ab237,兎,uusi,rabbit,N4,23e57f2ab237.png,✅
+66352ae1e03f,鳥,tori,bird,N4,66352ae1e03f.png,✅
+ac7d7b831e9e,蛇,hebi,snake,N4,ac7d7b831e9e.png,✅
+dbb1c39aa23f,熊,kuma,bear,N4,dbb1c39aa23f.png,✅
+b58605f685c3,鹿,shika,deer (very common in areas like Nara or Miyajima),N4,b58605f685c3.png,✅
+4425d2a1eb71,狐,kitsune,fox,N4,4425d2a1eb71.png,✅
+a97a6cdace15,撫でる,naderu,to pet / stroke (an animal),N4,a97a6cdace15.png,✅
+256ba1b1baa8,しっぽを振る,shippou o furu,to wag a tail,N4,256ba1b1baa8.png,✅
+e8c1ef1fe2b6,吠える,hoeru,to bark,N4,e8c1ef1fe2b6.png,✅
+639089d3cb05,花が咲く,hanagasaku,flowers bloom,N4,639089d3cb05.png,✅
+38472e833954,葉が落ちる,hanagochiru,leaves fall,N4,38472e833954.png,✅
+b0480b904cf1,芝生,shiba,lawn / grass,N4,b0480b904cf1.png,✅
+813f05ec2b97,池,ike,pond,N4,813f05ec2b97.png,✅
+3ccda013677c,虫,mushi,bug / insect,N4,3ccda013677c.png,✅
+8754a3e1d6f0,自然,shizen,nature,N4,8754a3e1d6f0.png,✅
+8dd26d8a170b,体,karada,body,N4,8dd26d8a170b.png,✅
+4ce4ccf86f04,～にいい,ni ii,good for ~,N4,4ce4ccf86f04.png,✅
+c39908cb9653,悪い,warui,bad,N4,c39908cb9653.png,✅
+38e7eb4743ad,ジョギング［する］,jogingu,jogging / to jog,N4,38e7eb4743ad.png,✅
+b0814c9182e9,ダイエット［する］,daito,diet / to be on a diet,N4,b0814c9182e9.png,✅
+5e61c8c5c897,が,tsuzuku,to continue / last,N4,5e61c8c5c897.png,✅
+a229228af15a,病気,byōki,illness / sickness,N4,a229228af15a.png,✅
+fefcbf59976a,に,naru,to become / to get (an illness),N4,fefcbf59976a.png,✅
+1dc9f4b98057,かぜ,kaze,a cold,N4,1dc9f4b98057.png,✅
+1937f0c19696,を,hi ku,to catch (a cold),N4,1937f0c19696.png,✅
+bad252b8f1ef,せき,sekki,cough,N4,bad252b8f1ef.png,✅
+869f9f0bbfb2,が,deru (ga deru),to have (a cough) / to come out,N4,869f9f0bbfb2.png,✅
+b0c2acac8ac1,熱,netsu,fever,N4,b0c2acac8ac1.png,✅
+ad193e1debbb,が,aru (ga aru),to have (a fever),N4,ad193e1debbb.png,✅
+9ea5d6e091b3,体の調べ,kada no shirabe,checking the body / physical exam,N4,9ea5d6e091b3.png,✅
+404b0e92e1fe,のど,nodo,throat,N4,404b0e92e1fe.png,✅
+26649d84c1e0,が,itai (ga itai),~/ hurts / painful,N4,26649d84c1e0.png,✅
+c4285d445314,薬,kusa-ri,medicine,N4,c4285d445314.png,✅
+d5738fed2f23,を,nomu (o nomu),to take (medicine) / to drink,N4,d5738fed2f23.png,✅
+23b1f7eef606,（お）だいじに（（お）大事に）,(o)daiji ni ((o)o-daiji-ni),Get well soon / Take care,N4,23b1f7eef606.png,✅
+d687f3dfa302,を,yasumu (o yasumu),to rest / take a day off,N4,d687f3dfa302.png,✅
+f38197c760e7,が,~naru (~ga nyōru),to get better / to be cured,N4,f38197c760e7.png,✅
+f16abd4555ae,心配［する］,shinpai [suru],worry / to worry,N4,f16abd4555ae.png,✅
+ad2dec777162,が,~beru (~ga supparu),to decrease,N4,ad2dec777162.png,✅
+b8974df7f455,が,~fueru (~ga kaeru),to increase,N4,b8974df7f455.png,✅
+b00e3e04ff5c,たばこ,tabako,cigarette / tobacco,N4,b00e3e04ff5c.png,✅
+6077c5e2aae8,を,~yameru (~ga yameru),to quit / stop,N4,6077c5e2aae8.png,✅
+8c36e99be617,を,~suu (~ga suu),to smoke,N4,8c36e99be617.png,✅
+f9915dead8c3,～すぎ,~sugi,too much ~,N4,f9915dead8c3.png,✅
+9911535d08a5,お酒,osae,alcohol / sake,N4,9911535d08a5.png,✅
+8dcdee9d04a6,乾杯,kampai,Cheers!,N4,8dcdee9d04a6.png,✅
+b50d4ed424a2,酔っぱらう,yopparai,to get drunk,N4,b50d4ed424a2.png,✅
+cda96112ded3,気分,ki-bun,feeling / mood,N4,cda96112ded3.png,✅
+35d7735427e3,を,~(wa) suru,to feel (a certain way),N4,35d7735427e3.png,✅
+de6e03804d3d,吐く,ha-ku,to vomit / throw up,N4,de6e03804d3d.png,✅
+e91a3e98c3bb,危ない,abunai,dangerous,N4,e91a3e98c3bb.png,✅
+b83e54237d46,けが［する］,kega[ suru],injury / to get injured,N4,b83e54237d46.png,✅
+27f08540bf37,気をつける,ki o tsukeru,to be careful,N4,27f08540bf37.png,✅
+b4b9c0a287cb,に,~sa waru,to touch,N4,b4b9c0a287cb.png,✅
+1d835500e724,痛いっ,itai,Ouch!,N4,1d835500e724.png,✅
+cc44015103f8,やけど［する］,yageto[ suru],burn / to get burned,N4,cc44015103f8.png,✅
+9623610d5204,お腹,onaka,stomach / tummy,N4,9623610d5204.png,✅
+538627527004,頭,atama,head,N4,538627527004.png,✅
+964f398d4efc,歯,ha,tooth,N4,964f398d4efc.png,✅
+6ebd8c23e50e,目,me,eye,N4,6ebd8c23e50e.png,✅
+016906e56548,耳,mimi,ear,N4,016906e56548.png,✅
+3db8a3ae61ad,鼻,hana,nose,N4,3db8a3ae61ad.png,✅
+4abec170b487,歯医者,haisya,dentist,N4,4abec170b487.png,✅
+42b8cbb7a1c8,マスク,masuku,face mask,N4,42b8cbb7a1c8.png,✅
+22b8027cd678,日本語,nihongo,Japanese language,N4,22b8027cd678.png,✅
+b34bcf573604,勉強［する］,benkyou[suru],study / to study,N4,b34bcf573604.png,✅
+8d07c5f7e655,授業,jugyou,class / lesson,N4,8d07c5f7e655.png,✅
+45ae5c6c371e,始まる,hajimaru,to begin / start,N4,45ae5c6c371e.png,✅
+42b767299f84,終わる,owaru,to end / finish,N4,42b767299f84.png,✅
+238c22aa9192,覚える,obueru,to memorize / remember,N4,238c22aa9192.png,✅
+90f87eac9810,試験,shiken,exam / test,N4,90f87eac9810.png,✅
+613933e368ea,を,ukeru (to take an exam),to take (an exam),N4,613933e368ea.png,✅
+f15a0072b9f8,頑張る,ganbaru,to do one's best,N4,f15a0072b9f8.png,✅
+80fe944a72fb,質問［する］,shitsumon (to ask a question),question / to ask a question,N4,80fe944a72fb.png,✅
+c9781a62e7a0,答える,kotae,to answer,N4,c9781a62e7a0.png,✅
+7f2f512f045e,先生,sensei,teacher / professor,N4,7f2f512f045e.png,✅
+b7618382022a,に,kiku (to ask the teacher),to ask (the teacher),N4,b7618382022a.png,✅
+ddd51f11dab8,辞書,jisho,dictionary,N4,ddd51f11dab8.png,✅
+6090a573ad21,を,~hikurūu,to look up (in a dictionary),N4,6090a573ad21.png,✅
+6c253c862e28,調べる,shiraberu,to investigate / look into,N4,6c253c862e28.png,✅
+6c7feb930990,意味,imi,meaning,N4,6c7feb930990.png,✅
+12075ca0086e,わかる,wakaru,to understand,N4,12075ca0086e.png,✅
+90f8b56503fe,練習［する］,renshū[ suru ],practice / to practice,N4,90f8b56503fe.png,✅
+48440cf02521,作文,sakubun,essay / composition,N4,48440cf02521.png,✅
+85333b155096,を,~kaku,to write,N4,85333b155096.png,✅
+e1e06dc0faf7,を,~dasu,to hand in / submit,N4,e1e06dc0faf7.png,✅
+3721e4ead521,宿題,shukudai,homework,N4,3721e4ead521.png,✅
+e97da8fb9073,成績,seiseki,grades / results,N4,e97da8fb9073.png,✅
+f179e998d936,が,too good (it) is,[grades] are good,N4,f179e998d936.png,✅
+c52b8dbd7b96,仕事,shigoto,work / job,N4,c52b8dbd7b96.png,✅
+af7ba9412cb0,働く,hatasu,to work,N4,af7ba9412cb0.png,✅
+a3815c4a4fe1,忙しい,isogashii,busy,N4,a3815c4a4fe1.png,✅
+0f17bde0b433,を,te-tudau,to help / assist,N4,0f17bde0b433.png,✅
+5e5af0b88555,会議,kaigi,meeting,N4,5e5af0b88555.png,✅
+4fbef2af827b,に,deru,to attend / participate in (a meeting),N4,4fbef2af827b.png,✅
+6da57038c34a,準備［する］,jyuni-bi [suru],preparation / to prepare,N4,6da57038c34a.png,✅
+4cf000d95591,パソコン,pasokon,PC / laptop,N4,4cf000d95591.png,✅
+56ce13dc5af4,を,tsuka-u,to use,N4,56ce13dc5af4.png,✅
+77fb3e2655e5,レポート,reporto,report / paper,N4,77fb3e2655e5.png,✅
+8b7d6a7dfd18,作ると,tsukuru to,when making/creating,N4,8b7d6a7dfd18.png,✅
+61948556e651,に,naru,to become / to be useful,N4,61948556e651.png,✅
+4397109fdab5,黒板,kokuban,blackboard,N4,4397109fdab5.png,✅
+96dcb3cf2441,休憩［する,kyūkei [suru],break / to take a break,N4,96dcb3cf2441.png,✅
+f751cf0ed666,合格［する］,gōkaku [suru],to pass (an exam),N4,f751cf0ed666.png,✅
+4eea4b059083,不合格,fukugakaku,fail (an exam),N4,4eea4b059083.png,✅
+e244b32d717e,鉛筆,enpitsu,pencil,N4,e244b32d717e.png,✅
+2f6765f2faf1,消しゴム,kesigomu,eraser,N4,2f6765f2faf1.png,✅
+d4718ca22419,残業［する］,zangyō [suru],overtime work / to work overtime,N4,d4718ca22419.png,✅
+451f7fb10e65,名刺,meishi,business card,N4,451f7fb10e65.png,✅
+35ce4c81e472,給料,kyūryō,salary / pay,N4,35ce4c81e472.png,✅
+27b4580bf7fe,電話に出る,denwa ni deru,to answer the phone,N4,27b4580bf7fe.png,✅
+60189c7dfa7f,コピー［する］,kopi shu,to photocopy,N4,60189c7dfa7f.png,✅
+64f1e0f5e9f1,王た,(o)shougatsu,New Year's,N4,64f1e0f5e9f1.png,✅
+c09e7d425523,神社にお参りする,jinja ni omairi suru,to visit a shrine to pray,N4,c09e7d425523.png,✅
+e93533ea0855,に,~atsumaru (~/ni tsudamu),to gather (at),N4,e93533ea0855.png,✅
+c78dddae23b0,パーティー,paatii,party,N4,c78dddae23b0.png,✅
+2c6844fb1180,を,~hiraku (~/o Hiraku),to hold / host (a party),N4,2c6844fb1180.png,✅
+49d128a13527,予定,yotei,plan / schedule,N4,49d128a13527.png,✅
+31e211cdc5e5,結婚式,kekkonsiki,wedding ceremony,N4,31e211cdc5e5.png,✅
+c08f09bc4255,招待［する］,shotai suru,invitation / to invite,N4,c08f09bc4255.png,✅
+6bb2948be6a3,に,~deru (~/ni deru),to attend (a wedding),N4,6bb2948be6a3.png,✅
+03539fb50799,を,ageru,to give,N4,03539fb50799.png,✅
+a320ead6dcce,喜ぶ,yorokobu,to be glad / pleased,N4,a320ead6dcce.png,✅
+1a72c6051ca8,に,kimaru,to be decided,N4,1a72c6051ca8.png,✅
+d107d1e011de,を,iu,to say (thanks),N4,d107d1e011de.png,✅
+b9ab3464782f,に,yoru,to stop by,N4,b9ab3464782f.png,✅
+ec87c4536439,プレゼント,purezento,present,N4,ec87c4536439.png,✅
+6d1086895bf2,を,erabu,to choose / select,N4,6d1086895bf2.png,✅
+3a11b23b0c18,を,morau,to receive,N4,3a11b23b0c18.png,✅
+9bbda9f865b4,を,kureru,to give (to me/us),N4,9bbda9f865b4.png,✅
+51a22089890b,て,~te-agaru,[grammar] to do something for someone,N4,51a22089890b.png,✅
+b3f430f408f1,て,~te-kureru,[grammar] someone does something for me,N4,b3f430f408f1.png,✅
+edb49527d272,て,~te-moru,[grammar] to have someone do something for me,N4,edb49527d272.png,✅
+e1c254d29d65,奥さん,okusan,(someone else's) wife,N4,e1c254d29d65.png,✅
+d6f72c3b316c,ご主人,goshujin,(someone else's) husband,N4,d6f72c3b316c.png,✅
+d314cec9738a,～によろしく,~ni-yoroshiku,give my regards to ~,N4,d314cec9738a.png,✅
+ad330237444f,を,~o-watasu,to hand over,N4,ad330237444f.png,✅
+308b8404cb2d,が,~ga-hitsuyou,necessary,N4,308b8404cb2d.png,✅
+2fc83f7d981a,安心［する］,anjin,relief / to feel relieved,N4,2fc83f7d981a.png,✅
+560670603772,て,~te-yokatta,I’m glad that ~,N4,560670603772.png,✅
+1a85ee9d0651,（お）みまい（（お）見舞い）,(o)mimei,well gift,N4,1a85ee9d0651.png,✅
+8602f3353c13,に,~iku (~ ni iku),to go (to visit someone),N4,8602f3353c13.png,✅
+bd39666f1bda,て,~ageteru (~ te ageteru),to do something for someone,N4,bd39666f1bda.png,✅
+5a98000b7606,おかげさまで,okagesama de,thanks to you (polite expression of gratitude),N4,5a98000b7606.png,✅
+8341dbbd6053,退院［する］,taiiin [suru],to be discharged from the hospital,N4,8341dbbd6053.png,✅
+13ce7e530d1f,おめでとう［ございます］,ome de to [gozaimasu],Congratulations!,N4,13ce7e530d1f.png,✅
+69747d1ce14e,て,~kureru (~ te kureru),someone does something for me,N4,69747d1ce14e.png,✅
+c689c5c4b5b9,て,~morau (~ te morau),to have someone do something for me,N4,c689c5c4b5b9.png,✅
+283c922eba7e,気持ち,kimochi,feeling / gratitude,N4,283c922eba7e.png,✅
+7b399b3d1e8b,を,~komeru (~ o komeru),to put (one’s heart/feelings) into something,N4,7b399b3d1e8b.png,✅
+73d1c25324d1,て,~oku (~ te oku),to do something in advance / keep something in a certain state,N4,73d1c25324d1.png,✅
+d48ea0f1065e,感じ,kanji,feeling / impression,N4,d48ea0f1065e.png,✅
+b6bdf913dfd1,が,~ga suru,to feel (a certain way) / to have a smell or sound,N4,b6bdf913dfd1.png,✅
+9d21939feb6f,宴会,enkai,banquet / formal party,N4,9d21939feb6f.png,✅
+eb9ce14899d0,式場,shikijo,ceremony hall / venue,N4,eb9ce14899d0.png,✅
+8dd914cbfed0,新郎,shinrou,the groom,N4,8dd914cbfed0.png,✅
+e3a92e311621,新婦,shinpū,the bride,N4,e3a92e311621.png,✅
+ed1e05179704,スピーチ,supīchi,speech (very common at Japanese weddings),N4,ed1e05179704.png,✅
+26ffb0a3e5d7,二次会,niji kai,"the ""after-party"" (usually at a bar or karaoke)",N4,26ffb0a3e5d7.png,✅
+3cbfa4fcda9b,回復［する］,kaifuku [suru],recovery / to recover,N4,3cbfa4fcda9b.png,✅
+ff5a1b6e72e1,お大事に,odaijini,"""Please take care of yourself"" (Essential phrase when leaving a hospital visit)",N4,ff5a1b6e72e1.png,✅
+ff5715c02a08,お見舞い品,omimaihin,"well gift (often fruit or flowers, but avoid potted plants as they imply ""staying rooted"" in the hospital!)",N4,ff5715c02a08.png,✅
+b91932a6764d,退院祝い,taiiin iwai,a gift to celebrate someone being discharged,N4,b91932a6764d.png,✅
+b8605bcaade3,お世話になる,osewa ni naru,to be in someone's care / to be indebted to someone,N4,b8605bcaade3.png,✅
+434c8571b8e1,手土産,temiya ge,"a small ""hand gift"" brought when visiting a home",N4,434c8571b8e1.png,✅
+7206594e8748,お裾分け,osusowake,sharing a portion of a gift you received with someone else,N4,7206594e8748.png,✅
+177d486f9713,感謝［する］,kansha [suru],gratitude / to thank someone formally,N4,177d486f9713.png,✅
+22bad082ba3d,子供,kodomo,child,N4,22bad082ba3d.png,✅
+41347ab6e7a3,小学生,shougaku sei,elementary school student,N4,41347ab6e7a3.png,✅
+758752ca9b23,に,naru (ni naru),to become,N4,758752ca9b23.png,✅
+5d1ed4d98d2e,に,au (ni au),to meet,N4,5d1ed4d98d2e.png,✅
+5a72dac70f27,に,nitte iru (ni nitteiru),to resemble / look like,N4,5a72dac70f27.png,✅
+4e82e412d5c1,を,omoidasu,to remember/recall,N4,4e82e412d5c1.png,✅
+0b3c6f1d2d09,中学生,chūgakusei,junior high school student,N4,0b3c6f1d2d09.png,✅
+8c41e4b0e5bb,高校生,kōkōsei,high school student,N4,8c41e4b0e5bb.png,✅
+484161dca85c,大学生,daigaku-sei,university student,N4,484161dca85c.png,✅
+7726d95842a0,に,hairu,"to enter (e.g., school)",N4,7726d95842a0.png,✅
+04c65764a10d,卒業［する］,sotsugyō,graduation/to graduate,N4,04c65764a10d.png,✅
+70392d0be9f2,が,kimaru,"to be decided (e.g., a job)",N4,70392d0be9f2.png,✅
+c375d82b74f7,を,hajimeru,to start (something),N4,c375d82b74f7.png,✅
+19cf41517835,が,hajimaru,(something) starts,N4,19cf41517835.png,✅
+18bec02a5813,一人暮らし［する］,hitorigurashi,living alone/to live alone,N4,18bec02a5813.png,✅
+90bb537f2e22,引っ越し［する］,hikkoshi[suru],moving (house) / to move,N4,90bb537f2e22.png,✅
+e702d597f890,に,~tomete(ru)(~(ni)kinmete(ru)),to work for / be employed at,N4,e702d597f890.png,✅
+6d597b9b88c5,に,~nareru(~(ni)naru),to get used to / get accustomed to,N4,6d597b9b88c5.png,✅
+fa7caa197db4,結婚［する］,kekkon[suru],marriage / to get married,N4,fa7caa197db4.png,✅
+58129208c580,離婚［する］,rikon[suru],divorce / to get divorced,N4,58129208c580.png,✅
+284c3478cda8,出産［する］,shussan[suru],childbirth / to give birth,N4,284c3478cda8.png,✅
+1e3e068638f8,を,~sodateru(~(o)sodate),to raise / bring up (a child),N4,1e3e068638f8.png,✅
+0bad2e9b66a8,が,~sodatsu(~(ga)sodate),to grow up,N4,0bad2e9b66a8.png,✅
+53b2ba6f4033,死ぬ,shinu,to die,N4,53b2ba6f4033.png,✅
+7bbeaaaa534a,を,~naku(su)~(o)naku(su),to lose (someone),N4,7bbeaaaa534a.png,✅
+6a3a74aa04fd,が,~naku naru,to pass away (polite),N4,6a3a74aa04fd.png,✅
+af0fa2ba2fea,～歳,~sai,~ years old,N4,af0fa2ba2fea.png,✅
+3b670d9941e7,幼稚園,yōchien,kindergarten,N4,3b670d9941e7.png,✅
+ba5750d5c7ea,塾,juku,cram school (very common for Japanese students),N4,ba5750d5c7ea.png,✅
+2a8b924f53b8,留守番,rusuban,staying home alone (looking after the house),N4,2a8b924f53b8.png,✅
+07b5b7964eb3,いじめ,ijime,bullying,N4,07b5b7964eb3.png,✅
+044bb41c9807,入学［する,~nyūgaku [suru],entrance to school / enrollment,N4,044bb41c9807.png,✅
+b0888324121f,独身,dokushin,single / unmarried,N4,b0888324121f.png,✅
+6f3dc650d4bd,就職［する］,~shūshoku [suru],finding employment / getting a job,N4,6f3dc650d4bd.png,✅
+ccf6c7829b59,転勤［する］,~tenkin [suru],job transfer (moving to a different office/city for work),N4,ccf6c7829b59.png,✅
+9d243f21f713,昇進［する］,shōshin [suru],promotion,N4,9d243f21f713.png,✅
+1528baa4e08e,定年,teinein,retirement age,N4,1528baa4e08e.png,✅
+1845df2f3af1,老後,rōgo,retirement years / old age,N4,1845df2f3af1.png,✅
+9ea55e9d72ae,先祖,senzo,ancestor,N4,9ea55e9d72ae.png,✅
+c81272c42b86,親戚,shinseki,relative,N4,c81272c42b86.png,✅
+fc893ecbaf11,孫,mago,grandchild,N4,fc893ecbaf11.png,✅
+b333a82bc282,二世,nisei,"second generation American),",N4,b333a82bc282.png,✅
+8547ab4180de,寿命,jumyō,lifespan,N4,8547ab4180de.png,✅
+16494978b606,社会,shakai,society,N4,16494978b606.png,✅
+e9e3c7fe3c14,に,ni o kimau,to be interested in ~,N4,e9e3c7fe3c14.png,✅
+9d1613783155,世界,sekai,world,N4,9d1613783155.png,✅
+0580cd5365b7,国,kuni,country,N4,0580cd5365b7.png,✅
+3d9d32c25dca,を,wo shiru,to know / find out,N4,3d9d32c25dca.png,✅
+f5c24facf308,が,ga okoru,to happen / occur,N4,f5c24facf308.png,✅
+67dbf25f970d,事件,jiken,incident / case,N4,67dbf25f970d.png,✅
+5a6bcb29c24e,が,ga aru,to happen / there is (an accident),N4,5a6bcb29c24e.png,✅
+c8c722cf2798,が,ga naku naru,to pass away / to be lost,N4,c8c722cf2798.png,✅
+df5fa8be059b,消える,kieru,to disappear / go out,N4,df5fa8be059b.png,✅
+56da126b4af0,助ける,tasukeru,to help / rescue,N4,56da126b4af0.png,✅
+9c4626c192d8,を,~tsutaeru (~ wo tsugeru),to convey / report,N4,9c4626c192d8.png,✅
+1642e71d4106,記事,kiji,article,N4,1642e71d4106.png,✅
+236703855dda,環境,kankyō,environment,N4,236703855dda.png,✅
+c24716dbcd5c,を,~mamoru (~ wo mamoru),to protect,N4,c24716dbcd5c.png,✅
+f4142e98a89c,が,~no koreru (~ ga nokoru),to remain,N4,f4142e98a89c.png,✅
+4eef7c0f84ba,緑,midori,greenery / green,N4,4eef7c0f84ba.png,✅
+c2d7224f7c13,を,~herasu (~ wo oseru),to reduce / decrease (something),N4,c2d7224f7c13.png,✅
+1c909a20183d,を,~fuyasu (~ wo kaeru),to increase (something),N4,1c909a20183d.png,✅
+b5c3015bb967,ごみ,gomi,trash / garbage,N4,b5c3015bb967.png,✅
+dc3cf0625118,を,~hirou,to pick up,N4,dc3cf0625118.png,✅
+c023668a38a6,を,~suteru,to throw away,N4,c023668a38a6.png,✅
+246088882190,リサイクル［する］,recyuraru [suru],recycling / to recycle,N4,246088882190.png,✅
+edded97ee86d,を,~atsu meru,to collect,N4,edded97ee86d.png,✅
+567223704c40,が,~atsumaru,to gather,N4,567223704c40.png,✅
+838bf4cce30c,もったいない,mottai nai,"wasteful / ""what a waste""",N4,838bf4cce30c.png,✅
+fb661248bdd6,無駄［な］,mu da [na],wasteful / useless,N4,fb661248bdd6.png,✅
+625dca88efdc,を,~ueru,to plant,N4,625dca88efdc.png,✅
+b9bd9192448e,天然,tennen,"natural (as in ""natural resources"" or ""natural beauty"")",N4,b9bd9192448e.png,✅
+e08b58514ba6,地震,jishin,earthquake,N4,e08b58514ba6.png,✅
+e6ea63832eb1,洪水,kōzui,flood,N4,e6ea63832eb1.png,✅
+c612cbe0c0f3,火事,kaji,fire / blaze,N4,c612cbe0c0f3.png,✅
+b71e23bd9331,大事,daiji,important / serious (often used for serious news),N4,b71e23bd9331.png,✅
+610702a72245,逮捕［する］,taihō [suru],arrest / to arrest,N4,610702a72245.png,✅
+e77d293038bb,犯罪,hanzai,crime,N4,e77d293038bb.png,✅
+ccf156e63e43,地球温暖化,chikyū ondankai,global warming,N4,ccf156e63e43.png,✅
+fdcccb72a42e,汚染,osen,pollution,N4,fdcccb72a42e.png,✅
+a0873332c9a1,海洋ごみ,kaiyōgomi,ocean plastic/trash,N4,a0873332c9a1.png,✅
+06ebd3412c92,保護［する］,hogo [suru],protection / to protect (often used for wildlife),N4,06ebd3412c92.png,✅
+62fc3d754c21,太陽光,taiyō kō,sunlight / solar power,N4,62fc3d754c21.png,✅
+3200b2c8935c,エコ,Eko,"friendly, environmentally friendly (often used for products or businesses)",N4,3200b2c8935c.png,✅
+bdf29ec12531,ボランティア,Borantia,"volunteer, volunteer work (often used for activities like helping at events or in community service)",N4,bdf29ec12531.png,✅
+b0fed8a3a462,寄付［する］,kifu [suru],donation / to donate,N4,b0fed8a3a462.png,✅
+28c6cfc45fc4,選挙,senkyō,election,N4,28c6cfc45fc4.png,✅
+76315f6fdf7d,平和,heiwa,"peace, peaceful",N4,76315f6fdf7d.png,✅
+95ab5337ea7c,地域,chiiki,region / local community,N4,95ab5337ea7c.png,✅
+c923bbbe7865,技術,gijutsu,technology / skill,N4,c923bbbe7865.png,✅
+abb1e03cfee8,が,～susumu (～ga susumu),to advance / progress,N4,abb1e03cfee8.png,✅
+85efb63d8995,便利［な］,benri[nan],convenient,N4,85efb63d8995.png,✅
+9d46ec1e3de0,パソコン,pasokon,personal computer / laptop,N4,9d46ec1e3de0.png,✅
+86d758c6d8a8,インターネット,intānnetto,internet,N4,86d758c6d8a8.png,✅
+8500239698dc,が,tsunagaru[gatsunagu],to be connected,N4,8500239698dc.png,✅
+a2f47631f77f,サイト,saito,website / site,N4,a2f47631f77f.png,✅
+a8e025acf299,を,miru[meru],to see / look at,N4,a8e025acf299.png,✅
+dd12ad426002,を,sagasu[sagu],to search for / look for,N4,dd12ad426002.png,✅
+351375a7fca4,オンライン,onrain,online,N4,351375a7fca4.png,✅
+8669f05bd2c9,メール,mēru,email,N4,8669f05bd2c9.png,✅
+b96f9db98667,を,okuru[o-kuru],to send,N4,b96f9db98667.png,✅
+1ca6d4126bb7,に,~hen shin [suru] (~ ni hen shin [suru]),reply / to reply (to),N4,1ca6d4126bb7.png,✅
+ead1fb76670d,入力［する］,nyuryoku [suru],input / to type in,N4,ead1fb76670d.png,✅
+c6fcdb0cab4e,記号,ki gyou,symbol / sign,N4,c6fcdb0cab4e.png,✅
+0cf7fc01edf1,数字,suiji,numbers / digits,N4,0cf7fc01edf1.png,✅
+a3ae5148b364,を,~ ireru (~ wo ireru),to put in / enter,N4,a3ae5148b364.png,✅
+d0b7abd8f222,パスワード,pasuwado,password,N4,d0b7abd8f222.png,✅
+9d339361e7ed,間違える,machi gau,to make a mistake,N4,9d339361e7ed.png,✅
+ac754686d095,マウス,mouzu,mouse (computer),N4,ac754686d095.png,✅
+769a9a32bac7,を,~ kuretsuku (~ wo kuretsuku),to click,N4,769a9a32bac7.png,✅
+14cb986bfba4,ボタン,botan,button,N4,14cb986bfba4.png,✅
+9d730a94e275,を,~osu (~o ossu),to press / push,N4,9d730a94e275.png,✅
+40c2302b0e0c,データ,deta,data,N4,40c2302b0e0c.png,✅
+124bfe18ffc0,を,~hoshō (~ho shō),to save (data),N4,124bfe18ffc0.png,✅
+8067579798db,が,~kieru (~ga kieru),to disappear / be lost (data),N4,8067579798db.png,✅
+4ee81abfe5e1,を,~kesu (~wo kesu),to erase / delete,N4,4ee81abfe5e1.png,✅
+55f9528aacd5,を,~kopī (~wo kopī),to copy,N4,55f9528aacd5.png,✅
+e99b1531d9d2,を,~insatsu (~wo insatsu),to print,N4,e99b1531d9d2.png,✅
+283d8498982f,ソフト,sofu,software,N4,283d8498982f.png,✅
+e6e118cb057d,ダウンロード［する］,daunrōdo ([suru]),to download,N4,e6e118cb057d.png,✅
+4d1ec6adc4bb,アップデート［する］,Appudeto,to update,N4,4d1ec6adc4bb.png,✅
+d1e0865e442a,を,~Hiraku,to open (a file/app),N4,d1e0865e442a.png,✅
+8b9912a68b7b,が,~Tomaru,"to stop / freeze (e.g., the screen)",N4,8b9912a68b7b.png,✅
+f5ed26f1c78a,を,~Ugokasu,to move (something) / to operate,N4,f5ed26f1c78a.png,✅
+61dbaf592a96,が,~Ugoku,to move / to work,N4,61dbaf592a96.png,✅
+db712e662a2b,を,~Kaeru,to change (something),N4,db712e662a2b.png,✅
+9a395301c9b6,が,~Kawaru,to change,N4,9a395301c9b6.png,✅
+87b864c19d2b,理由,Riyuu,reason,N4,87b864c19d2b.png,✅
+cea6109f900c,を,~Setsumei [suru],explanation / to explain,N4,cea6109f900c.png,✅
+8a45aba88e95,を,~Tsutaeru,to convey / communicate (information),N4,8a45aba88e95.png,✅
+7513d25976c9,と,~to o mō,to think that,N4,7513d25976c9.png,✅
+8cc9f36ffe62,を,~ni o kimeru,to decide on,N4,8cc9f36ffe62.png,✅
+fa9fc33aee9d,が,~ga kimaru,will be decided,N4,fa9fc33aee9d.png,✅
+9f73f43463d7,に,~ni ki o tsukeru,to pay attention to,N4,9f73f43463d7.png,✅
+3f1bd2c67943,役に立つ,yaku ni tatsu,to be useful / helpful,N4,3f1bd2c67943.png,✅
+fd8a69d58269,ぶらうざ,burāza,browser,N4,fd8a69d58269.png,✅
+0ddd463f896d,検索［する］,ken sa ku [ suru ],search / to search (the action of Googling something),N4,0ddd463f896d.png,✅
+a8078a8f5bb6,りんく,rinku,link,N4,a8078a8f5bb6.png,✅
+f04ca926a211,動画,dōga,video (very common for YouTube/TikTok),N4,f04ca926a211.png,✅
+a0aa4bca0be7,画面,gamen,screen / monitor,N4,a0aa4bca0be7.png,✅
+73fe39d5770a,故障［する］,kosshou [suru],breakdown / to be broken,N4,73fe39d5770a.png,✅
+c0310f244499,亚,fuiriez [suru],to freeze (when the computer stops moving),N4,c0310f244499.png,✅
+1fac680777e8,再起動［する］,saikidou [suru],to restart / reboot,N4,1fac680777e8.png,✅
+57f09de47881,エスエヌエス,SNS,social media,N4,57f09de47881.png,✅
+4fa2017afd63,めっせーじ,messeiji,message,N4,4fa2017afd63.png,✅
+d8b1bb1de57d,通知,tsuchai,notification,N4,d8b1bb1de57d.png,✅
+abfa8826a7b0,すたんぷ,sutanpu,stickers (specifically for apps like LINE),N4,abfa8826a7b0.png,✅
+55f87a2be2d7,電波,denpa,"signal / reception (e.g., ""The WiFi signal is weak"")",N4,55f87a2be2d7.png,✅
+f7a89eb4fe96,災害,sai gai,disaster,N4,f7a89eb4fe96.png,✅
+df1e37f4a00a,津波,tsunami,tsunami,N4,df1e37f4a00a.png,✅
+4e40af5745c7,が,~okoru(~ga okoru),to occur / happen,N4,4e40af5745c7.png,✅
+8c65fc0ae393,火事,kaji,fire,N4,8c65fc0ae393.png,✅
+b22a0fd893a4,を,~dasu(~o dasu),to cause (a fire) / start (a fire),N4,b22a0fd893a4.png,✅
+47f349926d52,が,~deru(~ga deru),(a fire) breaks out,N4,47f349926d52.png,✅
+484ca3f68bc2,大変［な］,taihen[na],serious / terrible / difficult,N4,484ca3f68bc2.png,✅
+0f9a3eab5ec7,に,~au(~ni au),to encounter / meet with (a disaster/accident),N4,0f9a3eab5ec7.png,✅
+b47b11a1add5,非常口,hijou guchi,emergency exit,N4,b47b11a1add5.png,✅
+f1f910a5d27b,を,~shiraberu(~o shiraberu),to investigate / check,N4,f1f910a5d27b.png,✅
+64068813fb1e,逃げる,nigeru,to escape / run away,N4,64068813fb1e.png,✅
+8e34c45f5c45,を,~tasu keru (を ~ o tasukeru),to help / rescue,N4,8e34c45f5c45.png,✅
+f59541198629,が,~taku sareru (んい ~ ga tasukaru),to be saved / rescued,N4,f59541198629.png,✅
+447e7e2840a5,けが,kega,injury,N4,447e7e2840a5.png,✅
+534c685ffce6,を,~suru (を o suru),to get injured,N4,534c685ffce6.png,✅
+d34ada2eb317,救急車,kyuu kyuu sha,ambulance,N4,d34ada2eb317.png,✅
+4d1c84c43c3c,を,~yobu (を o yobu),to call (an ambulance),N4,4d1c84c43c3c.png,✅
+3113eb084cc4,困る,komaru,to be in trouble / have a hard time,N4,3113eb084cc4.png,✅
+a21b24318bdb,警察,keisatsu,police,N4,a21b24318bdb.png,✅
+9031a8115e67,に,~renraku [suru] (たい ni renraku [suru]),to contact / get in touch with,N4,9031a8115e67.png,✅
+b76f4fe473d2,に,ni o tsukeru (ni ni o tsukeru),to be careful of,N4,b76f4fe473d2.png,✅
+f951f6627f20,を,naku su (o naku su),to lose (something),N4,f951f6627f20.png,✅
+5ecc9c2725ac,が,(ga) naku nar-u,(something) is lost,N4,5ecc9c2725ac.png,✅
+e1eba7a4a928,盗む,nusumu,to steal,N4,e1eba7a4a928.png,✅
+0fb96873a3a0,を,~ o makasen (o maku sen),to make a mistake / mistake one for another,N4,0fb96873a3a0.png,✅
+25f0b8cc88b4,避難所,hinanjō,evacuation shelter (usually a local school or community center),N4,25f0b8cc88b4.png,✅
+16bd7a9ca1fa,警報,keihō,"warning / alarm (e.g., Oame Keiho = Heavy rain warning)",N4,16bd7a9ca1fa.png,✅
+5ebea04a691d,震度,shindō,"Japanese seismic scale (measures the intensity of shaking at a specific location, from 0 to 7)",N4,5ebea04a691d.png,✅
+596f8bb7a924,情報,jōhō,"information (e.g., Saigai Joho = disaster information)",N4,596f8bb7a924.png,✅
+5a5229b5cd21,安否,anpi,safety (used when checking if someone is okay: Anpi kakunin),N4,5a5229b5cd21.png,✅
+8043a048d6f4,公衆電話,kōshū denwa,public phone (often free to use during major disasters).,N4,8043a048d6f4.png,✅
+f52edc088dbe,懐中電灯,kaijū den tō,flashlight.,N4,f52edc088dbe.png,✅
+91b571fcbe95,乾パン,kanpan,hard tack / emergency crackers.,N4,91b571fcbe95.png,✅
+14244d730619,揺れる,yureru,to shake / sway (used during earthquakes).,N4,14244d730619.png,✅
+5e8bff906b56,静かに,shizukani,quietly (often told to people during evacuation to prevent panic).,N4,5e8bff906b56.png,✅
+3e8e8481a40f,交番,kōban,police box (the small neighborhood police stations found everywhere in Japan).,N4,3e8e8481a40f.png,✅
+5b44ce9d0892,異臭,i-shū,strange smell (useful if reporting a gas leak).,N4,5b44ce9d0892.png,✅
+bcdb5ceb1d3e,ひび,hibi,"crack (e.g., a crack in a wall or window after an earthquake).",N4,bcdb5ceb1d3e.png,✅
+27b2fe9a92c9,届け出,todoke de,todoke = lost property report).,N4,27b2fe9a92c9.png,✅
+ea45468ed15f,政治,seiji,politics.,N4,ea45468ed15f.png,✅
+d22e0ab01c53,経済,keizai,economy,N4,d22e0ab01c53.png,✅
+627ee0f8a549,放送［する］,hōsō [suru],broadcast / to broadcast,N4,627ee0f8a549.png,✅
+02dccd75fc8f,外国,gaikoku,foreign country,N4,02dccd75fc8f.png,✅
+86b06725e106,と,~(wa)tsunagu (~to~tsunagu),to connect ~ and ~,N4,86b06725e106.png,✅
+661a43f18b3e,と,~kōryū [suru] (~to kōryū [suru]),exchange / to have an exchange with,N4,661a43f18b3e.png,✅
+ae7c6ee9c7a8,を,~mamoru (~wo mamoru),to protect / follow (rules),N4,ae7c6ee9c7a8.png,✅
+785e33d9d8f6,法律,hōritsu,law,N4,785e33d9d8f6.png,✅
+667749b416ba,規則,kisoku,rule / regulation,N4,667749b416ba.png,✅
+53655c9af900,に,~deru (~[sentaku] ni deru),to run (in an election),N4,53655c9af900.png,✅
+df6722435428,選ぶ,erabu,to choose / elect,N4,df6722435428.png,✅
+0caf44d055ae,投票［する］,touhyou [suru],to vote,N4,0caf44d055ae.png,✅
+320165a3a5c7,リーダー,rīdā,leader,N4,320165a3a5c7.png,✅
+d017ef14f7c1,平和［な］,heiwana,peaceful,N4,d017ef14f7c1.png,✅
+70244fb0ff66,祈る,inoru,to pray,N4,70244fb0ff66.png,✅
+66c9013148b6,物価,bukka,prices (cost of living),N4,66c9013148b6.png,✅
+fe734da4e656,が,(bukka) ga agaru,(prices) to rise,N4,fe734da4e656.png,✅
+4e6a71738ece,が,(bukka) ga sagaru,(prices) to fall,N4,4e6a71738ece.png,✅
+b9e80497bec7,税金,zeikin,tax,N4,b9e80497bec7.png,✅
+76e886cc58a9,を,(zeikin) o harau,to pay,N4,76e886cc58a9.png,✅
+7bdea795d6a3,無駄［な］,muda na,wasteful,N4,7bdea795d6a3.png,✅
+a2cd397cebb0,を,~naku su,to eliminate / get rid of,N4,a2cd397cebb0.png,✅
+94110693a247,が,~nakunaru,to disappear,N4,94110693a247.png,✅
+87c4dacb782d,議員,giin,member of assembly / member of parliament,N4,87c4dacb782d.png,✅
+8039f26961ce,候補者,kohosya,candidate,N4,8039f26961ce.png,✅
+8a085ca57b98,政党,seitou,political party,N4,8a085ca57b98.png,✅
+edfd52d8f4ce,首相,syushou,Prime Minister (specifically used for Japan's leader),N4,edfd52d8f4ce.png,✅
+6afda9259ef2,大統領,daitouriyou,President (of a country),N4,6afda9259ef2.png,✅
+4d377f996eac,上院,jokai,Upper House / Lower House,N4,4d377f996eac.png,✅
+c0a941745d87,為替,kawase,foreign exchange,N4,c0a941745d87.png,✅
+70740eb07c33,円安,enyasu,"weak Yen (good for tourists, tough for importers!)",N4,70740eb07c33.png,✅
+87879e3272c9,円高,endaka,strong Yen,N4,87879e3272c9.png,✅
+a12bbe1f27e0,金利,kinri,interest rate,N4,a12bbe1f27e0.png,✅
+71ff4acdcb50,景気,keiki,"economic conditions (e.g., ""The economy is good/bad"")",N4,71ff4acdcb50.png,✅
+22fe75c8f4da,輸入,yunyu,import,N4,22fe75c8f4da.png,✅
+68c684544964,輸出,yushutsu,export,N4,68c684544964.png,✅
+85bcdd136dc1,外交,gaikou,diplomacy,N4,85bcdd136dc1.png,✅
+2b04798b94b7,協力［する］,kyoryoku[ suru],cooperation / to cooperate,N4,2b04798b94b7.png,✅
+a2393d032ed0,支援［する］,shien[suru],support / to support (often used for international aid),N4,a2393d032ed0.png,✅
+4c1fee1ba37a,貿易,boueki,foreign trade,N4,4c1fee1ba37a.png,✅
+2f7aad48c339,憲法,kenpou,constitution,N4,2f7aad48c339.png,✅
+dacea8ecaf43,年金,nenkin,pension,N4,dacea8ecaf43.png,✅
+cf20436ab399,保険,hoken,insurance,N4,cf20436ab399.png,✅
+8ba8ca89c693,自由,jiyū,freedom / liberty,N4,8ba8ca89c693.png,✅
+021f8e8974e9,平等,byōdō,equality,N4,021f8e8974e9.png,✅
+7adfa9c0d2e3,ビジネス,bijinesu,business,N4,7adfa9c0d2e3.png,✅
+8bb462073df7,会社,kaisha,company,N4,8bb462073df7.png,✅
+0b91658d0d9b,事務,jimusho,office work / administration,N4,0b91658d0d9b.png,✅
+432f83573efb,ボーナス,bōnazu,bonus,N4,432f83573efb.png,✅
+db912474856f,が,de-ru,(bonus/salary) to be paid,N4,db912474856f.png,✅
+80e77551d035,業務,gyōmu,business operations / duties,N4,80e77551d035.png,✅
+46398728139c,を,~o-konau (~ wo oeru),to perform / carry out,N4,46398728139c.png,✅
+17a1ded0e5eb,会議,kaigi,meeting / conference,N4,17a1ded0e5eb.png,✅
+e7054dd5d8ae,を,~hiraku (~ o hiraku),to hold (a meeting),N4,e7054dd5d8ae.png,✅
+5e9f56ed05f8,に,~deru (~ ni deru),to attend (a meeting),N4,5e9f56ed05f8.png,✅
+ac22887f2608,を,~jumbi [suru] (~ wo junbi [suru]),preparation / to prepare,N4,ac22887f2608.png,✅
+796c35b94f27,を,~hokoku [suru] (~ wo hokoku [suru]),report / to report,N4,796c35b94f27.png,✅
+d21fb0badff7,意見,iken,opinion,N4,d21fb0badff7.png,✅
+a47865e72350,を,~iu,to say / express,N4,a47865e72350.png,✅
+90547a42a17b,賛成［する］,sansei [suru],agreement / to agree,N4,90547a42a17b.png,✅
+f43adf9e8b9f,反対［する］,hantai [suru],opposition / to disagree,N4,f43adf9e8b9f.png,✅
+e1a1269d5bc5,出張［する］,shuchou [suru],business trip / to go on a business trip,N4,e1a1269d5bc5.png,✅
+97f3a2539b1b,時間,jikan,time,N4,97f3a2539b1b.png,✅
+451701940668,を,~moru,to keep / follow (time/rules),N4,451701940668.png,✅
+941924578300,に,~okoreru,to be late for,N4,941924578300.png,✅
+461698d67a5d,に,~mani au,to be in time for,N4,461698d67a5d.png,✅
+9530ce63fc37,連絡［する］,renraku [suru],contact / to contact,N4,9530ce63fc37.png,✅
+d37a9c50fc11,相談［する］,sou-dan [suru],consultation / to consult,N4,d37a9c50fc11.png,✅
+9b9d4b9e89ee,部長,buchou,Department manager / Head of department,N4,9b9d4b9e89ee.png,✅
+e566640112a5,課長,kacho,Section manager,N4,e566640112a5.png,✅
+e5a8a3b57232,指導［する］,shido [suru],guidance / to guide / to coach,N4,e5a8a3b57232.png,✅
+9abca6bab6cd,アドバイス［する］,adobaisu [suru],advice / to advise,N4,9abca6bab6cd.png,✅
+929f9869ffa8,手伝う,tetsudau,to help / assist,N4,929f9869ffa8.png,✅
+8369b1d649a8,を,~tano-mu (~o tasumu),to ask / request (a favor),N4,8369b1d649a8.png,✅
+12285232b029,を,~hikiukeru (~o hikiu keru),to take on / undertake (a task),N4,12285232b029.png,✅
+225ee4d3fb8c,無理［な］,muri [na],impossible / excessive,N4,225ee4d3fb8c.png,✅
+b50d50e76807,を,~tsuzukeru (~o tsuzkeru),to continue (something),N4,b50d50e76807.png,✅
+54ea3eec360d,が,tsuzuku,to continue,N4,54ea3eec360d.png,✅
+a1bfc80abcc3,成功［する］,seikou [suru],success / to succeed,N4,a1bfc80abcc3.png,✅
+c9d42a7be40a,失敗［する］,shippai [suru],failure / to fail,N4,c9d42a7be40a.png,✅
+1fdc25bd478f,休憩［する］,kyukei [suru],break / to take a break,N4,1fdc25bd478f.png,✅
+1f9c42b250a1,を,yasumu (゙に待しきる),to rest / be absent,N4,1f9c42b250a1.png,✅
+4ee4f0d3dca8,休暇,kyuka,holiday / vacation / leave,N4,4ee4f0d3dca8.png,✅
+f37f84b37df7,を,toru (゙に待しきる),to take (a holiday),N4,f37f84b37df7.png,✅
+5fa19a6dc81d,サイト,saito,website,N4,5fa19a6dc81d.png,✅
+70265b6f9190,を,nyuryoku [suru] (゙に設や),input / to type in,N4,70265b6f9190.png,✅
+5ce023c7d394,機械,kikai,machine,N4,5ce023c7d394.png,✅
+81ecd04783fa,が,~ugoku (~ga ugoku),to move / to work (function),N4,81ecd04783fa.png,✅
+54122ad64330,転職［する］,tenshoku (suru),change of occupation / to change jobs,N4,54122ad64330.png,✅
+b62aead87f03,に,~kamaru (~ni kamaru),"to be decided (e.g., a new job is decided)",N4,b62aead87f03.png,✅
+2d14fb89b9a3,上司,joushi,boss / superior (a general term for anyone above you).,N4,2d14fb89b9a3.png,✅
+add4565c0621,部下,buka,subordinate (those who work under a manager).,N4,add4565c0621.png,✅
+9c96aa08c6ef,同僚,douryou,colleague / coworker (someone at your same level).,N4,9c96aa08c6ef.png,✅
+8ecafbe2c5ee,担当者,tantousha,the person in charge (very common when calling another company).,N4,8ecafbe2c5ee.png,✅
+e820a0221f42,経営者,keiei-sha,manager / proprietor / executive.,N4,e820a0221f42.png,✅
+f8bd928d94af,締め切り,shimekiri,deadline.,N4,f8bd928d94af.png,✅
+eb3794fa75e8,予定,yotei,schedule / plan.,N4,eb3794fa75e8.png,✅
+f5b66ee4d751,共有［する］,kyouyuu [suru],"sharing / to share (e.g., ""Share the data"").",N4,f5b66ee4d751.png,✅
+8678dc6b386e,確認［する］,kakunin [suru],confirmation / to check (the most common verb in a Japanese office!).,N4,8678dc6b386e.png,✅
+5880825a7ca4,重要［な］,juuyou [na],important / urgent.,N4,5880825a7ca4.png,✅
+2f58209cb6ed,転送［する］,tensou [suru],to forward (an email or a phone call).,N4,2f58209cb6ed.png,✅
+8ee5718a5eeb,添付,tenjou,attachment (as in an email attachment).,N4,8ee5718a5eeb.png,✅
+26df0f1139e6,件名,kennmei,subject line (of an email).,N4,26df0f1139e6.png,✅
+b95db1210f76,名刺交換,meishikoukan,business card exchange (the formal ritual).,N4,b95db1210f76.png,✅
+d4817e9c6762,お辞儀,ojigi,bowing (essential for greetings and apologies).,N4,d4817e9c6762.png,✅
+c92d365fbbd4,小学校,shougakkou,elementary school,N4,c92d365fbbd4.png,✅
+67c3b8ca3479,中学校,chougakkou,junior high / middle school,N4,67c3b8ca3479.png,✅
+9791d8bde4b7,大学,daigaku,university / college,N4,9791d8bde4b7.png,✅
+bbeb7519a82e,に,~nyū gaku[suru],to enter / enroll in school,N4,bbeb7519a82e.png,✅
+f2880aaf5535,を,~sotsugyou[suru],to graduate,N4,f2880aaf5535.png,✅
+1086fa527017,教育,kyouiku,education,N4,1086fa527017.png,✅
+eac89020bb01,教室,kyoujitsu,classroom,N4,eac89020bb01.png,✅
+15860c6cac6d,生徒,seito,"student (usually for elementary, junior high school)",N4,15860c6cac6d.png,✅
+6d7c34db396c,学生,gakusei,student (usually for university),N4,6d7c34db396c.png,✅
+83990f32391d,を,~shiraberu,to investigate / look up,N4,83990f32391d.png,✅
+1e8bf87813b4,歴史,rekihi,history,N4,1e8bf87813b4.png,✅
+11455a81450b,地理,chiri,geography,N4,11455a81450b.png,✅
+3e966d8d021b,教授,kyōju,professor,N4,3e966d8d021b.png,✅
+cb83185140c9,専門,senmon,specialty / major,N4,cb83185140c9.png,✅
+2b36269599ed,研究［する］,kenkyū [suru],research / to research,N4,2b36269599ed.png,✅
+c37f595a1b7e,林,hayashi,woods / grove,N4,c37f595a1b7e.png,✅
+7b546c4c9f3e,地球,chikyū,earth,N4,7b546c4c9f3e.png,✅
+31030ded6641,を,~yogosu (~o kisu),to make dirty / pollute,N4,31030ded6641.png,✅
+01ea68f18834,が,~yogoreru (~ga kiseru),to get dirty / become polluted,N4,01ea68f18834.png,✅
+fd808857ba4e,リサイクル［する］,Risai kuru [suru],to recycle,N4,fd808857ba4e.png,✅
+4d176f1cd701,交際［する］,kōsai [suru],association / dating / to see someone,N4,4d176f1cd701.png,✅
+920130295146,仲良くする,naka-yoku suru,to get along with,N4,920130295146.png,✅
+9cf597348c64,行事,gyōji,event,N4,9cf597348c64.png,✅
+bad3944a04e0,お正月,o-shōgatsu,New Year's,N4,bad3944a04e0.png,✅
+5fa11fe9f69d,成人式,seijin shiki,Coming of Age ceremony,N4,5fa11fe9f69d.png,✅
+c5103f4e9252,習慣,shūkan,habit / custom,N4,c5103f4e9252.png,✅
+1b8929b9e337,学力,gakuryoku,Academic ability,N4,1b8929b9e337.png,✅
+0567da15f61c,留学,ryūgaku,Studying abroad,N4,0567da15f61c.png,✅
+c7baef3324d1,自然災害,jishinsaigai,Natural disaster (combines Nature + Disaster),N4,c7baef3324d1.png,✅
+b9c7e67e2adf,地元,jimoto,Hometown / local area,N4,b9c7e67e2adf.png,✅
+accc54efc5f2,伝統,dentou,Tradition.,N4,accc54efc5f2.png,✅
+d997a35d0b15,お正月,oshougatsu,New Year's (the most important holiday in Japan),N4,d997a35d0b15.png,✅
+ec38db91280b,成人式,seijinshiki,Coming of Age Ceremony (held in January for 20-year-olds),N4,ec38db91280b.png,✅
+5bdfbefd86d4,祭り,matsuri,Festival,N4,5bdfbefd86d4.png,✅
+1c9f7d9e4c9e,準備［する］,jumbi,Preparation / to prepare,N4,1c9f7d9e4c9e.png,✅
+d36c2f2cd0b2,習慣,shuukan,Habit / custom,N4,d36c2f2cd0b2.png,✅
+bfd137e42486,伝統,dentou,Tradition,N4,bfd137e42486.png,✅
+af8466df1d68,～を守る,~ wo mamoru,To protect / keep (a tradition),N4,af8466df1d68.png,✅
+fdf14e5205a6,～を伝える,~ wo tsutaeru,To convey / pass down (to the next generation),N4,fdf14e5205a6.png,✅
+b5335ff231f2,～を祈る,~ wo inoru,To pray,N4,b5335ff231f2.png,✅
+47c01d2b31bd,交際［する］,kōsai [suru],Social interaction / to associate with others,N4,47c01d2b31bd.png,✅
+67532f38743a,仲良くする,naka yoku suru,To get along with someone / to harmonize,N4,67532f38743a.png,✅
+b9a3ac76d05d,赤ちゃん,akachan,Infant / baby,N4,b9a3ac76d05d.png,✅
+a70af6de9aff,子供,kodomo,Child,N4,a70af6de9aff.png,✅
+82ca33dd0873,大人,otona,Adult / grown-up,N4,82ca33dd0873.png,✅
+385fc43442be,老人,rōjin,Elderly person / old person,N4,385fc43442be.png,✅
+4ab1f5a7b9fb,幸せ［な］,shiawase [na],Happy / fortunate,N4,4ab1f5a7b9fb.png,✅
+ead17ea68356,～を祝う,~o iwau,To celebrate / to congratulate,N4,ead17ea68356.png,✅
+4c4ed9c8281d,～に／と結婚［する］,~ni/toto kekkon [suru],Marriage / to get married,N4,4c4ed9c8281d.png,✅
+2578f03bf937,～が生まれる,~ga umareru,To be born,N4,2578f03bf937.png,✅
+7c5d7559bba2,～が亡くなる,-ga nakunaru,To pass away / die (polite form),N4,7c5d7559bba2.png,✅
