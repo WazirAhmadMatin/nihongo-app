@@ -6,11 +6,11 @@ Vocabulary: data/jlpt_vocab.sqlite (read-only, JLPT N5–N1)   → vocab.py
 User data:  data/users.sqlite (progress, reviews, settings)   → userdb.py
 Login:      Telegram Mini App initData, verified in auth.py
 """
-import os, random, re
+import asyncio, hashlib, hmac, os, random, re
 from contextlib import asynccontextmanager
 from collections import defaultdict
 from typing import Optional
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -90,7 +90,9 @@ class SettingsRequest(BaseModel):
 # ── Words ──────────────────────────────────────────────────────────────────────
 @app.get("/health")
 def health():
-    return {"status": "ok", "words_loaded": len(WORDS), "dev_mode": DEV_MODE}
+    storage = "postgres" if userdb.IS_PG else ("temporary (/tmp)" if userdb.DB_PATH.startswith("/tmp") else "sqlite")
+    return {"status": "ok", "words_loaded": len(WORDS), "dev_mode": DEV_MODE, "storage": storage,
+            "bot_webhook_ready": bool(os.getenv("BOT_TOKEN") and os.getenv("CRON_SECRET"))}
 
 
 @app.get("/levels")
@@ -336,3 +338,69 @@ def reset(uid: int = Depends(me)):
             c.execute(f"DELETE FROM {t} WHERE user_id=?", (uid,))
     quizzes.pop(uid, None)
     return {"reset": True}
+
+
+# ── Telegram webhook + scheduled messages (free serverless hosting) ───────────
+# 1. Set BOT_TOKEN and CRON_SECRET.  2. Open /telegram/setup?key=<CRON_SECRET> once.
+# 3. Have something call /cron?key=<CRON_SECRET> every ~15 min (GitHub Actions: .github/workflows/cron.yml).
+CRON_SECRET = os.getenv("CRON_SECRET", "")
+_tg = {"app": None, "loop": None}
+
+
+def _webhook_secret() -> str:
+    return hashlib.sha256(("webhook:" + os.getenv("BOT_TOKEN", "")).encode()).hexdigest()[:48]
+
+
+def _check_key(key: Optional[str], request: Request):
+    auth = request.headers.get("authorization", "")
+    given = key or (auth[7:] if auth.lower().startswith("bearer ") else "")
+    if not CRON_SECRET or not hmac.compare_digest(given, CRON_SECRET):
+        raise HTTPException(403, "Wrong or missing key.")
+
+
+async def _bot_app():
+    """The bot in webhook mode, created once per running instance."""
+    loop = asyncio.get_running_loop()
+    if _tg["app"] is None or _tg["loop"] is not loop:
+        import bot
+        app_ = bot.build_app(polling=False)
+        await app_.initialize()
+        _tg.update(app=app_, loop=loop)
+    return _tg["app"]
+
+
+@app.post("/telegram/webhook")
+async def telegram_webhook(request: Request):
+    secret = request.headers.get("x-telegram-bot-api-secret-token", "")
+    if not hmac.compare_digest(secret, _webhook_secret()):
+        raise HTTPException(403, "Bad secret.")
+    from telegram import Update
+    app_ = await _bot_app()
+    await app_.process_update(Update.de_json(await request.json(), app_.bot))
+    return {"ok": True}
+
+
+@app.get("/telegram/setup")
+async def telegram_setup(request: Request, key: Optional[str] = None):
+    """Point Telegram at this server's webhook and register the bot's commands."""
+    _check_key(key, request)
+    import bot
+    app_ = await _bot_app()
+    base = os.getenv("PUBLIC_URL") or str(request.base_url).rstrip("/")
+    base = base.replace("http://", "https://") if "localhost" not in base else base
+    url = f"{base}/telegram/webhook"
+    await app_.bot.set_webhook(url, secret_token=_webhook_secret(),
+                               allowed_updates=["message", "callback_query", "poll_answer"],
+                               drop_pending_updates=True)
+    await bot.post_init(app_)
+    info = await app_.bot.get_webhook_info()
+    return {"ok": True, "webhook": info.url, "pending_updates": info.pending_update_count}
+
+
+@app.get("/cron")
+async def cron(request: Request, key: Optional[str] = None):
+    """Send words of the day and reminders that are due. Call every ~15 minutes."""
+    _check_key(key, request)
+    import bot
+    app_ = await _bot_app()
+    return {"ok": True, **(await bot.run_scheduled(app_.bot))}

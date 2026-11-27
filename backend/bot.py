@@ -1,8 +1,11 @@
 """
 bot.py — Nihongo Telegram bot
 
-Runs on its own (`python bot.py`) or inside the API process (set RUN_BOT=1 for
-uvicorn, see main.py). Either way it shares data/users.sqlite with the API.
+Three ways to run it (all share the same user database with the API):
+  • Webhook (free hosting, e.g. Vercel): Telegram calls POST /telegram/webhook on the API,
+    and a scheduler (GitHub Actions) calls GET /cron every 15 min for daily messages.
+  • Inside the API process with polling: RUN_BOT=1 (start.sh)
+  • On its own with polling: python bot.py
 
 What it does
   • Opens the Mini App
@@ -90,8 +93,7 @@ def add_button(word_id: str):
 
 def pick_new_word(user: dict) -> dict:
     """A word from the user's level they haven't started yet (falls back to any)."""
-    with userdb.conn() as c:
-        known = {r[0] for r in c.execute("SELECT word_id FROM cards WHERE user_id=?", (user["user_id"],))}
+    known = userdb.known_word_ids(user["user_id"])
     pool = [w for w in vocab.filter_words(user["level"]) if w["id"] not in known]
     pool = pool or vocab.filter_words(user["level"])
     with_ex = [w for w in pool if w["example_jp"]]
@@ -332,10 +334,7 @@ async def send_quiz_poll(ctx, chat_id: int, user: dict, left: int):
         chat_id, question, choices, type="quiz", correct_option_id=correct, is_anonymous=False,
         explanation=(w["example_jp"] + "\n" + w["example_en"])[:200] if w["example_jp"] else None,
     )
-    ctx.bot_data.setdefault("polls", {})[msg.poll.id] = {
-        "user_id": user["user_id"], "chat_id": chat_id, "word_id": w["id"],
-        "correct": correct, "left": left - 1,
-    }
+    userdb.save_poll(msg.poll.id, user["user_id"], chat_id, w["id"], correct, left - 1)
 
 
 async def quiz_cmd(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
@@ -348,14 +347,16 @@ async def quiz_cmd(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
 async def on_poll_answer(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     ans = update.poll_answer
-    info = ctx.bot_data.get("polls", {}).pop(ans.poll_id, None)
-    if not info or not ans.option_ids:
+    if not ans.option_ids:
+        return
+    info = userdb.pop_poll(ans.poll_id)
+    if not info:
         return
     ok = ans.option_ids[0] == info["correct"]
     userdb.record_quiz(info["user_id"], info["word_id"], ok, "bot:poll")
-    if info["left"] > 0:
+    if info["left_n"] > 0:
         user = userdb.get_user(info["user_id"])
-        await send_quiz_poll(ctx, info["chat_id"], user, info["left"])
+        await send_quiz_poll(ctx, info["chat_id"], user, info["left_n"])
     else:
         await ctx.bot.send_message(info["chat_id"], "🎉 Quiz done! Another round?",
                                    reply_markup=InlineKeyboardMarkup([[
@@ -371,6 +372,12 @@ def _due_now(user: dict, hhmm: str) -> bool:
 
 
 async def scheduler(ctx: ContextTypes.DEFAULT_TYPE):
+    await run_scheduled(ctx.bot)
+
+
+async def run_scheduled(bot) -> dict:
+    """Send due words of the day and reminders. Safe to call often: each is sent once a day."""
+    sent = {"words": 0, "reminders": 0}
     for user in userdb.all_users():
         if not user["notify"] or not user["chat_id"]:
             continue
@@ -378,7 +385,8 @@ async def scheduler(ctx: ContextTypes.DEFAULT_TYPE):
         try:
             if user["last_word_day"] != day and _due_now(user, user["word_time"]):
                 userdb.mark_sent(user["user_id"], "last_word_day", day)
-                await send_word(ctx.bot, user["chat_id"], pick_new_word(user), "🌅 Word of the day")
+                await send_word(bot, user["chat_id"], pick_new_word(user), "🌅 Word of the day")
+                sent["words"] += 1
 
             if user["last_remind_day"] != day and _due_now(user, user["reminder_time"]):
                 userdb.mark_sent(user["user_id"], "last_remind_day", day)
@@ -390,21 +398,28 @@ async def scheduler(ctx: ContextTypes.DEFAULT_TYPE):
                         parts.append(f"🔔 You have <b>{q['due']}</b> review{'s' if q['due'] != 1 else ''} waiting.")
                     if s["current"] and not s["studied_today"]:
                         parts.append(f"🔥 Your {s['current']}-day streak ends tonight. A few reviews will keep it!")
-                    await ctx.bot.send_message(
+                    await bot.send_message(
                         user["chat_id"], "\n".join(parts), parse_mode=ParseMode.HTML,
                         reply_markup=InlineKeyboardMarkup([[open_app_button("▶️ Review now", "#review")]]))
+                    sent["reminders"] += 1
         except Exception as e:                     # blocked bot, deleted chat, etc.
             log.warning("notify %s failed: %s", user["user_id"], e)
+    return sent
 
 # ── Setup ──────────────────────────────────────────────────────────────────────
 async def post_init(app: Application):
     await app.bot.set_my_commands([BotCommand(c, d[:256]) for c, d in COMMANDS])
 
 
-def build_app() -> Application:
+def build_app(polling: bool = True) -> Application:
+    """polling=True: long-running bot with its own scheduler.
+    polling=False: webhook mode, updates are fed in by the API (see main.py)."""
     if not TOKEN:
         raise RuntimeError("BOT_TOKEN is not set")
-    app = ApplicationBuilder().token(TOKEN).post_init(post_init).build()
+    builder = ApplicationBuilder().token(TOKEN).post_init(post_init)
+    if not polling:
+        builder = builder.updater(None).job_queue(None)
+    app = builder.build()
     handlers = {
         "start": start, "help": help_cmd, "today": today_cmd, "word": word_cmd, "quiz": quiz_cmd,
         "stats": stats_cmd, "leaderboard": leaderboard_cmd, "settings": settings_cmd,
@@ -416,7 +431,8 @@ def build_app() -> Application:
     app.add_handler(CallbackQueryHandler(on_button))
     app.add_handler(PollAnswerHandler(on_poll_answer))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.PRIVATE, lookup))
-    app.job_queue.run_repeating(scheduler, interval=60, first=10)
+    if polling:
+        app.job_queue.run_repeating(scheduler, interval=60, first=10)
     return app
 
 
