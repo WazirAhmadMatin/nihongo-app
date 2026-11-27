@@ -1,49 +1,52 @@
-// Shared JLPT level constants and small display helpers.
+// Shared level constants and small display helpers.
 
 export const LEVELS = [null, 'N5', 'N4', 'N3', 'N2', 'N1']
 export const LEVEL_LABEL = { null: 'All', N5: 'N5', N4: 'N4', N3: 'N3', N2: 'N2', N1: 'N1', MY: 'Mine' }
 
-export const LEVEL_COLORS = {
-  N5: { bg: 'rgba(124,158,248,0.15)', border: 'rgba(124,158,248,0.35)', color: '#7C9EF8' },
-  N4: { bg: 'rgba(248,124,158,0.15)', border: 'rgba(248,124,158,0.35)', color: '#F87C9E' },
-  N3: { bg: 'rgba(20,169,107,0.15)',  border: 'rgba(20,169,107,0.35)',  color: '#14A96B' },
-  N2: { bg: 'rgba(248,196,124,0.15)', border: 'rgba(248,196,124,0.35)', color: '#E0A24E' },
-  N1: { bg: 'rgba(176,124,248,0.15)', border: 'rgba(176,124,248,0.35)', color: '#A47CF8' },
-  MY: { bg: 'rgba(15,168,136,0.15)',  border: 'rgba(15,168,136,0.35)',  color: '#0FA888' },
-}
-
-export function LevelBadge({ level }) {
+export function LevelTag({ level }) {
   if (!level) return null
-  const c = LEVEL_COLORS[level] || { bg: 'rgba(255,255,255,0.07)', border: 'rgba(255,255,255,0.15)', color: 'var(--t3)' }
-  return (
-    <span style={{
-      flexShrink: 0, fontSize: 10, fontWeight: 700, fontFamily: 'var(--mono)',
-      padding: '2px 7px', borderRadius: 6, letterSpacing: '0.04em',
-      background: c.bg, border: `1px solid ${c.border}`, color: c.color,
-    }}>
-      {level === 'MY' ? '★' : level}
-    </span>
-  )
+  return <span className="lv" style={{ '--lv': `var(--${level})` }}>{level === 'MY' ? 'My word' : level}</span>
 }
 
-// Example sentence with the target word highlighted.
+// Example sentence with the target word marked.
 export function Example({ text, target }) {
   if (!text) return null
   const i = target ? text.indexOf(target) : -1
   if (i < 0) return <>{text}</>
+  return <>{text.slice(0, i)}<mark>{target}</mark>{text.slice(i + target.length)}</>
+}
+
+// Segmented control
+export function Seg({ options, value, onChange, label = o => o }) {
   return (
-    <>
-      {text.slice(0, i)}
-      <mark style={{
-        background: 'rgba(248,196,124,0.25)', color: 'inherit',
-        borderRadius: 4, padding: '0 2px',
-      }}>{target}</mark>
-      {text.slice(i + target.length)}
-    </>
+    <div className="seg" role="group">
+      {options.map(o => (
+        <button key={String(o)} aria-pressed={value === o} onClick={() => onChange(o)}>{label(o)}</button>
+      ))}
+    </div>
   )
 }
 
-export const selectStyle = {
-  width: '100%', padding: '10px 12px', borderRadius: 10, fontSize: 14,
-  border: '1px solid var(--card-border)', background: 'var(--card-bg)', color: 'var(--t1)',
+// One row of a grouped list
+export function Row({ title, sub, value, onClick, children, chevron = !!onClick }) {
+  const Tag = onClick ? 'button' : 'div'
+  return (
+    <Tag className="row" onClick={onClick}>
+      <div className="row-main">
+        <div className="row-title">{title}</div>
+        {sub && <div className="row-sub">{sub}</div>}
+      </div>
+      {value != null && <div className="row-value">{value}</div>}
+      {children}
+      {chevron && <span className="chev" aria-hidden>›</span>}
+    </Tag>
+  )
 }
+
+// Big card word: shrink long words so they stay on one or two lines
+export function wordSize(text = '') {
+  const n = [...text].length
+  return n <= 3 ? 64 : n <= 4 ? 56 : n <= 5 ? 48 : n <= 6 ? 42 : n <= 8 ? 34 : 28
+}
+
+export const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`

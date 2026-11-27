@@ -1,61 +1,35 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
-import { LEVEL_COLORS } from '../levels'
+import { plural } from '../levels'
 
 const WEEKS = 18
 
-// GitHub-style calendar of the last WEEKS weeks
-function Heatmap({ days, today }) {
+// Study calendar: one square per day, last WEEKS weeks, Monday first
+function Calendar({ days, today }) {
   const counts = Object.fromEntries(days.map(d => [d.day, d.reviews]))
   const end = new Date(today + 'T00:00:00')
-  // first column starts on a Monday, WEEKS columns ending with this week
   const first = new Date(end)
   first.setDate(end.getDate() - ((end.getDay() + 6) % 7) - (WEEKS - 1) * 7)
+  const shade = n => n == null ? 'transparent'
+    : n === 0 ? undefined
+    : `color-mix(in srgb, var(--ok) ${n < 10 ? 35 : n < 30 ? 60 : n < 60 ? 80 : 100}%, transparent)`
   const cols = []
   for (let c = 0; c < WEEKS; c++) {
     const col = []
     for (let r = 0; r < 7; r++) {
-      const d = new Date(first)
-      d.setDate(first.getDate() + c * 7 + r)
+      const d = new Date(first); d.setDate(first.getDate() + c * 7 + r)
       const key = d.toLocaleDateString('en-CA')
-      col.push({ key, n: d > end ? null : (counts[key] || 0) })
+      const n = d > end ? null : (counts[key] || 0)
+      col.push(<i key={key} title={n != null ? `${key}: ${n}` : undefined} style={{ background: shade(n) }} />)
     }
-    cols.push(col)
+    cols.push(<div key={c}>{col}</div>)
   }
-  const shade = n => n === null ? 'transparent'
-    : n === 0 ? 'var(--card-border)'
-    : n < 10 ? 'rgba(20,169,107,0.30)'
-    : n < 30 ? 'rgba(20,169,107,0.55)'
-    : n < 60 ? 'rgba(20,169,107,0.80)' : 'var(--green)'
-  return (
-    <div style={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
-      {cols.map((col, i) => (
-        <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          {col.map(cell => (
-            <div key={cell.key} title={cell.n != null ? `${cell.key}: ${cell.n}` : ''}
-              style={{ width: 13, height: 13, borderRadius: 3, background: shade(cell.n) }} />
-          ))}
-        </div>
-      ))}
-    </div>
-  )
-}
-
-function Section({ title, children, right }) {
-  return (
-    <div style={{ marginBottom: 22 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <div className="section-title" style={{ marginBottom: 10 }}>{title}</div>
-        {right}
-      </div>
-      {children}
-    </div>
-  )
+  return <div className="cal" aria-label="Study calendar">{cols}</div>
 }
 
 export default function StatsTab({ onQuizMissed }) {
-  const [s,  setS]  = useState(null)
-  const [lb, setLb] = useState(null)
+  const [s,   setS]   = useState(null)
+  const [lb,  setLb]  = useState(null)
   const [err, setErr] = useState(null)
 
   async function load() {
@@ -67,131 +41,85 @@ export default function StatsTab({ onQuizMissed }) {
   useEffect(() => { load() }, [])
 
   async function doReset() {
-    if (!confirm('Delete all your progress (reviews, streak, stats)? This cannot be undone.')) return
+    if (!confirm("Delete all your progress: reviews, streak and stats? This can't be undone.")) return
     await api.reset()
     load()
   }
 
-  if (err) return <div className="empty-state"><span className="empty-kanji">？</span><span className="empty-text">{err}</span></div>
-  if (!s) return <div className="empty-state"><span className="empty-kanji">統</span><span className="empty-text">Loading…</span></div>
+  if (err) return <div className="empty">Couldn't load your progress: {err}</div>
+  if (!s)  return <div className="empty">Loading…</div>
 
   const exam = s.exam_days_left
   return (
-    <div className="section-pad fade-up">
-      {/* Top cards */}
-      <div className="stats-grid" style={{ marginBottom: 22 }}>
-        <div className="stat-card">
-          <span className="stat-icon">🔥</span>
-          <span className="stat-value" style={{ color: 'var(--gold-l)' }}>{s.streak.current}</span>
-          <span className="stat-label">Day streak</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-icon">⚡</span>
-          <span className="stat-value">{s.streak.best}</span>
-          <span className="stat-label">Best streak</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-icon">✅</span>
-          <span className="stat-value">{s.total_reviews}</span>
-          <span className="stat-label">Answers</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-icon">🎯</span>
-          <span className="stat-value" style={{ color: s.accuracy >= 80 ? 'var(--green)' : 'var(--t1)' }}>{s.accuracy}%</span>
-          <span className="stat-label">Accuracy</span>
-        </div>
+    <div className="screen">
+      <div className="group figures" style={{ marginTop: 8 }}>
+        <div className="figure"><b>{s.streak.current}</b><span>day streak</span></div>
+        <div className="figure"><b>{s.streak.best}</b><span>best streak</span></div>
+        <div className="figure"><b>{s.total_reviews}</b><span>answers</span></div>
+        <div className="figure"><b>{s.accuracy}%</b><span>correct</span></div>
+      </div>
+      {exam != null && exam >= 0 && (
+        <p className="note">{exam === 0 ? 'Your JLPT is today. 頑張って!' : `Your JLPT is in ${plural(exam, 'day')} (${s.exam_date}).`}</p>
+      )}
+
+      <h2 className="group-title">Last {WEEKS} weeks</h2>
+      <div className="group">
+        <Calendar days={s.heatmap} today={s.today} />
+        <p className="note" style={{ textAlign: 'center', margin: '0 0 12px' }}>Each square is a day. Darker means more answers.</p>
       </div>
 
-      {exam != null && exam >= 0 && (
-        <div style={{
-          marginBottom: 22, padding: '14px 16px', borderRadius: 14, textAlign: 'center',
-          background: 'linear-gradient(135deg, rgba(79,110,247,0.12), rgba(212,104,156,0.10))',
-          border: '1px solid rgba(79,110,247,0.25)',
-        }}>
-          <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--t3)', letterSpacing: '0.1em' }}>JLPT · {s.exam_date}</div>
-          <div style={{ fontSize: 30, fontWeight: 700, color: 'var(--t1)', fontFamily: 'var(--display)' }}>
-            {exam === 0 ? 'Today! 頑張って！' : `${exam} day${exam === 1 ? '' : 's'} to go`}
-          </div>
-        </div>
-      )}
-
-      <Section title="Study calendar">
-        <Heatmap days={s.heatmap} today={s.today} />
-        <div style={{ textAlign: 'center', fontSize: 10, color: 'var(--t3)', marginTop: 6, fontFamily: 'var(--mono)' }}>
-          last {WEEKS} weeks · darker = more answers
-        </div>
-      </Section>
-
-      <Section title="Progress by level">
-        {s.levels.map(lv => {
-          const c = LEVEL_COLORS[lv.level]
-          const m = (lv.mastered / lv.total) * 100
-          const l = (lv.learning / lv.total) * 100
-          return (
-            <div key={lv.level} style={{ marginBottom: 12 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 4, fontFamily: 'var(--mono)' }}>
-                <span style={{ color: c.color, fontWeight: 700 }}>{lv.level}</span>
-                <span style={{ color: 'var(--t3)' }}>
-                  {lv.mastered} mastered · {lv.learning} learning · {lv.total}
-                </span>
-              </div>
-              <div style={{ height: 8, borderRadius: 99, background: 'var(--card-border)', overflow: 'hidden', display: 'flex' }}>
-                <div style={{ width: `${m}%`, background: c.color }} />
-                <div style={{ width: `${l}%`, background: c.color, opacity: 0.35 }} />
-              </div>
+      <h2 className="group-title">Words by level</h2>
+      <div className="group">
+        {s.levels.map(lv => (
+          <div className="row" key={lv.level} style={{ display: 'block' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span className="lv" style={{ '--lv': `var(--${lv.level})`, fontSize: 15 }}>{lv.level}</span>
+              <span className="row-sub">{lv.mastered} known, {lv.learning} learning, of {lv.total.toLocaleString()}</span>
             </div>
-          )
-        })}
-        <div style={{ fontSize: 10, color: 'var(--t3)', fontFamily: 'var(--mono)' }}>
-          mastered = next review 3+ weeks away
-        </div>
-      </Section>
+            <div className="bar">
+              <span style={{ width: `${(lv.mastered / lv.total) * 100}%`, background: `var(--${lv.level})` }} />
+              <span style={{ width: `${(lv.learning / lv.total) * 100}%`, background: `color-mix(in srgb, var(--${lv.level}) 35%, transparent)` }} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="note">A word counts as known once its next review is three weeks or more away.</p>
 
       {s.most_missed.length > 0 && (
-        <Section title="Needs practice"
-          right={<button className="btn-ghost" style={{ fontSize: 11, padding: '4px 10px' }} onClick={onQuizMissed}>Quiz these →</button>}>
-          <div className="wrong-list">
+        <>
+          <h2 className="group-title">Words you miss most</h2>
+          <div className="group">
             {s.most_missed.map(w => (
-              <div className="wrong-item" key={w.id}>
-                <span className="wrong-kanji">{w.kanji}</span>
-                <div className="wrong-info">
-                  <div style={{ fontSize: 12, color: 'var(--t2)', marginBottom: 2 }}>
-                    {w.reading ? `${w.reading} — ` : ''}{w.english}
-                  </div>
-                  <div className="wrong-count">{w.count}× wrong · {w.level}</div>
+              <div className="row" key={w.id}>
+                <span className="jp" style={{ fontSize: 20, fontWeight: 600, minWidth: 64 }}>{w.kanji}</span>
+                <div className="row-main">
+                  <div className="row-sub" style={{ marginTop: 0 }}>{w.reading ? `${w.reading}: ` : ''}{w.english}</div>
                 </div>
+                <span className="row-value">{w.count}×</span>
               </div>
             ))}
+            <button className="row" onClick={onQuizMissed}>
+              <div className="row-main"><div className="row-title" style={{ color: 'var(--link)' }}>Quiz me on these</div></div>
+            </button>
           </div>
-        </Section>
+        </>
       )}
 
-      <Section title="🏆 This week">
-        {lb?.board.length ? (
-          <div>
-            {lb.board.map(e => (
-              <div key={e.rank} style={{
-                display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', marginBottom: 6,
-                borderRadius: 10, border: '1px solid var(--card-border)',
-                background: e.me ? 'rgba(79,110,247,0.10)' : 'var(--card-bg)',
-              }}>
-                <span style={{ width: 26, fontSize: 16 }}>{['🥇', '🥈', '🥉'][e.rank - 1] || `${e.rank}.`}</span>
-                <span style={{ flex: 1, fontWeight: e.me ? 700 : 500, color: 'var(--t1)', fontSize: 14 }}>{e.name}{e.me ? ' (you)' : ''}</span>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--t2)' }}>{e.week} · 🔥{e.streak}</span>
-              </div>
-            ))}
+      <h2 className="group-title">This week</h2>
+      <div className="group">
+        {lb?.board.length ? lb.board.map(e => (
+          <div className="row" key={e.rank}>
+            <span className="muted" style={{ width: 22 }}>{e.rank}</span>
+            <div className="row-main"><div className="row-title" style={{ fontWeight: e.me ? 600 : 400 }}>{e.name}{e.me ? ' (you)' : ''}</div></div>
+            <span className="row-value">{plural(e.week, 'answer')}</span>
           </div>
-        ) : null}
-        {lb?.me && !lb.me.public && (
-          <div style={{ fontSize: 12, color: 'var(--t3)', marginTop: 6 }}>
-            You're not on the leaderboard. Choose a display name in ⚙️ Settings to join.
-          </div>
-        )}
-      </Section>
+        )) : <div className="row"><div className="row-main row-sub">Nobody has joined the ranking yet.</div></div>}
+      </div>
+      {lb?.me && !lb.me.public && <p className="note">You're hidden from the ranking. Add a display name in Settings to join.</p>}
 
-      <button className="btn-ghost" style={{ width: '100%', fontSize: 12, color: 'var(--red)' }} onClick={doReset}>
-        Reset all progress
-      </button>
+      <div style={{ marginTop: 32, textAlign: 'center' }}>
+        <button className="btn-text btn-danger" onClick={doReset}>Reset my progress</button>
+      </div>
     </div>
   )
 }

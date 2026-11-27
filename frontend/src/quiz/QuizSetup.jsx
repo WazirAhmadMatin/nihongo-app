@@ -1,26 +1,17 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
-import { LEVELS, LEVEL_LABEL, selectStyle } from '../levels'
+import { LEVELS, LEVEL_LABEL, Seg } from '../levels'
 
 export const MODES = [
-  { id: 'meaning', icon: '🈯', label: 'Meaning', desc: 'See the word, pick the English' },
-  { id: 'reverse', icon: '🔁', label: 'Reverse', desc: 'See the English, pick the word' },
-  { id: 'reading', icon: '🔤', label: 'Reading', desc: 'See kanji, pick the hiragana (like the JLPT)' },
-  { id: 'cloze',   icon: '✏️', label: 'Fill in', desc: 'Complete the sentence (N4)' },
+  { id: 'meaning', label: 'Meaning', desc: 'See the word, choose the English' },
+  { id: 'reverse', label: 'Reverse', desc: 'See the English, choose the word' },
+  { id: 'reading', label: 'Reading', desc: 'See the kanji, choose the hiragana, like the JLPT' },
+  { id: 'cloze',   label: 'Fill in the blank', desc: 'Choose the missing word in a sentence (N4 only for now)' },
 ]
 
-const COUNTS = [
-  { n: 5,  label: 'Quick',     sub: '~2 min' },
-  { n: 10, label: 'Standard',  sub: '~5 min' },
-  { n: 20, label: 'Deep dive', sub: '~10 min' },
-]
-
-const card = active => ({
-  padding: '10px 12px', borderRadius: 12, cursor: 'pointer',
-  border: `1.5px solid ${active ? 'var(--accent)' : 'var(--card-border)'}`,
-  background: active ? 'rgba(79,110,247,0.08)' : 'var(--card-bg)',
-  transition: 'all 0.18s', WebkitTapHighlightColor: 'transparent',
-})
+function Check({ on }) {
+  return <span aria-hidden style={{ color: 'var(--accent)', fontWeight: 700, width: 18 }}>{on ? '✓' : ''}</span>
+}
 
 export default function QuizSetup({ settings, onChange, onStart, loading }) {
   const { mode, level, topic, missed, count, retry } = settings
@@ -34,82 +25,64 @@ export default function QuizSetup({ settings, onChange, onStart, loading }) {
   }, [level])
 
   return (
-    <div className="quiz-setup fade-up">
-      <div className="setup-section">
-        <div className="setup-label">Quiz type</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 8 }}>
-          {MODES.map(m => (
-            <div key={m.id} onClick={() => set('mode', m.id)} style={card(mode === m.id)}>
-              <div style={{ fontSize: 14, fontWeight: 600, color: mode === m.id ? 'var(--accent)' : 'var(--t1)', fontFamily: 'var(--sans)' }}>
-                {m.icon} {m.label}
-              </div>
-              <div style={{ fontSize: 11, color: 'var(--t3)', marginTop: 2, lineHeight: 1.35 }}>{m.desc}</div>
+    <div className="screen">
+      <h2 className="group-title">Type</h2>
+      <div className="group">
+        {MODES.map(m => (
+          <button key={m.id} className="row" onClick={() => set('mode', m.id)} aria-pressed={mode === m.id}>
+            <div className="row-main">
+              <div className="row-title">{m.label}</div>
+              <div className="row-sub">{m.desc}</div>
             </div>
-          ))}
-        </div>
+            <Check on={mode === m.id} />
+          </button>
+        ))}
       </div>
 
-      <div className="setup-section">
-        <div className="setup-label">Level</div>
-        <div className="pill-group">
-          {LEVELS.map(l => (
-            <button key={String(l)} className={`pill ${level === l ? 'active' : ''}`}
-              onClick={() => onChange({ ...settings, level: l, topic: null })}>
-              {LEVEL_LABEL[l]}
-            </button>
-          ))}
-        </div>
-      </div>
+      <h2 className="group-title">Level</h2>
+      <Seg options={LEVELS} value={level} label={l => LEVEL_LABEL[l]}
+        onChange={l => onChange({ ...settings, level: l, topic: null })} />
 
-      <div className="setup-section">
-        <div className="setup-label">Words</div>
-        <div className="pill-group" style={{ marginBottom: topics.length && !missed ? 10 : 0 }}>
-          <button className={`pill ${!missed ? 'active' : ''}`} onClick={() => set('missed', false)}>All words</button>
-          <button className={`pill ${missed ? 'active' : ''}`} onClick={() => set('missed', true)}>❌ Words I missed</button>
-        </div>
+      <h2 className="group-title">Words</h2>
+      <div className="group">
+        <button className="row" onClick={() => set('missed', false)}>
+          <div className="row-main"><div className="row-title">All words</div></div><Check on={!missed} />
+        </button>
+        <button className="row" onClick={() => set('missed', true)}>
+          <div className="row-main">
+            <div className="row-title">Only words I've missed</div>
+          </div><Check on={missed} />
+        </button>
         {topics.length > 0 && !missed && (
-          <select value={topic ?? ''} style={selectStyle}
-            onChange={e => set('topic', e.target.value === '' ? null : Number(e.target.value))}>
-            <option value="">All topics</option>
-            {topics.map(t => (
-              <option key={t.topic_no} value={t.topic_no}>
-                {t.topic_no}. {t.topic_ja} — {t.topic_en} ({t.count})
-              </option>
-            ))}
-          </select>
+          <label className="row">
+            <div className="row-main"><div className="row-title">Topic</div></div>
+            <select value={topic ?? ''} onChange={e => set('topic', e.target.value === '' ? null : Number(e.target.value))}>
+              <option value="">Any topic</option>
+              {topics.map(t => <option key={t.topic_no} value={t.topic_no}>{t.topic_ja}（{t.topic_en}）</option>)}
+            </select>
+          </label>
         )}
       </div>
 
-      <div className="setup-section">
-        <div className="setup-label">When I get one wrong</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 8 }}>
-          <div onClick={() => set('retry', false)} style={card(!retry)}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: !retry ? 'var(--accent)' : 'var(--t1)' }}>Show the answer</div>
-            <div style={{ fontSize: 11, color: 'var(--t3)', marginTop: 2 }}>Test mode</div>
-          </div>
-          <div onClick={() => set('retry', true)} style={card(retry)}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: retry ? 'var(--accent)' : 'var(--t1)' }}>Let me try again</div>
-            <div style={{ fontSize: 11, color: 'var(--t3)', marginTop: 2 }}>Practice until right</div>
-          </div>
-        </div>
+      <h2 className="group-title">Questions</h2>
+      <Seg options={[5, 10, 20]} value={count} onChange={n => set('count', n)} />
+
+      <h2 className="group-title">When I answer wrong</h2>
+      <div className="group">
+        <button className="row" onClick={() => set('retry', false)}>
+          <div className="row-main"><div className="row-title">Show me the answer</div></div><Check on={!retry} />
+        </button>
+        <button className="row" onClick={() => set('retry', true)}>
+          <div className="row-main">
+            <div className="row-title">Let me try again</div>
+            <div className="row-sub">Only your first answer counts toward your score</div>
+          </div><Check on={retry} />
+        </button>
       </div>
 
-      <div className="setup-section">
-        <div className="setup-label">Number of cards</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 9 }}>
-          {COUNTS.map(({ n, label, sub }) => (
-            <div key={n} onClick={() => set('count', n)} style={{ ...card(count === n), padding: '14px 10px', textAlign: 'center' }}>
-              <div style={{ fontSize: 22, fontWeight: 700, fontFamily: 'var(--mono)', lineHeight: 1, color: count === n ? 'var(--accent)' : 'var(--t1)' }}>{n}</div>
-              <div style={{ fontSize: 11, fontWeight: 600, marginTop: 4, fontFamily: 'var(--sans)', color: count === n ? 'var(--accent)' : 'var(--t2)' }}>{label}</div>
-              <div style={{ fontSize: 10, marginTop: 2, fontFamily: 'var(--mono)', color: 'var(--t3)' }}>{sub}</div>
-            </div>
-          ))}
-        </div>
+      <div style={{ marginTop: 24 }}>
+        <button className="btn" onClick={onStart} disabled={loading}>{loading ? 'Starting…' : 'Start quiz'}</button>
       </div>
-
-      <button className="btn-primary" onClick={onStart} disabled={loading}>
-        {loading ? '読み込み中…' : '始める — Start'}
-      </button>
     </div>
   )
 }
