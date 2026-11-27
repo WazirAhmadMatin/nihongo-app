@@ -1,42 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { api } from '../api'
+import { LEVELS, LEVEL_LABEL, LEVEL_COLORS, Example } from '../levels'
 
-const LEVELS = [null, 'N5', 'N4', 'EXTRA']
-const LABEL  = { null: 'All', N5: 'N5', N4: 'N4', EXTRA: 'Extra' }
 const PAGE_SIZE = 50
-
-const BADGE_COLORS = {
-  N5:    { bg: 'rgba(124,158,248,0.15)', border: 'rgba(124,158,248,0.35)', color: '#7C9EF8' },
-  N4:    { bg: 'rgba(248,124,158,0.15)', border: 'rgba(248,124,158,0.35)', color: '#F87C9E' },
-  EXTRA: { bg: 'rgba(248,196,124,0.15)', border: 'rgba(248,196,124,0.35)', color: '#F8C47C' },
-}
-
-// Deterministic pastel color from a string
-function tileColor(str) {
-  let h = 0
-  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) & 0xffff
-  const hue = h % 360
-  return `hsl(${hue},40%,28%)`
-}
-
-function KanjiFallback({ kanji }) {
-  return (
-    <div style={{
-      width: 36, height: 36, borderRadius: 8, flexShrink: 0,
-      background: tileColor(kanji),
-      border: '1px solid rgba(255,255,255,0.1)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      fontFamily: 'var(--serif-jp, serif)', fontSize: 18, color: 'rgba(255,255,255,0.85)',
-      lineHeight: 1,
-    }}>
-      {kanji?.[0] ?? '?'}
-    </div>
-  )
-}
 
 function LevelBadge({ level }) {
   if (!level) return null
-  const c = BADGE_COLORS[level] || { bg: 'rgba(255,255,255,0.07)', border: 'rgba(255,255,255,0.15)', color: 'var(--t3)' }
+  const c = LEVEL_COLORS[level] || { bg: 'rgba(255,255,255,0.07)', border: 'rgba(255,255,255,0.15)', color: 'var(--t3)' }
   return (
     <span style={{
       flexShrink: 0,
@@ -50,40 +20,90 @@ function LevelBadge({ level }) {
   )
 }
 
-export default function WordsTab() {
-  const [words,    setWords]    = useState([])
-  const [total,    setTotal]    = useState(0)
-  const [loading,  setLoading]  = useState(true)
-  const [level,    setLevel]    = useState(null)
-  const [search,   setSearch]   = useState('')
-  const [page,     setPage]     = useState(1)
-  const [allWords, setAllWords] = useState([])
-  const debounce = useRef(null)
+function WordRow({ w, open, onToggle }) {
+  return (
+    <div className="word-item" onClick={onToggle}
+      style={{ flexDirection: 'column', alignItems: 'stretch', cursor: 'pointer', gap: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <LevelBadge level={w.level} />
 
-  async function load(lvl, q) {
-    setLoading(true)
+        <div className="word-kanji-col" style={{ flex: 1, minWidth: 0 }}>
+          <span className="word-kanji">{w.kanji}</span>
+          <span className="word-romaji">
+            {w.reading ? `${w.reading} · ` : ''}{w.romaji}
+          </span>
+        </div>
+
+        <span className="word-english" style={{
+          overflow: 'hidden', textOverflow: open ? 'clip' : 'ellipsis',
+          whiteSpace: open ? 'normal' : 'nowrap',
+          maxWidth: '42%', flexShrink: 0, textAlign: 'right',
+        }}>
+          {w.english}
+          {w.hint && <span style={{ display: 'block', fontSize: 11, color: 'var(--t3)' }}>({w.hint})</span>}
+        </span>
+      </div>
+
+      {open && (
+        <div className="fade-up" style={{ marginTop: 10, paddingLeft: 2 }}>
+          <div style={{ fontSize: 10, fontFamily: 'var(--mono)', color: 'var(--t3)', letterSpacing: '0.06em', marginBottom: 6 }}>
+            {[w.pos, w.topic_en && `${w.topic_ja} · ${w.topic_en}`].filter(Boolean).join('  ·  ')}
+          </div>
+          {w.example_jp ? (
+            <div className="example-block" style={{ padding: 0 }}>
+              <p className="example-jp"><Example text={w.example_jp} target={w.example_target} /></p>
+              <p className="example-en">{w.example_en}</p>
+            </div>
+          ) : (
+            <div style={{ fontSize: 11, color: 'var(--t3)' }}>No example sentence yet.</div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default function WordsTab() {
+  const [words,   setWords]   = useState([])
+  const [total,   setTotal]   = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [more,    setMore]    = useState(false)
+  const [level,   setLevel]   = useState(null)
+  const [topics,  setTopics]  = useState([])
+  const [topic,   setTopic]   = useState(null)
+  const [search,  setSearch]  = useState('')
+  const [openId,  setOpenId]  = useState(null)
+  const debounce = useRef(null)
+  const reqId    = useRef(0)
+
+  // Topics for the chosen level
+  useEffect(() => {
+    setTopic(null)
+    setTopics([])
+    if (!level) return
+    api.topics(level).then(d => setTopics(d.topics)).catch(() => {})
+  }, [level])
+
+  async function load(offset = 0) {
+    const id = ++reqId.current
+    offset === 0 ? setLoading(true) : setMore(true)
     try {
-      const data = await api.words(lvl, q, 200)
-      setAllWords(data.words)
+      const data = await api.words({ level, topic, search, limit: PAGE_SIZE, offset })
+      if (id !== reqId.current) return        // a newer request replaced this one
+      setWords(prev => offset === 0 ? data.words : [...prev, ...data.words])
       setTotal(data.total)
-      setPage(1)
-      setWords(data.words.slice(0, PAGE_SIZE))
     } catch {}
-    finally { setLoading(false) }
+    finally {
+      if (id === reqId.current) { setLoading(false); setMore(false) }
+    }
   }
 
   useEffect(() => {
     clearTimeout(debounce.current)
-    debounce.current = setTimeout(() => load(level, search), 250)
-  }, [level, search])
+    debounce.current = setTimeout(() => { setOpenId(null); load(0) }, 250)
+  }, [level, topic, search])
 
-  function loadMore() {
-    const next = page + 1
-    setWords(allWords.slice(0, next * PAGE_SIZE))
-    setPage(next)
-  }
-
-  const hasMore = words.length < allWords.length
+  const hasMore = words.length < total
 
   return (
     <>
@@ -93,7 +113,7 @@ export default function WordsTab() {
           <span className="search-icon">🔍</span>
           <input
             className="search-input"
-            placeholder="Search kanji, romaji, or English…"
+            placeholder="Search word, reading, romaji, or English…"
             value={search}
             onChange={e => setSearch(e.target.value)}
             autoCorrect="off"
@@ -112,21 +132,39 @@ export default function WordsTab() {
         </div>
 
         {/* Level filter */}
-        <div className="pill-group" style={{ marginBottom: 12 }}>
+        <div className="pill-group" style={{ marginBottom: 10 }}>
           {LEVELS.map(l => (
             <button
               key={String(l)}
               className={`pill ${level === l ? 'active' : ''}`}
               onClick={() => setLevel(l)}
             >
-              {LABEL[l]}
+              {LEVEL_LABEL[l]}
             </button>
           ))}
         </div>
+
+        {/* Topic filter */}
+        {topics.length > 0 && (
+          <select
+            className="search-input"
+            value={topic ?? ''}
+            onChange={e => setTopic(e.target.value === '' ? null : Number(e.target.value))}
+            style={{ width: '100%', marginBottom: 12, padding: '9px 12px', borderRadius: 10,
+                     border: '1px solid var(--card-border)', background: 'var(--card-bg)', color: 'var(--t1)' }}
+          >
+            <option value="">All topics</option>
+            {topics.map(t => (
+              <option key={t.topic_no} value={t.topic_no}>
+                {t.topic_no}. {t.topic_ja} — {t.topic_en} ({t.count})
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
       <div className="words-count">
-        {loading ? 'Loading…' : `${total.toLocaleString()} word${total !== 1 ? 's' : ''}`}
+        {loading ? 'Loading…' : `${total.toLocaleString()} word${total !== 1 ? 's' : ''} · tap a word for its example`}
       </div>
 
       {!loading && words.length === 0 && (
@@ -137,39 +175,20 @@ export default function WordsTab() {
       )}
 
       <div className="words-list fade-up">
-        {words.map((w, i) => (
-          <div className="word-item" key={`${w.kanji}-${i}`} style={{ alignItems: 'center' }}>
-
-            
-
-            {/* Badge — left of kanji column so it doesn't get cut off */}
-            <LevelBadge level={w.level} />
-
-            {/* Kanji + romaji */}
-            <div className="word-kanji-col" style={{ flex: 1, minWidth: 0 }}>
-              <span className="word-kanji">{w.kanji}</span>
-              <span className="word-romaji">{w.romaji}</span>
-            </div>
-
-            {/* English — truncated so it never pushes badge off screen */}
-            <span className="word-english" style={{
-              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-              maxWidth: '38%', flexShrink: 0, textAlign: 'right',
-            }}>
-              {w.english}
-            </span>
-          </div>
+        {words.map(w => (
+          <WordRow key={w.id} w={w} open={openId === w.id}
+            onToggle={() => setOpenId(openId === w.id ? null : w.id)} />
         ))}
       </div>
 
-      {/* Load more */}
       {hasMore && !loading && (
         <button
           className="btn-ghost"
           style={{ width: '100%', marginTop: 12, fontSize: 13 }}
-          onClick={loadMore}
+          onClick={() => load(words.length)}
+          disabled={more}
         >
-          Load more ({allWords.length - words.length} remaining)
+          {more ? 'Loading…' : `Load more (${(total - words.length).toLocaleString()} remaining)`}
         </button>
       )}
     </>

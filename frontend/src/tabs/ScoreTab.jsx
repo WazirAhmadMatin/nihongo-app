@@ -105,10 +105,15 @@ export default function ScoreTab({ userId }) {
           <div className="section-title" style={{ marginBottom: 12 }}>Needs practice</div>
           <div className="wrong-list" style={{ marginBottom: 24 }}>
             {data.wrong_words.map(w => (
-              <div className="wrong-item" key={w.kanji}>
+              <div className="wrong-item" key={w.id || w.kanji}>
                 <span className="wrong-kanji">{w.kanji}</span>
                 <div className="wrong-info">
-                  <div className="wrong-count">{w.count}× wrong</div>
+                  {w.english && (
+                    <div style={{ fontSize: 12, color: 'var(--t2)', marginBottom: 2 }}>
+                      {w.reading ? `${w.reading} — ` : ''}{w.english}
+                    </div>
+                  )}
+                  <div className="wrong-count">{w.count}× wrong{w.level ? ` · ${w.level}` : ''}</div>
                   <div className="wrong-bar-wrap">
                     <div className="wrong-bar" style={{ width: `${Math.round((w.count / maxWrong) * 100)}%` }} />
                   </div>

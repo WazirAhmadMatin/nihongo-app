@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
-
-const LEVELS = [null, 'N5', 'N4', 'EXTRA']
-const LABEL  = { null: 'All', N5: 'N5', N4: 'N4', EXTRA: 'Extra' }
+import { LEVELS, LEVEL_LABEL as LABEL, Example } from '../levels'
 const COUNTS = [
   { n: 5,  label: 'Quick',     sub: '~2 min' },
   { n: 10, label: 'Standard',  sub: '~5 min' },
@@ -73,6 +71,8 @@ export default function QuizTab({ userId }) {
   const [phase,      setPhase]      = useState('setup')
   const [level,      setLevel]      = useState('N5')
   const [count,      setCount]      = useState(10)
+  const [topics,     setTopics]     = useState([])
+  const [topic,      setTopic]      = useState(null)
   const [card,       setCard]       = useState(null)
   const [choices,    setChoices]    = useState([])
   const [selected,   setSelected]   = useState(null)
@@ -84,6 +84,13 @@ export default function QuizTab({ userId }) {
   const [flashState, setFlashState] = useState(null)
   const [streakAnim, setStreakAnim] = useState(false)
 
+  // Topics for the chosen level
+  useEffect(() => {
+    setTopic(null); setTopics([])
+    if (!level) return
+    api.topics(level).then(d => setTopics(d.topics)).catch(() => {})
+  }, [level])
+
   useEffect(() => {
     if (!result || selected === null) return
     const t = setTimeout(() => {
@@ -93,14 +100,14 @@ export default function QuizTab({ userId }) {
         setCard(result.next_card); setChoices(result.next_card.choices || [])
         setSelected(null); setResult(null); setCardKey(k => k + 1)
       }
-    }, 1400)
+    }, result.correct ? 1600 : 2800)
     return () => clearTimeout(t)
   }, [result, selected])
 
   async function startQuiz() {
     setLoading(true)
     try {
-      const data = await api.quizStart(userId, level, count)
+      const data = await api.quizStart(userId, level, count, topic)
       setCard(data); setChoices(data.choices || [])
       setProgress({ done: 0, total: data.quiz_total, correct: 0 })
       setSelected(null); setResult(null); setSummary(null)
@@ -154,6 +161,25 @@ export default function QuizTab({ userId }) {
           ))}
         </div>
       </div>
+
+      {topics.length > 0 && (
+        <div className="setup-section">
+          <div className="setup-label">Topic</div>
+          <select
+            value={topic ?? ''}
+            onChange={e => setTopic(e.target.value === '' ? null : Number(e.target.value))}
+            style={{ width: '100%', padding: '10px 12px', borderRadius: 10, fontSize: 14,
+                     border: '1px solid var(--card-border)', background: 'var(--card-bg)', color: 'var(--t1)' }}
+          >
+            <option value="">All topics</option>
+            {topics.map(t => (
+              <option key={t.topic_no} value={t.topic_no}>
+                {t.topic_no}. {t.topic_ja} — {t.topic_en} ({t.count})
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       <div className="setup-section">
         <div className="setup-label">Number of cards</div>
@@ -275,24 +301,30 @@ export default function QuizTab({ userId }) {
 
         <div className="card-level-row">
           <span className="level-tag">{card?.level ?? '—'}</span>
-          <span className="pos-tag">{card?.pos ?? ''}</span>
+          <span className="pos-tag">{[card?.pos, card?.topic_en].filter(Boolean).join(' · ')}</span>
         </div>
 
         <div className="kanji-display" style={{ textAlign: 'center', padding: '8px 0 4px' }}>
           <span className="kanji-main" style={{ fontSize: 'clamp(44px,12vw,64px)', display: 'block', lineHeight: 1.1 }}>
             {card?.kanji ?? ''}
           </span>
-          <span className="kanji-romaji" style={{ opacity: 0.5, fontSize: 14, display: 'block', marginTop: 4 }}>
+          {card?.reading && (
+            <span style={{ fontFamily: 'var(--serif-jp)', fontSize: 16, color: 'var(--t2)', display: 'block', marginTop: 6 }}>
+              {card.reading}
+            </span>
+          )}
+          <span className="kanji-romaji" style={{ opacity: 0.5, fontSize: 13, display: 'block', marginTop: 2 }}>
             {card?.romaji ?? ''}
           </span>
         </div>
 
-        {(card?.example_jp || card?.example_en) && (
+        {card?.example_jp && (
           <>
             <div className="card-divider" />
             <div className="example-block">
-              {card.example_jp && <p className="example-jp">{card.example_jp}</p>}
-              {card.example_en && <p className="example-en">{card.example_en}</p>}
+              <p className="example-jp"><Example text={card.example_jp} target={card.example_target} /></p>
+              {/* Translation only after answering, so it can't give the answer away */}
+              {result?.example_en && <p className="example-en quiz-feedback-enter">{result.example_en}</p>}
             </div>
           </>
         )}
@@ -324,8 +356,11 @@ export default function QuizTab({ userId }) {
             <div style={{ fontSize: 13, fontWeight: 600, color: result.correct ? 'var(--green)' : 'var(--red)' }}>
               {result.correct ? 'Correct!' : `Incorrect — ${result.answer}`}
             </div>
-            {result.romaji && (
-              <div style={{ fontSize: 11, color: 'var(--t3)', fontFamily: 'var(--mono)', marginTop: 1 }}>{result.romaji}</div>
+            {(result.reading || result.romaji) && (
+              <div style={{ fontSize: 11, color: 'var(--t3)', fontFamily: 'var(--mono)', marginTop: 1 }}>
+                {[result.reading, result.romaji].filter(Boolean).join(' · ')}
+                {result.hint ? `  —  ${result.hint}` : ''}
+              </div>
             )}
           </div>
         </div>

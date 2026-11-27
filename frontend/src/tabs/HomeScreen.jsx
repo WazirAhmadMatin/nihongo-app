@@ -322,7 +322,7 @@ export default function HomeScreen({ onChoose }) {
           </div>
 
           <div className="hs-tags">
-            {['N5', 'N4', 'Extra'].map(t => (
+            {['N5', 'N4', 'N3', 'N2', 'N1'].map(t => (
               <span key={t} className="hs-tag" style={{
                 background: 'rgba(248,196,124,0.12)',
                 borderColor: 'rgba(248,196,124,0.3)',

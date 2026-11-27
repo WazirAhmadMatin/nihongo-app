@@ -17,18 +17,22 @@ const get  = (path)        => req('GET',  path)
 const post = (path, body)  => req('POST', path, body)
 
 export const api = {
-  words:      (level, search, limit) => {
+  words: ({ level, topic, search, limit = 50, offset = 0 } = {}) => {
     const p = new URLSearchParams()
-    if (level)  p.set('level',  level)
-    if (search) p.set('search', search)
-    if (limit)  p.set('limit',  limit)
+    if (level)          p.set('level',  level)
+    if (topic != null)  p.set('topic',  topic)
+    if (search)         p.set('search', search)
+    p.set('limit',  limit)
+    p.set('offset', offset)
     return get(`/words?${p}`)
   },
+  word:       (id)         => get(`/words/${encodeURIComponent(id)}`),
   levels:     ()           => get('/levels'),
+  topics:     (level)      => get(`/topics?level=${level}`),
   score:      (uid)        => get(`/score/${uid}`),
-  quizStart:  (uid, level, total) => post('/quiz/start',  { user_id: uid, level, total }),
-  quizAnswer: (uid, answer)       => post('/quiz/answer', { user_id: uid, answer }),
-  quizHint:   (uid)               => post('/quiz/hint',   { user_id: uid }),
-  quizStop:   (uid)               => post('/quiz/stop',   { user_id: uid }),
-  reset:      (uid)               => post('/reset',       { user_id: uid }),
+  quizStart:  (uid, level, total, topic = null) =>
+                post('/quiz/start', { user_id: uid, level, total, topic }),
+  quizAnswer: (uid, answer) => post('/quiz/answer', { user_id: uid, answer }),
+  quizStop:   (uid)         => post('/quiz/stop',   { user_id: uid }),
+  reset:      (uid)         => post('/reset',       { user_id: uid }),
 }

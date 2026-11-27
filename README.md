@@ -8,7 +8,7 @@ nihongo-app/
 │   ├── main.py                      ← FastAPI REST API
 │   ├── bot.py                       ← Telegram bot (Mini App launcher)
 │   ├── requirements.txt
-│   └── jlpt_vocabulary_enriched.csv ← your existing CSV (copy here)
+│   └── data/jlpt_vocab.sqlite       ← vocabulary database (N5–N1)
 └── frontend/
     ├── src/
     │   ├── App.jsx
@@ -32,9 +32,6 @@ nihongo-app/
 ```bash
 cd backend
 
-# Copy your CSV
-cp /path/to/jlpt_vocabulary_enriched.csv .
-
 # Install dependencies
 pip install -r requirements.txt
 
@@ -45,7 +42,7 @@ uvicorn main:app --reload --port 8000
 Test it:
 ```
 GET http://localhost:8000/health
-GET http://localhost:8000/words?level=N5&limit=10
+GET http://localhost:8000/words?level=N4&limit=10
 ```
 
 ---
@@ -133,30 +130,39 @@ Now users tap the menu button inside Telegram to open the Mini App.
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | `/health` | Health check + word count |
-| GET | `/words?level=N5&search=mizu&limit=100` | Word list |
-| GET | `/levels` | Level counts |
-| GET | `/score/{user_id}` | User score + wrong words |
-| POST | `/quiz/start` | Start quiz `{user_id, level, total}` |
+| GET | `/levels` | Word count per level (N5–N1) |
+| GET | `/topics?level=N4` | The book's topics for a level, with word counts |
+| GET | `/words?level=N4&topic=3&search=saifu&limit=50&offset=0` | Paged word list (all filters optional) |
+| GET | `/words/{id}` | One word with every field, e.g. `/words/N4-0322` |
+| GET | `/score/{user_id}` | User score + most-missed words |
+| POST | `/quiz/start` | Start quiz `{user_id, level, topic?, total}` |
 | POST | `/quiz/answer` | Submit answer `{user_id, answer}` |
-| POST | `/quiz/hint` | Get hint `{user_id}` |
 | POST | `/quiz/stop` | Stop quiz `{user_id}` |
 | POST | `/reset` | Reset session `{user_id}` |
 
 ---
 
-## 6. CSV Format
+## 6. Vocabulary database
 
-Your existing `jlpt_vocabulary_enriched.csv` columns used:
+Words come from `backend/data/jlpt_vocab.sqlite` (table `vocab`): 9,205 JLPT words
+(N5 1,011 · N4 1,155 · N3 2,113 · N2 2,357 · N1 2,569), grouped by the topics of the
+*ミニストーリーで覚える JLPT ベスト単語* books. N4 words have original example sentences;
+the example columns are empty for the other levels until sentences are added.
+
+To update the words, replace the `.sqlite` file and restart the API. To use a different
+path, set the `VOCAB_DB` environment variable.
 
 | Column | Description |
 |--------|-------------|
-| `kanji_final` | Japanese word |
-| `romaji_final` | Romanisation |
-| `english_ai` | English meaning(s), `/`-separated |
-| `level` | N5, N4, EXTRA (or 0 = EXTRA) |
-| `pos` | Part of speech (optional) |
-| `example_jp` | Example sentence Japanese (optional) |
-| `example_en` | Example sentence English (optional) |
+| `id` | Stable ID, e.g. `N4-0322` |
+| `level` | N5 … N1 |
+| `word`, `reading`, `romaji` | Word, kana reading, romanization |
+| `meaning`, `hint` | English meaning and a short hint for look-alike words |
+| `pos` | Part(s) of speech, `;`-separated |
+| `topic_no`, `topic_ja`, `topic_en` | The book's topic |
+| `example_ja`, `example_en`, `example_target` | Example sentence, translation, and the word as it appears in the sentence |
+
+The old `jlpt_vocabulary_enriched.csv` is no longer read by the API.
 
 ---
 
