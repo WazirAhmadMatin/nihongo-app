@@ -16,6 +16,16 @@ from zoneinfo import ZoneInfo
 import vocab
 
 _BASE   = os.path.dirname(os.path.abspath(__file__))
+
+# Local development: pick up env files. `neon deploy` / `neon env pull` write DATABASE_URL
+# to .env.local (or .env) in the repo root; backend/.env is the older place.
+try:
+    from dotenv import load_dotenv
+    for _f in (os.path.join(_BASE, ".env"), os.path.join(os.path.dirname(_BASE), ".env.local"),
+               os.path.join(os.path.dirname(_BASE), ".env")):
+        load_dotenv(_f, override=False)     # real environment variables always win
+except ImportError:
+    pass
 DB_PATH = os.environ.get("USER_DB", os.path.join(_BASE, "data", "users.sqlite"))
 DATABASE_URL = os.environ.get("DATABASE_URL", "").strip()
 IS_PG = DATABASE_URL.startswith(("postgres://", "postgresql://"))
