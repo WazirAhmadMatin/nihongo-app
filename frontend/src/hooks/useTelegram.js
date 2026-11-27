@@ -8,8 +8,8 @@ export function useTelegram() {
     if (tg) {
       tg.ready()
       tg.expand()
-      tg.setHeaderColor('#0a0a0f')
-      tg.setBackgroundColor('#0a0a0f')
+      tg.setHeaderColor?.('secondary_bg_color')
+      // colors follow the app theme
       setReady(true)
     } else {
       // Dev mode without Telegram

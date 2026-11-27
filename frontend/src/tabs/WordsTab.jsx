@@ -1,26 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
 import { api } from '../api'
-import { LEVELS, LEVEL_LABEL, LEVEL_COLORS, Example } from '../levels'
+import { LEVELS, LEVEL_LABEL, Example, LevelBadge, SpeakButton } from '../levels'
 
 const PAGE_SIZE = 50
-
-function LevelBadge({ level }) {
-  if (!level) return null
-  const c = LEVEL_COLORS[level] || { bg: 'rgba(255,255,255,0.07)', border: 'rgba(255,255,255,0.15)', color: 'var(--t3)' }
-  return (
-    <span style={{
-      flexShrink: 0,
-      fontSize: 10, fontWeight: 700, fontFamily: 'var(--mono)',
-      padding: '2px 7px', borderRadius: 6,
-      background: c.bg, border: `1px solid ${c.border}`, color: c.color,
-      letterSpacing: '0.04em',
-    }}>
-      {level}
-    </span>
-  )
-}
+const FILTERS = [...LEVELS, 'MY']
 
 function WordRow({ w, open, onToggle }) {
+  const [inReviews, setInReviews] = useState(w.in_reviews)
+  async function addToReviews(e) {
+    e.stopPropagation()
+    try { await api.addReview(w.id); setInReviews(true) } catch (err) { alert(err.message) }
+  }
   return (
     <div className="word-item" onClick={onToggle}
       style={{ flexDirection: 'column', alignItems: 'stretch', cursor: 'pointer', gap: 0 }}>
@@ -30,7 +20,7 @@ function WordRow({ w, open, onToggle }) {
         <div className="word-kanji-col" style={{ flex: 1, minWidth: 0 }}>
           <span className="word-kanji">{w.kanji}</span>
           <span className="word-romaji">
-            {w.reading ? `${w.reading} · ` : ''}{w.romaji}
+            {[w.reading, w.romaji].filter(Boolean).join(' · ')}
           </span>
         </div>
 
@@ -46,8 +36,15 @@ function WordRow({ w, open, onToggle }) {
 
       {open && (
         <div className="fade-up" style={{ marginTop: 10, paddingLeft: 2 }}>
-          <div style={{ fontSize: 10, fontFamily: 'var(--mono)', color: 'var(--t3)', letterSpacing: '0.06em', marginBottom: 6 }}>
-            {[w.pos, w.topic_en && `${w.topic_ja} · ${w.topic_en}`].filter(Boolean).join('  ·  ')}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+            <SpeakButton text={w.speak} audioUrl={w.audio_url} size={28} />
+            <div style={{ flex: 1, fontSize: 10, fontFamily: 'var(--mono)', color: 'var(--t3)', letterSpacing: '0.06em' }}>
+              {[w.pos, w.topic_en && (w.topic_ja ? `${w.topic_ja} · ${w.topic_en}` : w.topic_en)].filter(Boolean).join('  ·  ')}
+            </div>
+            <button className="btn-ghost" onClick={addToReviews} disabled={inReviews}
+              style={{ fontSize: 11, padding: '4px 10px', opacity: inReviews ? 0.6 : 1 }}>
+              {inReviews ? '✓ In reviews' : '＋ Review'}
+            </button>
           </div>
           {w.example_jp ? (
             <div className="example-block" style={{ padding: 0 }}>
@@ -55,7 +52,7 @@ function WordRow({ w, open, onToggle }) {
               <p className="example-en">{w.example_en}</p>
             </div>
           ) : (
-            <div style={{ fontSize: 11, color: 'var(--t3)' }}>No example sentence yet.</div>
+            !w.custom && <div style={{ fontSize: 11, color: 'var(--t3)' }}>No example sentence yet.</div>
           )}
         </div>
       )}
@@ -80,7 +77,7 @@ export default function WordsTab() {
   useEffect(() => {
     setTopic(null)
     setTopics([])
-    if (!level) return
+    if (!level || level === 'MY') return
     api.topics(level).then(d => setTopics(d.topics)).catch(() => {})
   }, [level])
 
@@ -133,7 +130,7 @@ export default function WordsTab() {
 
         {/* Level filter */}
         <div className="pill-group" style={{ marginBottom: 10 }}>
-          {LEVELS.map(l => (
+          {FILTERS.map(l => (
             <button
               key={String(l)}
               className={`pill ${level === l ? 'active' : ''}`}
@@ -164,13 +161,13 @@ export default function WordsTab() {
       </div>
 
       <div className="words-count">
-        {loading ? 'Loading…' : `${total.toLocaleString()} word${total !== 1 ? 's' : ''} · tap a word for its example`}
+        {loading ? 'Loading…' : `${total.toLocaleString()} word${total !== 1 ? 's' : ''} · tap a word for details`}
       </div>
 
       {!loading && words.length === 0 && (
         <div className="empty-state">
           <span className="empty-kanji">無</span>
-          <span className="empty-text">No words match your search.</span>
+          <span className="empty-text">{level === 'MY' ? 'No personal words yet. Add them in ⚙️ Settings or with /add in the bot.' : 'No words match your search.'}</span>
         </div>
       )}
 

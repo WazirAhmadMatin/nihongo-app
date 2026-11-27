@@ -20,6 +20,20 @@ const HOME_CSS = `
     100% { transform: translateY(-40px) scale(0); opacity: 0; }
   }
 
+  .hs-today {
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 26px;
+    border-radius: 16px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+    animation: hs-rise 0.4s cubic-bezier(.22,1,.36,1) both;
+  }
+  .hs-today-eyebrow { font-family: var(--mono); font-size: 10px; color: var(--t3); letter-spacing: 0.12em; }
+  .hs-today-title { font-family: var(--sans); font-size: 19px; font-weight: 700; color: var(--t1); margin-top: 2px; }
+  .hs-today-sub { font-family: var(--sans); font-size: 12px; color: var(--t3); margin-top: 2px; }
+
   .hs-wrap {
     display: flex;
     flex-direction: column;
@@ -242,10 +256,53 @@ const HOME_CSS = `
   .hs-dot:nth-child(3) { animation-delay: 0.8s; }
 `
 
-export default function HomeScreen({ onChoose }) {
+function TodayPanel({ me, onChoose }) {
+  if (!me) return null
+  const { today, streak, user } = me
+  const todo = today.due + today.new
+  const examLeft = user.exam_date
+    ? Math.round((new Date(user.exam_date + 'T00:00:00') - new Date(new Date().toDateString())) / 86400000)
+    : null
+  return (
+    <div className="hs-today">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+        <div>
+          <div className="hs-today-eyebrow">今日 · TODAY · {user.level}</div>
+          <div className="hs-today-title">
+            {todo ? `${todo} card${todo === 1 ? '' : 's'} to study` : today.done ? 'All done for today ✓' : 'Nothing due'}
+          </div>
+          <div className="hs-today-sub">
+            {today.due} reviews · {today.new} new{today.done ? ` · ${today.done} answered today` : ''}
+          </div>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: 26, lineHeight: 1, filter: streak.studied_today ? 'none' : 'grayscale(1)', opacity: streak.studied_today ? 1 : 0.6 }}>🔥</div>
+          <div style={{ fontFamily: 'var(--mono)', fontSize: 15, fontWeight: 700, color: 'var(--t1)' }}>{streak.current}</div>
+          <div style={{ fontFamily: 'var(--mono)', fontSize: 9, color: 'var(--t3)' }}>STREAK</div>
+        </div>
+      </div>
+      <button className="btn-primary" onClick={() => onChoose('review')} disabled={!todo}>
+        {todo ? '復習 — Start reviews' : 'Come back tomorrow'}
+      </button>
+      <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+        <button className="btn-ghost" style={{ flex: 1 }} onClick={() => onChoose('stats')}>📈 Stats</button>
+        <button className="btn-ghost" style={{ flex: 1 }} onClick={() => onChoose('settings')}>⚙️ Settings</button>
+      </div>
+      {examLeft != null && examLeft >= 0 && (
+        <div className="hs-today-sub" style={{ textAlign: 'center', marginTop: 10 }}>
+          🎯 JLPT in <b>{examLeft}</b> day{examLeft === 1 ? '' : 's'}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default function HomeScreen({ onChoose, me }) {
   return (
     <div className="hs-wrap">
       <style>{HOME_CSS}</style>
+
+      <TodayPanel me={me} onChoose={onChoose} />
 
       <div className="hs-eyebrow">あなたの道を選んでください</div>
       <div className="hs-title">Choose Your Path</div>
@@ -318,7 +375,7 @@ export default function HomeScreen({ onChoose }) {
             Vocabulary<br/>Quiz
           </div>
           <div className="hs-card-desc" style={{ color: 'var(--t2)' }}>
-            Test your knowledge under pressure
+            5 quiz types: meaning, reading, listening and more
           </div>
 
           <div className="hs-tags">

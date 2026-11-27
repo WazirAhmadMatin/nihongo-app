@@ -1,17 +1,23 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useTelegram } from './hooks/useTelegram'
-import HomeScreen from './tabs/HomeScreen'
-import QuizTab    from './tabs/QuizTab'
-import ScoreTab   from './tabs/ScoreTab'
-import WordsTab   from './tabs/WordsTab'
-import KanaTab    from './tabs/KanaTab'
+import { api } from './api'
+import HomeScreen  from './tabs/HomeScreen'
+import QuizTab     from './tabs/QuizTab'
+import WordsTab    from './tabs/WordsTab'
+import KanaTab     from './tabs/KanaTab'
+import ReviewTab   from './tabs/ReviewTab'
+import StatsTab    from './tabs/StatsTab'
+import SettingsTab from './tabs/SettingsTab'
 
-// Tabs shown only in the quiz path
+// Tabs shown in the quiz path
 const QUIZ_TABS = [
-  { id: 'quiz',  label: 'Quiz',  labelJp: '練習', icon: '🃏' },
-  { id: 'score', label: 'Score', labelJp: '成績', icon: '📊' },
-  { id: 'words', label: 'Words', labelJp: '語彙', icon: null, jpIcon: '本' },
+  { id: 'quiz',  label: 'Quiz',  icon: '🃏' },
+  { id: 'words', label: 'Words', jpIcon: '本' },
+  { id: 'stats', label: 'Stats', icon: '📊' },
 ]
+
+const TITLES = { review: '復習 Review', stats: '成績 Stats', settings: '設定 Settings', letters: '文字 Letters' }
+const PATHS = ['review', 'quiz', 'stats', 'settings', 'letters']
 
 function getInitialTheme() {
   try {
@@ -21,25 +27,46 @@ function getInitialTheme() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-export default function App() {
-  const { userId, ready } = useTelegram()
-  const [path,  setPath]  = useState(null)   // null | 'letters' | 'quiz'
-  const [tab,   setTab]   = useState('quiz') // active tab inside quiz path
-  const [theme, setTheme] = useState(getInitialTheme)
+// Bot buttons open the app at #review / #stats; Telegram can also pass start_param
+function initialPath(tg) {
+  const p = (window.location.hash || '').slice(1) || tg?.initDataUnsafe?.start_param || ''
+  return PATHS.includes(p) ? p : null
+}
 
-  // Sync theme to <html data-theme>
+export default function App() {
+  const { tg, ready } = useTelegram()
+  const start = initialPath(window.Telegram?.WebApp)
+  const [path,   setPath]   = useState(start === 'stats' ? 'quiz' : start)
+  const [tab,    setTab]    = useState(start === 'stats' ? 'stats' : 'quiz')
+  const [theme,  setTheme]  = useState(getInitialTheme)
+  const [me,     setMe]     = useState(null)
+  const [missed, setMissed] = useState(false)
+
+  const loadMe = useCallback(() => { api.me().then(setMe).catch(() => {}) }, [])
+  useEffect(() => { loadMe() }, [loadMe])
+
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
     try { localStorage.setItem('nihongo-theme', theme) } catch {}
   }, [theme])
 
-  function toggleTheme() {
-    setTheme(t => t === 'dark' ? 'light' : 'dark')
-  }
+  const goHome = useCallback(() => {
+    setPath(null); setTab('quiz'); setMissed(false)
+    loadMe()
+    if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search)
+  }, [loadMe])
 
-  function goHome() {
-    setPath(null)
-    setTab('quiz') // reset quiz tab for next visit
+  // Telegram's native back button
+  useEffect(() => {
+    const bb = tg?.BackButton
+    if (!bb) return
+    if (path) { bb.show(); bb.onClick(goHome) } else bb.hide()
+    return () => bb.offClick?.(goHome)
+  }, [path, tg, goHome])
+
+  function choose(p) {
+    if (p === 'stats') { setPath('quiz'); setTab('stats') }
+    else setPath(p)
   }
 
   if (!ready) return (
@@ -51,25 +78,18 @@ export default function App() {
 
   return (
     <div className="app-shell">
-
-      {/* ── Header ── */}
       <header className="app-header">
         <div className="header-top">
-
-          {/* Left side: back button (paths) or title (home) */}
           {path ? (
-            <button
-              onClick={goHome}
-              style={{
-                background: 'none', border: 'none', cursor: 'pointer',
-                display: 'flex', alignItems: 'center', gap: 6,
-                color: 'var(--t2)', fontFamily: 'var(--mono)',
-                fontSize: 12, letterSpacing: '0.06em',
-                padding: '4px 0', WebkitTapHighlightColor: 'transparent',
-              }}
-            >
+            <button onClick={goHome} style={{
+              background: 'none', border: 'none', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', gap: 6,
+              color: 'var(--t2)', fontFamily: 'var(--mono)',
+              fontSize: 12, letterSpacing: '0.06em',
+              padding: '4px 0', WebkitTapHighlightColor: 'transparent',
+            }}>
               <span style={{ fontSize: 16 }}>←</span>
-              <span>Home</span>
+              <span>{TITLES[path] || 'Home'}</span>
             </button>
           ) : (
             <div>
@@ -78,34 +98,21 @@ export default function App() {
             </div>
           )}
 
-          {/* Right side: theme toggle + seal */}
           <div className="header-actions">
-            <button
-              className="theme-toggle"
-              onClick={toggleTheme}
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
-            >
+            <button className="theme-toggle" onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
+              aria-label="Toggle theme" title={theme === 'dark' ? 'Light mode' : 'Dark mode'}>
               {theme === 'dark' ? '☀️' : '🌙'}
             </button>
             <div className="header-seal" />
           </div>
         </div>
 
-        {/* Tab bar — only shown inside the quiz path */}
         {path === 'quiz' && (
           <nav className="tab-bar">
             {QUIZ_TABS.map(t => (
-              <button
-                key={t.id}
-                className={`tab-btn ${tab === t.id ? 'active' : ''}`}
-                onClick={() => setTab(t.id)}
-              >
+              <button key={t.id} className={`tab-btn ${tab === t.id ? 'active' : ''}`} onClick={() => setTab(t.id)}>
                 <span className="tab-icon">
-                  {t.jpIcon
-                    ? <span style={{ fontFamily: 'var(--serif-jp)', fontSize: 16 }}>{t.jpIcon}</span>
-                    : t.icon
-                  }
+                  {t.jpIcon ? <span style={{ fontFamily: 'var(--serif-jp)', fontSize: 16 }}>{t.jpIcon}</span> : t.icon}
                 </span>
                 <span className="tab-label">{t.label}</span>
               </button>
@@ -114,24 +121,18 @@ export default function App() {
         )}
       </header>
 
-      {/* ── Content ── */}
       <main className="tab-content">
-
-        {/* Home screen */}
-        {path === null && (
-          <HomeScreen onChoose={setPath} />
+        {path === null       && <HomeScreen onChoose={choose} me={me} />}
+        {path === 'review'   && <ReviewTab onDone={goHome} />}
+        {path === 'letters'  && <KanaTab />}
+        {path === 'settings' && <SettingsTab onSaved={loadMe} />}
+        {path === 'quiz' && tab === 'quiz'  && (
+          <QuizTab key={missed ? 'missed' : 'all'} defaultLevel={me?.user?.level || 'N4'} presetMissed={missed} />
         )}
-
-        {/* Letters path — KanaTab only */}
-        {path === 'letters' && (
-          <KanaTab />
-        )}
-
-        {/* Quiz path — three tabs */}
-        {path === 'quiz' && tab === 'quiz'  && <QuizTab  userId={userId} />}
-        {path === 'quiz' && tab === 'score' && <ScoreTab userId={userId} />}
         {path === 'quiz' && tab === 'words' && <WordsTab />}
-
+        {path === 'quiz' && tab === 'stats' && (
+          <StatsTab onQuizMissed={() => { setMissed(true); setTab('quiz') }} />
+        )}
       </main>
     </div>
   )
