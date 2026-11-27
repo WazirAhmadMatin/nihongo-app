@@ -1,5 +1,4 @@
 // Shared JLPT level constants and small display helpers.
-import { BASE } from './api'
 
 export const LEVELS = [null, 'N5', 'N4', 'N3', 'N2', 'N1']
 export const LEVEL_LABEL = { null: 'All', N5: 'N5', N4: 'N4', N3: 'N3', N2: 'N2', N1: 'N1', MY: 'Mine' }
@@ -41,51 +40,6 @@ export function Example({ text, target }) {
       }}>{target}</mark>
       {text.slice(i + target.length)}
     </>
-  )
-}
-
-// ── Pronunciation ─────────────────────────────────────────────────────────────
-// Uses the generated VOICEVOX mp3 when the server has one, otherwise the
-// device's built-in Japanese voice.
-let currentAudio = null
-export function speak(text, audioUrl) {
-  try {
-    currentAudio?.pause()
-    window.speechSynthesis?.cancel()
-  } catch {}
-  if (audioUrl) {
-    currentAudio = new Audio(`${BASE}${audioUrl}`)
-    currentAudio.play().catch(() => speakTTS(text))
-    return
-  }
-  speakTTS(text)
-}
-
-function speakTTS(text) {
-  const synth = window.speechSynthesis
-  if (!synth || !text) return
-  const u = new SpeechSynthesisUtterance(text)
-  u.lang = 'ja-JP'
-  u.rate = 0.9
-  const ja = synth.getVoices().find(v => v.lang?.startsWith('ja'))
-  if (ja) u.voice = ja
-  synth.speak(u)
-}
-
-export function SpeakButton({ text, audioUrl, size = 34, title = 'Play pronunciation' }) {
-  if (!text) return null
-  return (
-    <button
-      onClick={e => { e.stopPropagation(); speak(text, audioUrl) }}
-      title={title} aria-label={title}
-      style={{
-        width: size, height: size, borderRadius: '50%', flexShrink: 0,
-        border: '1px solid var(--card-border)', background: 'var(--card-bg)',
-        cursor: 'pointer', fontSize: size * 0.45, lineHeight: 1,
-        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-        WebkitTapHighlightColor: 'transparent',
-      }}
-    >🔊</button>
   )
 }
 

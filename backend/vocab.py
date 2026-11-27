@@ -7,7 +7,6 @@ from typing import Optional
 
 _BASE     = os.path.dirname(os.path.abspath(__file__))
 DB_PATH   = os.environ.get("VOCAB_DB", os.path.join(_BASE, "data", "jlpt_vocab.sqlite"))
-AUDIO_DIR = os.environ.get("AUDIO_DIR", os.path.join(_BASE, "data", "audio"))
 LEVELS    = ["N5", "N4", "N3", "N2", "N1"]
 
 _KANJI_RE = re.compile(r"[一-鿿々]")
@@ -21,13 +20,6 @@ def _split(v):
     return [p for p in (v or "").split(";") if p]
 
 
-def _audio_files() -> set:
-    try:
-        return {f[:-4] for f in os.listdir(AUDIO_DIR) if f.endswith(".mp3")}
-    except FileNotFoundError:
-        return set()
-
-
 def _load() -> list[dict]:
     if not os.path.exists(DB_PATH):
         return []
@@ -35,7 +27,6 @@ def _load() -> list[dict]:
     con.row_factory = sqlite3.Row
     rows = con.execute("SELECT * FROM vocab").fetchall()
     con.close()
-    audio = _audio_files()
     words = []
     for r in rows:
         d = dict(r)
@@ -63,8 +54,6 @@ def _load() -> list[dict]:
             "example_target": d["example_target"] or "",
             "also_in":        _split(d["also_in"]),
             "has_kanji":      bool(_KANJI_RE.search(d["word"] or "")),
-            "audio":          d["id"] in audio,
-            "audio_ex":       f"{d['id']}_ex" in audio,
             "custom":         False,
         })
     order = {lv: i for i, lv in enumerate(LEVELS)}
@@ -106,8 +95,4 @@ def search(q: str, level: Optional[str] = None, limit: int = 0) -> list[dict]:
 
 def public(w: dict) -> dict:
     """Word as sent to clients."""
-    d = {k: v for k, v in w.items() if k not in ("pos_list", "audio", "audio_ex")}
-    d["audio_url"]    = f"/audio/{w['id']}.mp3" if w.get("audio") else None
-    d["audio_ex_url"] = f"/audio/{w['id']}_ex.mp3" if w.get("audio_ex") else None
-    d["speak"]        = w["reading"] or w["kanji"]
-    return d
+    return {k: v for k, v in w.items() if k != "pos_list"}

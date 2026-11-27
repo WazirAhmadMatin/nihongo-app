@@ -191,7 +191,7 @@ def _custom_word(row) -> dict:
         "hint": "", "pos": "", "pos_list": [], "topic_no": None, "topic_ja": "",
         "topic_en": "My words", "example_jp": "", "example_en": "", "example_target": "",
         "also_in": [], "has_kanji": bool(vocab._KANJI_RE.search(row["word"])),
-        "audio": False, "audio_ex": False, "custom": True,
+        "custom": True,
         "verb_group": None, "transitivity": "", "suru_verb": False,
     }
 

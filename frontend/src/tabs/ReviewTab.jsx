@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { api } from '../api'
-import { Example, LevelBadge, SpeakButton, speak } from '../levels'
+import { Example, LevelBadge } from '../levels'
 
 // Grade buttons. `days` mirrors the server's schedule so the button can show
 // roughly when the word comes back.
@@ -60,7 +60,6 @@ export default function ReviewTab({ onDone }) {
 
   function reveal() {
     setShown(true)
-    if (w) speak(w.speak, w.audio_url)
   }
 
   async function grade(g) {
@@ -140,7 +139,6 @@ export default function ReviewTab({ onDone }) {
               <span style={{ fontFamily: 'var(--serif-jp)', fontSize: 18, color: 'var(--t2)' }}>
                 {w.reading || w.kanji}
               </span>
-              <SpeakButton text={w.speak} audioUrl={w.audio_url} size={30} />
             </div>
           )}
           {shown && w.romaji && <span className="kanji-romaji" style={{ fontSize: 12, opacity: 0.6 }}>{w.romaji}</span>}
@@ -155,12 +153,9 @@ export default function ReviewTab({ onDone }) {
             {w.example_jp && (
               <>
                 <div className="card-divider" />
-                <div className="example-block" style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
-                  <div style={{ flex: 1 }}>
-                    <p className="example-jp"><Example text={w.example_jp} target={w.example_target} /></p>
-                    <p className="example-en">{w.example_en}</p>
-                  </div>
-                  <SpeakButton text={w.example_jp} audioUrl={w.audio_ex_url} size={28} title="Play sentence" />
+                <div className="example-block">
+                  <p className="example-jp"><Example text={w.example_jp} target={w.example_target} /></p>
+                  <p className="example-en">{w.example_en}</p>
                 </div>
               </>
             )}

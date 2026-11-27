@@ -375,7 +375,7 @@ export default function HomeScreen({ onChoose, me }) {
             Vocabulary<br/>Quiz
           </div>
           <div className="hs-card-desc" style={{ color: 'var(--t2)' }}>
-            5 quiz types: meaning, reading, listening and more
+            4 quiz types: meaning, reading, fill-in and more
           </div>
 
           <div className="hs-tags">

@@ -101,10 +101,6 @@ def pick_new_word(user: dict) -> dict:
 async def send_word(bot, chat_id: int, w: dict, title: str):
     await bot.send_message(chat_id, word_card(w, title), parse_mode=ParseMode.HTML,
                            reply_markup=InlineKeyboardMarkup([[add_button(w["id"])]]))
-    if w.get("audio"):
-        path = os.path.join(vocab.AUDIO_DIR, f"{w['id']}.mp3")
-        with open(path, "rb") as f:
-            await bot.send_audio(chat_id, f, title=w["kanji"])
 
 
 def today_text(user: dict) -> str:

@@ -4,4 +4,3 @@ __pycache__/
 dist/
 .env
 backend/data/users.sqlite*
-backend/data/audio/

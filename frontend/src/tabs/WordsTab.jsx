@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { api } from '../api'
-import { LEVELS, LEVEL_LABEL, Example, LevelBadge, SpeakButton } from '../levels'
+import { LEVELS, LEVEL_LABEL, Example, LevelBadge } from '../levels'
 
 const PAGE_SIZE = 50
 const FILTERS = [...LEVELS, 'MY']
@@ -37,7 +37,6 @@ function WordRow({ w, open, onToggle }) {
       {open && (
         <div className="fade-up" style={{ marginTop: 10, paddingLeft: 2 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-            <SpeakButton text={w.speak} audioUrl={w.audio_url} size={28} />
             <div style={{ flex: 1, fontSize: 10, fontFamily: 'var(--mono)', color: 'var(--t3)', letterSpacing: '0.06em' }}>
               {[w.pos, w.topic_en && (w.topic_ja ? `${w.topic_ja} · ${w.topic_en}` : w.topic_en)].filter(Boolean).join('  ·  ')}
             </div>

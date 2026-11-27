@@ -12,7 +12,6 @@ from collections import defaultdict
 from typing import Optional
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 import userdb, vocab
@@ -45,10 +44,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-if os.path.isdir(vocab.AUDIO_DIR):
-    app.mount("/audio", StaticFiles(directory=vocab.AUDIO_DIR), name="audio")
 
-QUIZ_MODES = ("meaning", "reverse", "reading", "cloze", "listening")
+QUIZ_MODES = ("meaning", "reverse", "reading", "cloze")
 quizzes: dict = {}          # active quiz per user (short-lived, in memory)
 
 
@@ -238,9 +235,6 @@ def card_payload(w: dict, mode: str) -> dict:
     elif mode == "cloze":
         base.update(sentence=w["example_jp"].replace(w["example_target"], "＿＿", 1),
                     example_en=w["example_en"])
-    elif mode == "listening":
-        p = public(w)
-        base.update(speak=p["speak"], audio_url=p["audio_url"])
     return base
 
 

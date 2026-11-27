@@ -18,7 +18,7 @@ def mode_pool(words: list[dict], mode: str) -> list[dict]:
 
 
 def answer_of(w: dict, mode: str) -> str:
-    return {"meaning": w["english"], "listening": w["english"], "reverse": w["kanji"],
+    return {"meaning": w["english"], "reverse": w["kanji"],
             "reading": w["reading"], "cloze": w["example_target"]}[mode]
 
 
