@@ -24,10 +24,10 @@ nihongo-app/
 │   ├── userdb.py        ← user progress, spaced repetition, stats
 │   ├── quizlib.py       ← quiz questions and wrong answers
 │   ├── auth.py          ← verifies Telegram Mini App logins
-│   ├── start.sh         ← runs API + bot together
+│   ├── start.sh         ← runs API + bot together (always-on servers)
 │   └── data/
 │       ├── jlpt_vocab.sqlite   ← vocabulary (read-only)
-│       └── users.sqlite        ← created automatically: everyone's progress
+│       └── users.sqlite        ← progress when DATABASE_URL isn't set (local)
 └── frontend/            ← React (Vite) Mini App
     └── src/quiz/        ← Quiz → QuizQuestion → QuizQuestionButton → QuizEnd
                            (structure based on caike/React-QuizComponent)
@@ -61,28 +61,31 @@ In a normal browser (outside Telegram), the backend must run with `DEV_MODE=1`. 
 
 ---
 
-## 2. Deploy
+## 2. Deploy for free (no credit card)
 
-Telegram requires **HTTPS** for both the frontend and the API.
+| Part | Where | Cost |
+|---|---|---|
+| Frontend (Mini App) | Vercel project, root `frontend` | free |
+| API + bot (webhook) | Vercel project, root `backend` | free |
+| User progress | Neon Postgres (`DATABASE_URL`) | free, no card |
+| Daily words and reminders | GitHub Actions calling `/cron` every 15 min (`.github/workflows/cron.yml`) | free |
 
-### Backend (Railway / Render / Fly.io / a VPS)
-- **Start command:** `sh start.sh`. This runs the API and the bot in **one** process, so they share the same `users.sqlite`.
-- **Environment variables:** `BOT_TOKEN`, `WEBAPP_URL`, and optionally `CORS_ORIGINS` (your frontend URL).
-- **Persistent storage:** user progress is saved in a SQLite file, so give the service a **persistent volume** and set `USER_DB=/data/users.sqlite` (the path on the volume). Without a volume, progress is lost on every redeploy.
+1. **Neon:** create a project and copy the connection string (`postgresql://…`).
+2. **Vercel → New Project → this repo, Root Directory `backend`.** Set these environment variables:
+   `BOT_TOKEN`, `DATABASE_URL` (from Neon), `CRON_SECRET` (any long random text), and `WEBAPP_URL` (the frontend URL, from step 3).
+3. **Vercel → New Project → this repo, Root Directory `frontend`.** Set `VITE_API_URL` to the backend URL.
+4. Open `https://<backend>/telegram/setup?key=<CRON_SECRET>` once. This connects Telegram to the bot.
+5. **GitHub → Settings → Secrets and variables → Actions.** Add `API_URL` (the backend URL) and `CRON_SECRET`.
+6. **BotFather → Menu Button.** Set it to the frontend URL.
+
+Check `https://<backend>/health`: it should show `"storage": "postgres"` and `"dev_mode": false`.
+
+GitHub pauses scheduled workflows in a repository with no activity for 60 days; push any commit to resume.
+
+### Other hosting
+- **A server that's always on** (VPS, Railway Hobby, …): run `sh start.sh`. The bot then uses polling with its own scheduler. Progress goes to `data/users.sqlite`, or to Postgres if `DATABASE_URL` is set.
 - **Never set `DEV_MODE=1` in production.**
-- **Run only one copy of the bot.** If you used to run `python bot.py` separately, stop that copy; two copies of one bot conflict.
-
-### Frontend (Vercel)
-```bash
-cd frontend
-npm run build
-npx vercel --prod
-```
-Set `VITE_API_URL` to your API's URL.
-
-### BotFather
-1. `/mybots` → your bot → **Bot Settings → Menu Button** → set it to your frontend URL.
-2. The bot registers its command list by itself when it starts.
+- **Run only one copy of the bot:** either the webhook or polling, not both.
 
 ---
 
@@ -92,7 +95,10 @@ All endpoints except `/health`, `/levels` and `/topics` need the `X-Telegram-Ini
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/health` | Status and word count |
+| GET | `/health` | Status, word count, storage type |
+| POST | `/telegram/webhook` | Telegram updates (webhook mode) |
+| GET | `/telegram/setup?key=…` | Register the webhook and bot commands |
+| GET | `/cron?key=…` | Send due words of the day and reminders |
 | GET | `/levels` | Words per level |
 | GET | `/topics?level=N4` | The book's topics for a level |
 | GET | `/words?level=N4&topic=3&search=saifu&limit=50&offset=0` | Paged word list (`level=MY` = personal words) |

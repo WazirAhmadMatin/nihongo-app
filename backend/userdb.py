@@ -1,11 +1,13 @@
 """
 Per-user data: settings, spaced-repetition cards, review log, daily activity,
-personal words. Stored in data/users.sqlite (set USER_DB to move it).
+personal words, open quiz polls.
 
-Used by both the API (main.py) and the bot (bot.py), so both must point at
-the same file (run them on the same machine / volume).
+Storage:
+  • DATABASE_URL set (postgres://…)  → Postgres, e.g. a free Neon database (use this on Vercel)
+  • otherwise                         → SQLite file data/users.sqlite (set USER_DB to move it)
+Used by both the API (main.py) and the bot (bot.py).
 """
-import os, sqlite3, threading, time
+import os, re, sqlite3, threading, time
 from contextlib import contextmanager
 from datetime import date, datetime, timedelta
 from typing import Optional
@@ -14,17 +16,33 @@ from zoneinfo import ZoneInfo
 import vocab
 
 _BASE   = os.path.dirname(os.path.abspath(__file__))
+
+# Local development: pick up env files. `neon deploy` / `neon env pull` write DATABASE_URL
+# to .env.local (or .env) in the repo root; backend/.env is the older place.
+try:
+    from dotenv import load_dotenv
+    for _f in (os.path.join(_BASE, ".env"), os.path.join(os.path.dirname(_BASE), ".env.local"),
+               os.path.join(os.path.dirname(_BASE), ".env")):
+        load_dotenv(_f, override=False)     # real environment variables always win
+except ImportError:
+    pass
 DB_PATH = os.environ.get("USER_DB", os.path.join(_BASE, "data", "users.sqlite"))
+DATABASE_URL = os.environ.get("DATABASE_URL", "").strip()
+IS_PG = DATABASE_URL.startswith(("postgres://", "postgresql://"))
+if not IS_PG and os.environ.get("VERCEL") and "USER_DB" not in os.environ:
+    # Serverless file systems are read-only (except /tmp, which is wiped). Works, but nothing is kept:
+    # set DATABASE_URL to a Postgres database (e.g. free Neon) to keep progress.
+    DB_PATH = "/tmp/users.sqlite"
 DEFAULT_TZ   = "Asia/Tokyo"
 MASTERED_DAYS = 21          # interval at which a word counts as "mastered"
 _lock = threading.Lock()
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS users (
-    user_id        INTEGER PRIMARY KEY,
+    user_id        {BIGINT} PRIMARY KEY,
     first_name     TEXT,
     username       TEXT,
-    created_at     REAL,
+    created_at     {FLOAT},
     level          TEXT    DEFAULT 'N4',
     new_per_day    INTEGER DEFAULT 10,
     word_time      TEXT    DEFAULT '08:00',
@@ -33,28 +51,28 @@ CREATE TABLE IF NOT EXISTS users (
     tz             TEXT    DEFAULT 'Asia/Tokyo',
     public_name    TEXT,
     exam_date      TEXT,
-    chat_id        INTEGER,
+    chat_id        {BIGINT},
     last_word_day  TEXT,
     last_remind_day TEXT
 );
 CREATE TABLE IF NOT EXISTS cards (
-    user_id     INTEGER,
+    user_id     {BIGINT},
     word_id     TEXT,
     reps        INTEGER DEFAULT 0,
-    interval    REAL    DEFAULT 0,
-    ease        REAL    DEFAULT 2.5,
+    ivl         {FLOAT} DEFAULT 0,
+    ease        {FLOAT} DEFAULT 2.5,
     due         TEXT,
     lapses      INTEGER DEFAULT 0,
     added       TEXT,
-    last_review REAL,
+    last_review {FLOAT},
     PRIMARY KEY (user_id, word_id)
 );
 CREATE INDEX IF NOT EXISTS ix_cards_due ON cards(user_id, due);
 CREATE TABLE IF NOT EXISTS reviews (
-    id       INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id  INTEGER,
+    id       {SERIAL},
+    user_id  {BIGINT},
     word_id  TEXT,
-    ts       REAL,
+    ts       {FLOAT},
     day      TEXT,
     kind     TEXT,
     grade    INTEGER,
@@ -62,22 +80,33 @@ CREATE TABLE IF NOT EXISTS reviews (
 );
 CREATE INDEX IF NOT EXISTS ix_reviews_user ON reviews(user_id, day);
 CREATE TABLE IF NOT EXISTS activity (
-    user_id  INTEGER,
-    day      TEXT,
-    reviews  INTEGER DEFAULT 0,
-    correct  INTEGER DEFAULT 0,
+    user_id   {BIGINT},
+    day       TEXT,
+    reviews   INTEGER DEFAULT 0,
+    correct   INTEGER DEFAULT 0,
     new_words INTEGER DEFAULT 0,
     PRIMARY KEY (user_id, day)
 );
 CREATE TABLE IF NOT EXISTS my_words (
-    id         INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id    INTEGER,
+    id         {SERIAL},
+    user_id    {BIGINT},
     word       TEXT,
     reading    TEXT,
     meaning    TEXT,
-    created_at REAL
+    created_at {FLOAT}
+);
+CREATE TABLE IF NOT EXISTS polls (
+    poll_id  TEXT PRIMARY KEY,
+    user_id  {BIGINT},
+    chat_id  {BIGINT},
+    word_id  TEXT,
+    correct  INTEGER,
+    left_n   INTEGER,
+    created  {FLOAT}
 );
 """
+TYPES = ({"BIGINT": "BIGINT", "FLOAT": "DOUBLE PRECISION", "SERIAL": "BIGSERIAL PRIMARY KEY"} if IS_PG else
+         {"BIGINT": "INTEGER", "FLOAT": "REAL", "SERIAL": "INTEGER PRIMARY KEY AUTOINCREMENT"})
 
 SETTINGS = {
     "level":         lambda v: v if v in vocab.LEVELS else None,
@@ -104,8 +133,60 @@ def _valid_tz(v):
         return False
 
 
+class _Row(dict):
+    """Row that works like sqlite3.Row: row["name"] and row[0] (even with duplicate column names)."""
+    def __init__(self, names, values):
+        super().__init__(zip(names, values))
+        self._values = tuple(values)
+
+    def __getitem__(self, k):
+        return self._values[k] if isinstance(k, int) else super().__getitem__(k)
+
+    def __iter__(self):                    # iterate values, like a tuple/sqlite3.Row
+        return iter(self._values)
+
+    def keys(self):
+        return super().keys()
+
+
+class _PG:
+    """Tiny adapter so the same SQL (with ? placeholders) runs on Postgres."""
+    def __init__(self, raw):
+        self.raw = raw
+
+    def execute(self, sql, params=()):
+        cur = self.raw.cursor(row_factory=_row_factory)
+        cur.execute(re.sub(r"\?", "%s", sql), tuple(params))
+        return cur
+
+
+def _row_factory(cursor):
+    names = [d.name for d in cursor.description] if cursor.description else []
+    return lambda values: _Row(names, values)
+
+
+_pool = None
+
+
+def _get_pool():
+    global _pool
+    if _pool is None:
+        from psycopg_pool import ConnectionPool
+        # prepare_threshold=None: required for Neon's pooled (pgbouncer) connection string
+        _pool = ConnectionPool(DATABASE_URL, min_size=0, max_size=4, open=True,
+                               kwargs={"prepare_threshold": None, "autocommit": False},
+                               check=ConnectionPool.check_connection)
+        import atexit
+        atexit.register(lambda: _pool.close(timeout=1))
+    return _pool
+
+
 @contextmanager
 def conn():
+    if IS_PG:
+        with _get_pool().connection() as raw:   # commits on success, rolls back on error
+            yield _PG(raw)
+        return
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
     c = sqlite3.connect(DB_PATH, timeout=10)
     c.row_factory = sqlite3.Row
@@ -117,9 +198,12 @@ def conn():
 
 
 def init():
+    ddl = SCHEMA.format(**TYPES)
     with _lock, conn() as c:
-        c.execute("PRAGMA journal_mode=WAL")
-        c.executescript(SCHEMA)
+        if not IS_PG:
+            c.execute("PRAGMA journal_mode=WAL")
+        for stmt in [x.strip() for x in ddl.split(";") if x.strip()]:
+            c.execute(stmt)
 
 
 init()
@@ -207,10 +291,9 @@ def add_my_word(user_id: int, word: str, reading: str, meaning: str) -> dict:
     if not word or not meaning:
         raise ValueError("Word and meaning are required.")
     with _lock, conn() as c:
-        cur = c.execute("INSERT INTO my_words(user_id, word, reading, meaning, created_at) "
-                        "VALUES (?,?,?,?,?)", (user_id, word[:40], (reading or "").strip()[:40],
-                                               meaning[:120], time.time()))
-        row = c.execute("SELECT * FROM my_words WHERE id=?", (cur.lastrowid,)).fetchone()
+        row = c.execute("INSERT INTO my_words(user_id, word, reading, meaning, created_at) "
+                        "VALUES (?,?,?,?,?) RETURNING *", (user_id, word[:40], (reading or "").strip()[:40],
+                                                           meaning[:120], time.time())).fetchone()
     w = _custom_word(row)
     add_card(user_id, w["id"])          # new personal words go straight into reviews
     return w
@@ -237,9 +320,15 @@ def get_word(user_id: int, word_id: str) -> Optional[dict]:
     return None
 
 # ── Spaced repetition (SM-2 style, grades 0 Again · 1 Hard · 2 Good · 3 Easy) ─
+def _card_dict(row) -> dict:
+    d = dict(row)
+    d["interval"] = d.pop("ivl")
+    return d
+
+
 def _card(c, user_id, word_id):
     row = c.execute("SELECT * FROM cards WHERE user_id=? AND word_id=?", (user_id, word_id)).fetchone()
-    return dict(row) if row else None
+    return _card_dict(row) if row else None
 
 
 def add_card(user_id: int, word_id: str) -> bool:
@@ -287,10 +376,10 @@ def grade(user_id: int, word_id: str, g: int) -> dict:
         is_new = old is None or (old["reps"] == 0 and old["lapses"] == 0 and not old["last_review"])
         new = schedule(old, g)
         due = day + timedelta(days=round(new["interval"]))
-        c.execute("""INSERT INTO cards(user_id, word_id, reps, interval, ease, due, lapses, added, last_review)
+        c.execute("""INSERT INTO cards(user_id, word_id, reps, ivl, ease, due, lapses, added, last_review)
                      VALUES (?,?,?,?,?,?,?,?,?)
                      ON CONFLICT(user_id, word_id) DO UPDATE SET
-                       reps=excluded.reps, interval=excluded.interval, ease=excluded.ease,
+                       reps=excluded.reps, ivl=excluded.ivl, ease=excluded.ease,
                        due=excluded.due, lapses=excluded.lapses, last_review=excluded.last_review,
                        added=COALESCE(cards.added, excluded.added)""",
                   (user_id, word_id, new["reps"], new["interval"], new["ease"], due.isoformat(),
@@ -304,8 +393,8 @@ def _log(c, user_id, word_id, day, kind, grade_, correct, is_new=False):
     c.execute("INSERT INTO reviews(user_id, word_id, ts, day, kind, grade, correct) VALUES (?,?,?,?,?,?,?)",
               (user_id, word_id, time.time(), day.isoformat(), kind, grade_, correct))
     c.execute("""INSERT INTO activity(user_id, day, reviews, correct, new_words) VALUES (?,?,1,?,?)
-                 ON CONFLICT(user_id, day) DO UPDATE SET reviews=reviews+1,
-                 correct=correct+excluded.correct, new_words=new_words+excluded.new_words""",
+                 ON CONFLICT(user_id, day) DO UPDATE SET reviews=activity.reviews+1,
+                 correct=activity.correct+excluded.correct, new_words=activity.new_words+excluded.new_words""",
               (user_id, day.isoformat(), correct, int(is_new)))
 
 
@@ -339,7 +428,7 @@ def queue(user_id: int, limit: int = 50) -> dict:
     for r in due_rows:
         w = get_word(user_id, r["word_id"])
         if w:
-            due.append((w, dict(r)))
+            due.append((w, _card_dict(r)))
     items = [{"word": w, "card": card, "is_new": card["reps"] == 0 and not card["last_review"]}
              for w, card in due[:limit]]
     for w in new_words[:max(0, limit - len(items))]:
@@ -371,7 +460,7 @@ def stats(user_id: int) -> dict:
     user = get_user(user_id) or ensure_user(user_id)
     t = today(user)
     with conn() as c:
-        cards = [dict(r) for r in c.execute("SELECT word_id, interval, reps FROM cards WHERE user_id=?", (user_id,))]
+        cards = [dict(r) for r in c.execute("SELECT word_id, ivl, reps FROM cards WHERE user_id=?", (user_id,))]
         act = [dict(r) for r in c.execute(
             "SELECT day, reviews, correct FROM activity WHERE user_id=? AND day>=? ORDER BY day",
             (user_id, (t - timedelta(days=364)).isoformat()))]
@@ -383,9 +472,9 @@ def stats(user_id: int) -> dict:
            for lv in vocab.LEVELS}
     for cd in cards:
         w = vocab.BY_ID.get(cd["word_id"])
-        if not w or (cd["reps"] == 0 and cd["interval"] == 0):
+        if not w or (cd["reps"] == 0 and cd["ivl"] == 0):
             continue
-        per[w["level"]]["mastered" if cd["interval"] >= MASTERED_DAYS else "learning"] += 1
+        per[w["level"]]["mastered" if cd["ivl"] >= MASTERED_DAYS else "learning"] += 1
     exam = user.get("exam_date")
     return {
         "streak": streak(user_id, user),
@@ -406,13 +495,13 @@ def stats(user_id: int) -> dict:
 def leaderboard(user_id: int, limit: int = 20) -> dict:
     since = (date.today() - timedelta(days=6)).isoformat()
     with conn() as c:
-        rows = c.execute("""SELECT u.user_id, u.public_name, COALESCE(SUM(a.reviews),0) week
+        rows = c.execute("""SELECT u.user_id, u.public_name, COALESCE(SUM(a.reviews),0) AS wk
                             FROM users u LEFT JOIN activity a ON a.user_id=u.user_id AND a.day>=?
                             WHERE u.public_name IS NOT NULL OR u.user_id=?
-                            GROUP BY u.user_id ORDER BY week DESC""", (since, user_id)).fetchall()
+                            GROUP BY u.user_id, u.public_name ORDER BY wk DESC""", (since, user_id)).fetchall()
     board, me = [], None
     for i, r in enumerate(rows, 1):
-        entry = {"rank": i, "name": r["public_name"] or "You (hidden)", "week": r["week"],
+        entry = {"rank": i, "name": r["public_name"] or "You (hidden)", "week": int(r["wk"]),
                  "streak": streak(r["user_id"])["current"], "me": r["user_id"] == user_id,
                  "public": r["public_name"] is not None}
         if entry["me"]:
@@ -426,3 +515,24 @@ def wrong_counts(user_id: int) -> dict:
     with conn() as c:
         return {r[0]: r[1] for r in c.execute(
             "SELECT word_id, COUNT(*) FROM reviews WHERE user_id=? AND correct=0 GROUP BY word_id", (user_id,))}
+
+
+# ── Quiz polls sent by the bot (kept in the DB so it works on serverless) ─────
+def save_poll(poll_id: str, user_id: int, chat_id: int, word_id: str, correct: int, left_n: int):
+    with _lock, conn() as c:
+        c.execute("DELETE FROM polls WHERE created < ?", (time.time() - 7 * 86400,))
+        c.execute("INSERT INTO polls(poll_id, user_id, chat_id, word_id, correct, left_n, created) "
+                  "VALUES (?,?,?,?,?,?,?)", (poll_id, user_id, chat_id, word_id, correct, left_n, time.time()))
+
+
+def pop_poll(poll_id: str) -> Optional[dict]:
+    with _lock, conn() as c:
+        row = c.execute("SELECT * FROM polls WHERE poll_id=?", (poll_id,)).fetchone()
+        if row:
+            c.execute("DELETE FROM polls WHERE poll_id=?", (poll_id,))
+        return dict(row) if row else None
+
+
+def known_word_ids(user_id: int) -> set:
+    with conn() as c:
+        return {r[0] for r in c.execute("SELECT word_id FROM cards WHERE user_id=?", (user_id,))}
