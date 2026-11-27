@@ -73,7 +73,7 @@ const HOME_CSS = `
 
   .hs-cards {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 12px;
     width: 100%;
     animation: hs-rise 0.45s 0.2s cubic-bezier(.22,1,.36,1) both;
@@ -304,54 +304,11 @@ export default function HomeScreen({ onChoose, me }) {
 
       <TodayPanel me={me} onChoose={onChoose} />
 
-      <div className="hs-eyebrow">あなたの道を選んでください</div>
-      <div className="hs-title">Choose Your Path</div>
-      <div className="hs-sub">Which journey calls to you today?</div>
+      <div className="hs-eyebrow">練習 · PRACTICE</div>
+      <div className="hs-title">Test yourself</div>
+      <div className="hs-sub">Quizzes on top of your daily reviews</div>
 
       <div className="hs-cards">
-
-        {/* ── Scholar card ── */}
-        <div
-          className="hs-card"
-          onClick={() => onChoose('letters')}
-          style={{
-            background: 'linear-gradient(155deg, rgba(124,158,248,0.13) 0%, rgba(124,158,248,0.04) 100%)',
-            borderColor: 'rgba(124,158,248,0.35)',
-            boxShadow: '0 8px 32px rgba(124,158,248,0.12), inset 0 1px 0 rgba(255,255,255,0.06)',
-          }}
-        >
-          <div className="hs-card-icon" style={{ animationDelay: '0s' }}>📜</div>
-
-          <div className="hs-card-class" style={{ color: '#7C9EF8' }}>学者</div>
-          <div className="hs-card-name" style={{ color: 'rgba(124,158,248,0.7)' }}>Scholar</div>
-
-          <div className="hs-divider" style={{ background: 'rgba(124,158,248,0.2)' }} />
-
-          <div className="hs-card-title" style={{ color: 'var(--t1)' }}>
-            Learn the<br/>Letters
-          </div>
-          <div className="hs-card-desc" style={{ color: 'var(--t2)' }}>
-            Master the building blocks of Japanese writing
-          </div>
-
-          <div className="hs-tags">
-            {['ひらがな', 'カタカナ', '漢字'].map(t => (
-              <span key={t} className="hs-tag" style={{
-                background: 'rgba(124,158,248,0.12)',
-                borderColor: 'rgba(124,158,248,0.3)',
-                color: '#7C9EF8',
-              }}>{t}</span>
-            ))}
-          </div>
-
-          <button className="hs-cta" style={{
-            background: 'rgba(124,158,248,0.18)',
-            color: '#7C9EF8',
-            border: '1px solid rgba(124,158,248,0.35)',
-          }}>
-            Begin →
-          </button>
-        </div>
 
         {/* ── Challenger card ── */}
         <div

@@ -4,7 +4,6 @@ import { api } from './api'
 import HomeScreen  from './tabs/HomeScreen'
 import QuizTab     from './tabs/QuizTab'
 import WordsTab    from './tabs/WordsTab'
-import KanaTab     from './tabs/KanaTab'
 import ReviewTab   from './tabs/ReviewTab'
 import StatsTab    from './tabs/StatsTab'
 import SettingsTab from './tabs/SettingsTab'
@@ -16,8 +15,8 @@ const QUIZ_TABS = [
   { id: 'stats', label: 'Stats', icon: '📊' },
 ]
 
-const TITLES = { review: '復習 Review', stats: '成績 Stats', settings: '設定 Settings', letters: '文字 Letters' }
-const PATHS = ['review', 'quiz', 'stats', 'settings', 'letters']
+const TITLES = { review: '復習 Review', stats: '成績 Stats', settings: '設定 Settings' }
+const PATHS = ['review', 'quiz', 'stats', 'settings']
 
 function getInitialTheme() {
   try {
@@ -124,7 +123,6 @@ export default function App() {
       <main className="tab-content">
         {path === null       && <HomeScreen onChoose={choose} me={me} />}
         {path === 'review'   && <ReviewTab onDone={goHome} />}
-        {path === 'letters'  && <KanaTab />}
         {path === 'settings' && <SettingsTab onSaved={loadMe} />}
         {path === 'quiz' && tab === 'quiz'  && (
           <QuizTab key={missed ? 'missed' : 'all'} defaultLevel={me?.user?.level || 'N4'} presetMissed={missed} />
