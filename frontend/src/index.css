@@ -844,3 +844,18 @@ body {
   pointer-events: none;
   border-radius: inherit;
 }
+/* ── Shared animations (quiz, review) ── */
+@keyframes iconPop {
+  0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+  70%  { transform: scale(1.3) rotate(4deg); }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.quiz-card-enter { animation: slideUp 0.28s cubic-bezier(.22,1,.36,1) both; }
+.quiz-feedback-enter { animation: slideUp 0.2s cubic-bezier(.22,1,.36,1) both; }
+
+/* Card content sits above the .flash-card::before shimmer layer */
+.card-body, .card-level-row { position: relative; }

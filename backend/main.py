@@ -1,304 +1,338 @@
 """
 Nihongo Mini App — FastAPI Backend
 Run: uvicorn main:app --reload --port 8000
+
+Vocabulary: data/jlpt_vocab.sqlite (read-only, JLPT N5–N1)   → vocab.py
+User data:  data/users.sqlite (progress, reviews, settings)   → userdb.py
+Login:      Telegram Mini App initData, verified in auth.py
 """
-import csv, os, random, re, time
+import os, random, re
+from contextlib import asynccontextmanager
 from collections import defaultdict
 from typing import Optional
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-# ── Config ─────────────────────────────────────────────────────────────────────
-_BASE       = os.path.dirname(os.path.abspath(__file__))
-CSV_PATH    = os.path.join(_BASE, "jlpt_vocabulary_enriched.csv")
-COL_KANJI   = "kanji_final"
-COL_ROMAJI  = "romaji_final"
-COL_ENGLISH = "english_ai"
+import userdb, vocab
+from auth import current_user, DEV_MODE
+from vocab import WORDS, BY_ID, LEVELS, filter_words, public
+from quizlib import norm, mode_pool, answer_of, make_choices
 
-# ── In-memory state ────────────────────────────────────────────────────────────
-_word_cache: list  = []
-_cache_time: float = 0.0
-CACHE_TTL          = 300
-sessions: dict     = {}
+@asynccontextmanager
+async def lifespan(_app):
+    """With RUN_BOT=1 the Telegram bot runs inside this process, so one service
+    (one machine, one users.sqlite) serves both the API and the bot."""
+    tg = None
+    if os.getenv("RUN_BOT") == "1":
+        import bot
+        tg = bot.build_app()
+        await tg.initialize()
+        await tg.start()
+        await tg.updater.start_polling(allowed_updates=["message", "callback_query", "poll_answer"])
+    yield
+    if tg:
+        await tg.updater.stop()
+        await tg.stop()
+        await tg.shutdown()
 
-# ── App ────────────────────────────────────────────────────────────────────────
-app = FastAPI(title="Nihongo API")
+
+app = FastAPI(title="Nihongo API", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=os.getenv("CORS_ORIGINS", "*").split(","),
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+QUIZ_MODES = ("meaning", "reverse", "reading", "cloze")
+quizzes: dict = {}          # active quiz per user (short-lived, in memory)
+
+
+def me(tg_user: dict = Depends(current_user)) -> int:
+    """Authenticated user id; also makes sure the user exists in the DB."""
+    userdb.ensure_user(tg_user["id"], tg_user.get("first_name"), tg_user.get("username"))
+    return tg_user["id"]
+
 # ── Models ─────────────────────────────────────────────────────────────────────
 class QuizStartRequest(BaseModel):
-    user_id: int
     level: Optional[str] = None
+    topic: Optional[int] = None
     total: int = 10
+    mode: str = "meaning"
+    missed_only: bool = False
 
 class AnswerRequest(BaseModel):
-    user_id: int
     answer: str
 
-class ResetRequest(BaseModel):
-    user_id: int
+class GradeRequest(BaseModel):
+    word_id: str
+    grade: int
 
-# ── Data helpers ───────────────────────────────────────────────────────────────
-def load_words() -> list[dict]:
-    global _word_cache, _cache_time
-    if _word_cache and (time.time() - _cache_time) < CACHE_TTL:
-        return _word_cache
-    words = []
-    try:
-        with open(CSV_PATH, newline="", encoding="utf-8-sig") as f:
-            for row in csv.DictReader(f):
-                kanji     = row.get(COL_KANJI,   "").strip()
-                romaji    = row.get(COL_ROMAJI,  "").strip()
-                english   = row.get(COL_ENGLISH, "").strip()
-                raw_level = row.get("level", "").strip().upper()
-                if raw_level == "0":
-                    raw_level = "EXTRA"
+class WordIdRequest(BaseModel):
+    word_id: str
 
-                kanji = kanji.strip('"\'`+ ')
-                kanji = kanji.split("\n")[0].strip()
-                kanji = re.sub(r"[①②③④⑤⑥⑦⑧⑨⑩]", "", kanji)
-                kanji = re.sub(r"\[[^\]]*\]", "", kanji)
-                kanji = re.sub(r"\s*[\u2013\u2014-]\s*[a-zA-Z\u0100-\u024f~\s]+$", "", kanji)
-                if romaji:
-                    rom = romaji.strip().split()[0]
-                    pat = rf"\s*[\u2013\-~]?\s*{re.escape(rom)}[\w\-~]*$"
-                    kanji = re.sub(pat, "", kanji, flags=re.IGNORECASE)
-                    kanji = re.sub(pat, "", kanji, flags=re.IGNORECASE)
-                kanji = re.sub(r"\s+[a-zA-Z\u0100-\u024f]{2,}[\w\s~\-]*$", "", kanji)
-                kanji = re.sub(r"(?<=[぀-鿿゠-ヿ一-鿿])[a-zA-Z\u0100-\u024f]+[\w~\-]*$", "", kanji)
-                kanji = re.sub(r"[（(][a-zA-Z\u0100-\u024f\s\[\]~〜_\-]+[）)]", "", kanji)
-                kanji = re.sub(r"^\d+,\s*", "", kanji)
-                if " – " in kanji:
-                    kanji = kanji.split(" – ")[0]
-                kanji = re.sub(r"[~～][a-zA-Z]+$", "", kanji)
-                kanji = re.sub(r"  +", " ", kanji).strip().rstrip("、。,. \u2013\u2014-")
+class MyWordRequest(BaseModel):
+    word: str
+    reading: str = ""
+    meaning: str
 
-                jp_chars    = sum(1 for c in kanji if "\u3040" <= c <= "\u9fff" or "\uf900" <= c <= "\ufaff")
-                GARBAGE     = set("丁卋朝會化日晥芬零求常")
-                garbage     = sum(1 for c in kanji if c in GARBAGE)
-                ascii_ratio = sum(1 for c in kanji if ord(c) < 128) / max(len(kanji), 1)
+class SettingsRequest(BaseModel):
+    level: Optional[str] = None
+    new_per_day: Optional[int] = None
+    word_time: Optional[str] = None
+    reminder_time: Optional[str] = None
+    notify: Optional[bool] = None
+    tz: Optional[str] = None
+    public_name: Optional[str] = None
+    exam_date: Optional[str] = None
 
-                bad_row = (
-                    not kanji
-                    or not english
-                    or jp_chars == 0
-                    or garbage >= 2
-                    or (garbage >= 1 and jp_chars <= 1)
-                    or len(kanji) > 50
-                    or (ascii_ratio > 0.75 and jp_chars < 3)
-                )
+# ── Words ──────────────────────────────────────────────────────────────────────
+@app.get("/health")
+def health():
+    return {"status": "ok", "words_loaded": len(WORDS), "dev_mode": DEV_MODE}
 
-                if not bad_row:
-                    rc = dict(row)
-                    rc["_level_clean"] = raw_level
-                    words.append({"kanji": kanji, "romaji": romaji, "english": english, "_raw": rc})
-
-        _word_cache = words
-        _cache_time = time.time()
-    except FileNotFoundError:
-        pass
-    return _word_cache
-
-def words_for_level(level: Optional[str]) -> list[dict]:
-    all_w = load_words()
-    if not level:
-        return all_w
-    return [w for w in all_w if w["_raw"]["_level_clean"] == level.upper()]
-
-def get_session(uid: int) -> dict:
-    return sessions.setdefault(uid, {
-        "score": 0, "total": 0, "streak": 0, "best_streak": 0,
-        "seen": [], "word": None, "wrong": defaultdict(int),
-        "level": None, "quiz_total": 0, "quiz_done": 0,
-        "quiz_correct": 0, "in_quiz": False,
-    })
-
-def pick_word(uid: int, words: list[dict]) -> dict:
-    s      = get_session(uid)
-    unseen = [w for w in words if w["kanji"] not in s["seen"]]
-    pool   = unseen if unseen else words
-    weighted = []
-    for w in pool:
-        weight = 1 + 2 * s["wrong"].get(w["kanji"], 0)
-        weighted.extend([w] * min(weight, 5))
-    word = random.choice(weighted)
-    s["seen"].append(word["kanji"])
-    if len(s["seen"]) > 50:
-        s["seen"].pop(0)
-    return word
-
-def clean_answer(s: str) -> str:
-    return re.sub(r"\(.*?\)", "", s).strip().lower()
-
-def check_answer(user_answer: str, word: dict) -> bool:
-    def norm(s):
-        s = clean_answer(s)
-        return re.sub(r"^(a|an|the)\s+", "", s)
-    user     = norm(user_answer)
-    variants = [norm(v) for v in word["english"].split("/")]
-    variants.append(word["romaji"].lower().strip())
-    return user in variants
-
-def make_choices(correct_word: dict, all_words: list[dict], n_choices: int = 4) -> list[str]:
-    correct_english = clean_answer(correct_word["english"].split("/")[0])
-    pool = [
-        clean_answer(w["english"].split("/")[0])
-        for w in all_words
-        if w["kanji"] != correct_word["kanji"]
-    ]
-    pool        = list({e for e in pool if e and e != correct_english})
-    distractors = random.sample(pool, min(n_choices - 1, len(pool)))
-    choices     = distractors + [correct_english]
-    random.shuffle(choices)
-    return choices
-
-def card_payload(word: dict) -> dict:
-    raw = word["_raw"]
-    return {
-        "kanji":      word["kanji"],
-        "romaji":     word["romaji"],
-        "level":      raw["_level_clean"],
-        "pos":        raw.get("pos", ""),
-        "example_jp": raw.get("example_jp", ""),
-        "example_en": raw.get("example_en", ""),
-    }
-
-# ── Endpoints ──────────────────────────────────────────────────────────────────
-@app.get("/words")
-def get_words(level: Optional[str] = None, search: Optional[str] = None, limit: int = 100):
-    words = words_for_level(level)
-    if search:
-        q     = search.lower()
-        words = [w for w in words if q in w["kanji"] or q in w["romaji"].lower() or q in w["english"].lower()]
-    return {
-        "words": [
-            {
-                "kanji":   w["kanji"],
-                "romaji":  w["romaji"],
-                "english": w["english"],
-                "level":   w["_raw"]["_level_clean"],
-                "pos":     w["_raw"].get("pos", ""),
-            }
-            for w in words[:limit]
-        ],
-        "total": len(words),
-    }
 
 @app.get("/levels")
 def get_levels():
-    all_w  = load_words()
     counts = defaultdict(int)
-    for w in all_w:
-        counts[w["_raw"]["_level_clean"]] += 1
-    return {"levels": [{"level": k, "count": v} for k, v in sorted(counts.items())]}
+    for w in WORDS:
+        counts[w["level"]] += 1
+    return {"levels": [{"level": lv, "count": counts[lv]} for lv in LEVELS if counts[lv]]}
+
+
+@app.get("/topics")
+def get_topics(level: str):
+    topics = {}
+    for w in filter_words(level):
+        t = w["topic_no"]
+        if t is None:
+            continue
+        e = topics.setdefault(t, {"topic_no": t, "topic_ja": w["topic_ja"],
+                                  "topic_en": w["topic_en"], "count": 0})
+        e["count"] += 1
+    return {"level": level.upper(), "topics": [topics[k] for k in sorted(topics)]}
+
+
+@app.get("/words")
+def get_words(level: Optional[str] = None, topic: Optional[int] = None,
+              search: Optional[str] = None, limit: int = 100, offset: int = 0,
+              uid: int = Depends(me)):
+    if level and level.upper() == "MY":
+        words = userdb.my_words(uid)
+        if search:
+            q = search.lower()
+            words = [w for w in words if q in w["kanji"] or q in w["reading"] or q in w["english"].lower()]
+    elif search:
+        words = vocab.search(search, level)
+        if topic is not None:
+            words = [w for w in words if w["topic_no"] == topic]
+    else:
+        words = filter_words(level, topic)
+    limit = max(1, min(limit, 500))
+    page = words[offset:offset + limit]
+    ids = [w["id"] for w in page]
+    in_reviews = set()
+    if ids:
+        with userdb.conn() as c:
+            in_reviews = {r[0] for r in c.execute(
+                f"SELECT word_id FROM cards WHERE user_id=? AND word_id IN ({','.join('?' * len(ids))})",
+                (uid, *ids))}
+    return {
+        "words":  [{**public(w), "in_reviews": w["id"] in in_reviews} for w in page],
+        "total":  len(words),
+        "offset": offset,
+    }
+
+
+@app.get("/words/{word_id}")
+def get_word(word_id: str, uid: int = Depends(me)):
+    w = userdb.get_word(uid, word_id)
+    if not w:
+        raise HTTPException(404, "Word not found.")
+    return public(w)
+
+# ── Me / settings ──────────────────────────────────────────────────────────────
+@app.get("/me")
+def get_me(uid: int = Depends(me)):
+    user = userdb.get_user(uid)
+    q = userdb.queue(uid, limit=0)
+    return {
+        "user": {k: user[k] for k in ("user_id", "first_name", "level", "new_per_day", "word_time",
+                                      "reminder_time", "notify", "tz", "public_name", "exam_date")},
+        "today": {"due": q["due"], "new": q["new"], "done": q["done_today"]},
+        "streak": userdb.streak(uid, user),
+    }
+
+
+@app.put("/me/settings")
+def put_settings(req: SettingsRequest, uid: int = Depends(me)):
+    values = req.model_dump(exclude_unset=True)
+    try:
+        user = userdb.update_settings(uid, **values)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    return {"ok": True, "user": user}
+
+# ── Spaced repetition ──────────────────────────────────────────────────────────
+@app.get("/review/queue")
+def review_queue(limit: int = 30, uid: int = Depends(me)):
+    q = userdb.queue(uid, limit=max(1, min(limit, 100)))
+    return {
+        "due": q["due"], "new": q["new"], "done_today": q["done_today"],
+        "items": [{"word": public(i["word"]), "is_new": i["is_new"],
+                   "interval": (i["card"] or {}).get("interval", 0)} for i in q["items"]],
+    }
+
+
+@app.post("/review/grade")
+def review_grade(req: GradeRequest, uid: int = Depends(me)):
+    if not userdb.get_word(uid, req.word_id):
+        raise HTTPException(404, "Word not found.")
+    try:
+        return userdb.grade(uid, req.word_id, req.grade)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+
+
+@app.post("/review/add")
+def review_add(req: WordIdRequest, uid: int = Depends(me)):
+    if not userdb.get_word(uid, req.word_id):
+        raise HTTPException(404, "Word not found.")
+    return {"added": userdb.add_card(uid, req.word_id)}
+
+# ── Personal words ─────────────────────────────────────────────────────────────
+@app.get("/mywords")
+def list_my_words(uid: int = Depends(me)):
+    return {"words": [public(w) for w in userdb.my_words(uid)]}
+
+
+@app.post("/mywords")
+def create_my_word(req: MyWordRequest, uid: int = Depends(me)):
+    try:
+        return public(userdb.add_my_word(uid, req.word, req.reading, req.meaning))
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+
+
+@app.delete("/mywords/{word_id}")
+def remove_my_word(word_id: str, uid: int = Depends(me)):
+    if not userdb.delete_my_word(uid, word_id):
+        raise HTTPException(404, "Word not found.")
+    return {"deleted": True}
+
+# ── Quiz ───────────────────────────────────────────────────────────────────────
+def card_payload(w: dict, mode: str) -> dict:
+    """Only what the question needs; the rest arrives with the answer."""
+    base = {"id": w["id"], "level": w["level"], "pos": w["pos"], "topic_en": w["topic_en"], "mode": mode}
+    if mode == "meaning":
+        base.update(kanji=w["kanji"], reading=w["reading"], romaji=w["romaji"],
+                    example_jp=w["example_jp"], example_target=w["example_target"])
+    elif mode == "reverse":
+        base.update(english=w["english"], hint=w["hint"])
+    elif mode == "reading":
+        base.update(kanji=w["kanji"])
+    elif mode == "cloze":
+        base.update(sentence=w["example_jp"].replace(w["example_target"], "＿＿", 1),
+                    example_en=w["example_en"])
+    return base
+
+
+def pick_word(q: dict, words: list[dict]) -> dict:
+    """Prefer words not seen in this quiz; words answered wrong before come up more often."""
+    unseen = [w for w in words if w["id"] not in q["seen"]]
+    pool = unseen or words
+    weights = [min(1 + 2 * q["wrong"].get(w["id"], 0), 5) for w in pool]
+    w = random.choices(pool, weights=weights, k=1)[0]
+    q["seen"].add(w["id"])
+    return w
+
+
+def next_card(uid: int) -> dict:
+    q = quizzes[uid]
+    w = pick_word(q, q["pool"])
+    q["word"] = w
+    return {"card_number": q["done"] + 1, "quiz_total": q["total"],
+            **card_payload(w, q["mode"]), "choices": make_choices(w, q["mode"])}
+
 
 @app.post("/quiz/start")
-def quiz_start(req: QuizStartRequest):
-    s = get_session(req.user_id)
-    if s["in_quiz"]:
-        raise HTTPException(400, "Quiz already in progress. Stop it first.")
-    words = words_for_level(req.level)
-    if not words:
-        raise HTTPException(404, "No words found for this level.")
-    s.update({
-        "level": req.level, "quiz_total": req.total, "quiz_done": 0,
-        "quiz_correct": 0, "in_quiz": True, "word": None,
-    })
-    word      = pick_word(req.user_id, words)
-    s["word"] = word
-    return {
-        "card_number": 1,
-        "quiz_total":  req.total,
-        **card_payload(word),
-        "choices":     make_choices(word, words),
-    }
+def quiz_start(req: QuizStartRequest, uid: int = Depends(me)):
+    if req.mode not in QUIZ_MODES:
+        raise HTTPException(400, f"mode must be one of {', '.join(QUIZ_MODES)}")
+    wrong = userdb.wrong_counts(uid)
+    if req.missed_only:
+        words = [w for wid in wrong if (w := BY_ID.get(wid))]
+        if req.level:
+            words = [w for w in words if w["level"] == req.level.upper()]
+    else:
+        words = filter_words(req.level, req.topic)
+    pool = mode_pool(words, req.mode)
+    if not pool:
+        if req.mode == "cloze":
+            raise HTTPException(404, "Fill-in-the-blank needs example sentences, which only N4 has for now.")
+        if req.missed_only:
+            raise HTTPException(404, "No missed words yet. Nice!")
+        raise HTTPException(404, "No words found for this selection.")
+    quizzes[uid] = {"mode": req.mode, "pool": pool, "total": max(1, min(req.total, 100)),
+                    "done": 0, "correct": 0, "streak": 0, "seen": set(), "wrong": wrong, "word": None}
+    return next_card(uid)
+
 
 @app.post("/quiz/answer")
-def quiz_answer(req: AnswerRequest):
-    s = get_session(req.user_id)
-    if not s["in_quiz"] or not s["word"]:
+def quiz_answer(req: AnswerRequest, uid: int = Depends(me)):
+    q = quizzes.get(uid)
+    if not q or not q["word"]:
         raise HTTPException(400, "No active quiz.")
-    word       = s["word"]
-    is_correct = check_answer(req.answer, word)
-    s["total"] += 1
-    if is_correct:
-        s["score"]        += 1
-        s["quiz_correct"] += 1
-        s["streak"]        = s.get("streak", 0) + 1
-        if s["streak"] > s.get("best_streak", 0):
-            s["best_streak"] = s["streak"]
+    w, mode = q["word"], q["mode"]
+    answer = answer_of(w, mode)
+    ok = norm(req.answer) == norm(answer)
+    userdb.record_quiz(uid, w["id"], ok, f"quiz:{mode}")
+    q["done"] += 1
+    if ok:
+        q["correct"] += 1
+        q["streak"] += 1
     else:
-        s["streak"] = 0
-        s["wrong"][word["kanji"]] = s["wrong"].get(word["kanji"], 0) + 1
-    s["quiz_done"] += 1
-    finished = s["quiz_done"] >= s["quiz_total"]
+        q["streak"] = 0
+        q["wrong"][w["id"]] = q["wrong"].get(w["id"], 0) + 1
+    finished = q["done"] >= q["total"]
     result = {
-        "correct":      is_correct,
-        "answer":       clean_answer(word["english"].split("/")[0]),
-        "romaji":       word["romaji"],
-        "streak":       s["streak"],
-        "quiz_done":    s["quiz_done"],
-        "quiz_total":   s["quiz_total"],
-        "quiz_correct": s["quiz_correct"],
-        "finished":     finished,
+        "correct": ok, "answer": answer, "word": public(w),
+        "streak": q["streak"], "quiz_done": q["done"], "quiz_total": q["total"],
+        "quiz_correct": q["correct"], "finished": finished,
     }
     if finished:
-        s["in_quiz"] = False
-        s["word"]    = None
-        result["summary"] = {
-            "correct": s["quiz_correct"],
-            "total":   s["quiz_total"],
-            "pct":     round(s["quiz_correct"] / s["quiz_total"] * 100),
-        }
+        result["summary"] = {"correct": q["correct"], "total": q["total"],
+                             "pct": round(q["correct"] / q["total"] * 100)}
+        quizzes.pop(uid, None)
     else:
-        words          = words_for_level(s["level"])
-        next_word      = pick_word(req.user_id, words)
-        s["word"]      = next_word
-        result["next_card"] = {
-            "card_number": s["quiz_done"] + 1,
-            "quiz_total":  s["quiz_total"],
-            **card_payload(next_word),
-            "choices":     make_choices(next_word, words),
-        }
+        result["next_card"] = next_card(uid)
     return result
 
-@app.post("/quiz/stop")
-def quiz_stop(req: ResetRequest):
-    s       = get_session(req.user_id)
-    summary = {
-        "correct": s["quiz_correct"],
-        "total":   s["quiz_total"],
-        "pct":     round(s["quiz_correct"] / s["quiz_total"] * 100) if s["quiz_total"] else 0,
-    }
-    s.update({"in_quiz": False, "word": None, "quiz_total": 0, "quiz_done": 0, "quiz_correct": 0})
-    return {"stopped": True, "summary": summary}
 
-@app.get("/score/{user_id}")
-def get_score(user_id: int):
-    s           = get_session(user_id)
-    pct         = round(s["score"] / s["total"] * 100) if s["total"] else 0
-    wrong_words = sorted(s["wrong"].items(), key=lambda x: -x[1])[:10]
-    return {
-        "score":       s["score"],
-        "total":       s["total"],
-        "pct":         pct,
-        "streak":      s["streak"],
-        "best_streak": s.get("best_streak", 0),
-        "wrong_words": [{"kanji": k, "count": v} for k, v in wrong_words],
-    }
+@app.post("/quiz/stop")
+def quiz_stop(uid: int = Depends(me)):
+    q = quizzes.pop(uid, None) or {"correct": 0, "done": 0}
+    return {"stopped": True, "summary": {
+        "correct": q["correct"], "total": q["done"],
+        "pct": round(q["correct"] / q["done"] * 100) if q["done"] else 0}}
+
+# ── Stats ──────────────────────────────────────────────────────────────────────
+@app.get("/stats")
+def get_stats(uid: int = Depends(me)):
+    return userdb.stats(uid)
+
+
+@app.get("/leaderboard")
+def get_leaderboard(uid: int = Depends(me)):
+    return userdb.leaderboard(uid)
+
 
 @app.post("/reset")
-def reset(req: ResetRequest):
-    sessions.pop(req.user_id, None)
+def reset(uid: int = Depends(me)):
+    """Delete all of this user's progress (keeps settings and personal words)."""
+    with userdb._lock, userdb.conn() as c:
+        for t in ("cards", "reviews", "activity"):
+            c.execute(f"DELETE FROM {t} WHERE user_id=?", (uid,))
+    quizzes.pop(uid, None)
     return {"reset": True}
-
-@app.get("/health")
-def health():
-    words = load_words()
-    return {"status": "ok", "words_loaded": len(words)}
