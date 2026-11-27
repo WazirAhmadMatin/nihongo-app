@@ -8,54 +8,37 @@ import ReviewTab   from './tabs/ReviewTab'
 import StatsTab    from './tabs/StatsTab'
 import SettingsTab from './tabs/SettingsTab'
 
-// Tabs shown in the quiz path
-const QUIZ_TABS = [
-  { id: 'quiz',  label: 'Quiz',  icon: '🃏' },
-  { id: 'words', label: 'Words', jpIcon: '本' },
-  { id: 'stats', label: 'Stats', icon: '📊' },
-]
-
-const TITLES = { review: '復習 Review', stats: '成績 Stats', settings: '設定 Settings' }
-const PATHS = ['review', 'quiz', 'stats', 'settings']
-
-function getInitialTheme() {
-  try {
-    const saved = localStorage.getItem('nihongo-theme')
-    if (saved) return saved
-  } catch {}
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
+const TITLES = { review: 'Review', quiz: 'Quiz', words: 'Word list', stats: 'Progress', settings: 'Settings' }
 
 // Bot buttons open the app at #review / #stats; Telegram can also pass start_param
-function initialPath(tg) {
-  const p = (window.location.hash || '').slice(1) || tg?.initDataUnsafe?.start_param || ''
-  return PATHS.includes(p) ? p : null
+function initialPath() {
+  const p = (window.location.hash || '').slice(1) || window.Telegram?.WebApp?.initDataUnsafe?.start_param || ''
+  return TITLES[p] ? p : null
 }
 
 export default function App() {
   const { tg, ready } = useTelegram()
-  const start = initialPath(window.Telegram?.WebApp)
-  const [path,   setPath]   = useState(start === 'stats' ? 'quiz' : start)
-  const [tab,    setTab]    = useState(start === 'stats' ? 'stats' : 'quiz')
-  const [theme,  setTheme]  = useState(getInitialTheme)
+  const inTelegram = !!tg?.initData
+  const [path,   setPath]   = useState(initialPath)
   const [me,     setMe]     = useState(null)
   const [missed, setMissed] = useState(false)
+  const [error,  setError]  = useState(null)
 
-  const loadMe = useCallback(() => { api.me().then(setMe).catch(() => {}) }, [])
+  const loadMe = useCallback(() => {
+    api.me().then(d => { setMe(d); setError(null) }).catch(e => setError(e.message))
+  }, [])
   useEffect(() => { loadMe() }, [loadMe])
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-    try { localStorage.setItem('nihongo-theme', theme) } catch {}
-  }, [theme])
-
   const goHome = useCallback(() => {
-    setPath(null); setTab('quiz'); setMissed(false)
+    setPath(null); setMissed(false)
     loadMe()
     if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search)
+    window.scrollTo(0, 0)
   }, [loadMe])
 
-  // Telegram's native back button
+  const open = p => { setPath(p); window.scrollTo(0, 0) }
+
+  // Telegram's own back button
   useEffect(() => {
     const bb = tg?.BackButton
     if (!bb) return
@@ -63,74 +46,26 @@ export default function App() {
     return () => bb.offClick?.(goHome)
   }, [path, tg, goHome])
 
-  function choose(p) {
-    if (p === 'stats') { setPath('quiz'); setTab('stats') }
-    else setPath(p)
-  }
-
-  if (!ready) return (
-    <div className="loading-screen">
-      <span className="loading-kanji">語</span>
-      <span className="loading-text">NIHONGO</span>
-    </div>
-  )
+  if (!ready) return <div className="loading jp">読み込み中…</div>
 
   return (
-    <div className="app-shell">
-      <header className="app-header">
-        <div className="header-top">
-          {path ? (
-            <button onClick={goHome} style={{
-              background: 'none', border: 'none', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', gap: 6,
-              color: 'var(--t2)', fontFamily: 'var(--mono)',
-              fontSize: 12, letterSpacing: '0.06em',
-              padding: '4px 0', WebkitTapHighlightColor: 'transparent',
-            }}>
-              <span style={{ fontSize: 16 }}>←</span>
-              <span>{TITLES[path] || 'Home'}</span>
-            </button>
-          ) : (
-            <div>
-              <div className="app-title-jp">日本語</div>
-              <div className="app-title-en">nihongo vocabulary</div>
-            </div>
-          )}
+    <div className="app">
+      {path && (
+        <header className="topbar">
+          {/* Inside Telegram, its native back button is used instead */}
+          {inTelegram ? <span /> : <button className="back" onClick={goHome}>‹ Home</button>}
+          <div className="topbar-title">{TITLES[path]}</div>
+          <span />
+        </header>
+      )}
 
-          <div className="header-actions">
-            <button className="theme-toggle" onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
-              aria-label="Toggle theme" title={theme === 'dark' ? 'Light mode' : 'Dark mode'}>
-              {theme === 'dark' ? '☀️' : '🌙'}
-            </button>
-            <div className="header-seal" />
-          </div>
-        </div>
-
-        {path === 'quiz' && (
-          <nav className="tab-bar">
-            {QUIZ_TABS.map(t => (
-              <button key={t.id} className={`tab-btn ${tab === t.id ? 'active' : ''}`} onClick={() => setTab(t.id)}>
-                <span className="tab-icon">
-                  {t.jpIcon ? <span style={{ fontFamily: 'var(--serif-jp)', fontSize: 16 }}>{t.jpIcon}</span> : t.icon}
-                </span>
-                <span className="tab-label">{t.label}</span>
-              </button>
-            ))}
-          </nav>
-        )}
-      </header>
-
-      <main className="tab-content">
-        {path === null       && <HomeScreen onChoose={choose} me={me} />}
+      <main>
+        {path === null       && <HomeScreen me={me} error={error} onOpen={open} />}
         {path === 'review'   && <ReviewTab onDone={goHome} />}
+        {path === 'quiz'     && <QuizTab key={missed ? 'missed' : 'all'} defaultLevel={me?.user?.level || 'N4'} presetMissed={missed} />}
+        {path === 'words'    && <WordsTab />}
+        {path === 'stats'    && <StatsTab onQuizMissed={() => { setMissed(true); open('quiz') }} />}
         {path === 'settings' && <SettingsTab onSaved={loadMe} />}
-        {path === 'quiz' && tab === 'quiz'  && (
-          <QuizTab key={missed ? 'missed' : 'all'} defaultLevel={me?.user?.level || 'N4'} presetMissed={missed} />
-        )}
-        {path === 'quiz' && tab === 'words' && <WordsTab />}
-        {path === 'quiz' && tab === 'stats' && (
-          <StatsTab onQuizMissed={() => { setMissed(true); setTab('quiz') }} />
-        )}
       </main>
     </div>
   )

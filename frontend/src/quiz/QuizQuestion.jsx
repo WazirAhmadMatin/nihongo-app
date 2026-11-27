@@ -1,63 +1,56 @@
 import { useState, useEffect, useRef } from 'react'
-import { Example, LevelBadge } from '../levels'
+import { Example, LevelTag, wordSize } from '../levels'
 import QuizQuestionButton from './QuizQuestionButton'
 
 const JP_CHOICES = new Set(['reverse', 'reading', 'cloze'])
-const INSTRUCTION = {
-  meaning: 'Choose the English meaning',
-  reverse: 'Choose the Japanese word',
-  reading: 'Choose the reading',
-  cloze:   'Choose the missing word',
+const ASK = {
+  meaning: 'What does it mean?',
+  reverse: 'Which word is it?',
+  reading: 'How is it read?',
+  cloze:   'Which word fills the blank?',
 }
 
-// What the card asks, per quiz type. `w` (the full word) arrives with the answer.
+// The card's question, per quiz type. `w` (the full word) arrives with the answer.
 function Prompt({ q, w }) {
   switch (q.mode) {
     case 'reverse':
       return (
-        <div style={{ textAlign: 'center', padding: '14px 0 6px' }}>
-          <div style={{ fontSize: 22, fontWeight: 600, color: 'var(--t1)', fontFamily: 'var(--sans)', lineHeight: 1.35 }}>{q.english}</div>
-          {q.hint && <div style={{ fontSize: 13, color: 'var(--t3)', marginTop: 4 }}>({q.hint})</div>}
-          {w && <Reveal w={w} />}
-        </div>
+        <>
+          <div className="tango-meaning" style={{ fontSize: 22, marginTop: 22 }}>{q.english}</div>
+          {q.hint && <div className="tango-hint">{q.hint}</div>}
+          {w && <><div className="tango-word" style={{ fontSize: Math.min(40, wordSize(w.kanji)) }}>{w.kanji}</div>
+            {w.reading && <div className="tango-reading">{w.reading}</div>}</>}
+        </>
       )
     case 'reading':
       return (
-        <div style={{ textAlign: 'center', padding: '10px 0 4px' }}>
-          <span className="kanji-main" style={{ fontSize: 'clamp(44px,12vw,64px)', display: 'block', lineHeight: 1.15 }}>{q.kanji}</span>
-          {w && <div className="quiz-feedback-enter" style={{ fontSize: 14, color: 'var(--t2)', marginTop: 6 }}>{w.english}</div>}
-        </div>
+        <>
+          <div className="tango-word" style={{ fontSize: wordSize(q.kanji) }}>{q.kanji}</div>
+          {w && <div className="tango-meaning">{w.english}</div>}
+        </>
       )
     case 'cloze':
       return (
-        <div style={{ padding: '14px 2px 4px' }}>
-          <p style={{ fontFamily: 'var(--serif-jp)', fontSize: 20, lineHeight: 1.8, color: 'var(--t1)', textAlign: 'center' }}>
+        <>
+          <p className="example-jp" style={{ fontSize: 22, textAlign: 'center', marginTop: 20 }}>
             {w ? <Example text={w.example_jp} target={w.example_target} /> : q.sentence}
           </p>
-          <p className="example-en" style={{ textAlign: 'center', marginTop: 6 }}>{q.example_en}</p>
-          {w && (
-            <div className="quiz-feedback-enter" style={{ textAlign: 'center', fontSize: 13, color: 'var(--t2)', marginTop: 6 }}>
-              {w.kanji}{w.reading ? `【${w.reading}】` : ''} — {w.english}
-            </div>
-          )}
-        </div>
+          <p className="example-en" style={{ textAlign: 'center' }}>{q.example_en}</p>
+          {w && <div className="tango-hint" style={{ marginTop: 8 }}>{w.kanji}{w.reading ? `（${w.reading}）` : ''}: {w.english}</div>}
+        </>
       )
     default: // meaning
       return (
         <>
-          <div className="kanji-display" style={{ textAlign: 'center', padding: '8px 0 4px' }}>
-            <span className="kanji-main" style={{ fontSize: 'clamp(44px,12vw,64px)', display: 'block', lineHeight: 1.1 }}>{q.kanji}</span>
-            {q.reading && <span style={{ fontFamily: 'var(--serif-jp)', fontSize: 16, color: 'var(--t2)', display: 'block', marginTop: 6 }}>{q.reading}</span>}
-            <span className="kanji-romaji" style={{ opacity: 0.5, fontSize: 13, display: 'block', marginTop: 2 }}>{q.romaji}</span>
-          </div>
+          <div className="tango-word" style={{ fontSize: wordSize(q.kanji) }}>{q.kanji}</div>
+          {q.reading && <div className="tango-reading">{q.reading}</div>}
+          {w && <div className="tango-meaning">{w.english}</div>}
           {q.example_jp && (
             <>
-              <div className="card-divider" />
-              <div className="example-block">
-                <p className="example-jp"><Example text={q.example_jp} target={q.example_target} /></p>
-                {/* Translation only after answering, so it can't give the answer away */}
-                {w?.example_en && <p className="example-en quiz-feedback-enter">{w.example_en}</p>}
-              </div>
+              <hr className="tango-rule" />
+              <p className="example-jp"><Example text={q.example_jp} target={q.example_target} /></p>
+              {/* Translation only after answering, so it can't give the answer away */}
+              {w?.example_en && <p className="example-en">{w.example_en}</p>}
             </>
           )}
         </>
@@ -65,37 +58,24 @@ function Prompt({ q, w }) {
   }
 }
 
-function Reveal({ w }) {
-  return (
-    <div className="quiz-feedback-enter" style={{ marginTop: 10 }}>
-      <div style={{ fontFamily: 'var(--serif-jp)', fontSize: 30, color: 'var(--t1)' }}>{w.kanji}</div>
-      <div style={{ fontSize: 13, color: 'var(--t2)' }}>
-        {[w.reading, w.romaji].filter(Boolean).join(' · ')}{w.english ? ` — ${w.english}` : ''}
-      </div>
-    </div>
-  )
-}
-
 /**
  * One question.
  *  - onAnswer(choice) → Promise<result>: sends the FIRST answer to the server (that's what counts)
  *  - onNext(result): called when it's time to move on
- *  - retry: "try again until correct" — a wrong pick is crossed out and you choose again
+ *  - retry: "let me try again": a wrong pick is crossed out and you choose again
  */
 export default function QuizQuestion({ question, onAnswer, onNext, retry }) {
-  const [result,  setResult]  = useState(null)     // server result of the first answer
-  const [tried,   setTried]   = useState([])       // wrong picks (retry mode)
-  const [picked,  setPicked]  = useState(null)     // last pick
-  const [solved,  setSolved]  = useState(false)    // done with this question
-  const [busy,    setBusy]    = useState(false)
+  const [result, setResult] = useState(null)
+  const [tried,  setTried]  = useState([])
+  const [picked, setPicked] = useState(null)
+  const [solved, setSolved] = useState(false)
+  const [busy,   setBusy]   = useState(false)
   const timer = useRef(null)
   useEffect(() => () => clearTimeout(timer.current), [])   // stopped mid-question: don't move on
 
   async function handleClick(choice) {
     if (solved || busy || tried.includes(choice)) return
     setPicked(choice)
-
-    // First pick: ask the server
     let r = result
     if (!r) {
       setBusy(true)
@@ -103,15 +83,13 @@ export default function QuizQuestion({ question, onAnswer, onNext, retry }) {
       setResult(r)
       setBusy(false)
     }
-
     const isRight = choice === r.answer
     window.Telegram?.WebApp?.HapticFeedback?.notificationOccurred?.(isRight ? 'success' : 'error')
-
     if (isRight || !retry) {
       setSolved(true)
-      timer.current = setTimeout(() => onNext(r), isRight && !tried.length ? 1400 : 2800)
+      timer.current = setTimeout(() => onNext(r), isRight && !tried.length ? 1300 : 2800)
     } else {
-      setTried(t => [...t, choice])          // "Sorry, that's not right" — try again
+      setTried(t => [...t, choice])
     }
   }
 
@@ -123,72 +101,33 @@ export default function QuizQuestion({ question, onAnswer, onNext, retry }) {
     return 'idle'
   }
 
-  const firstCorrect = result?.correct
-  const flash = solved ? (picked === result.answer ? 'correct' : 'wrong') : (tried.length ? 'wrong' : null)
+  let feedback = null
+  if (!solved && tried.length) feedback = <><b className="no">Not that one.</b> Try again.</>
+  else if (solved) {
+    const w = result.word
+    const detail = [w.reading, w.romaji].filter(Boolean).join(', ')
+    feedback = result.correct
+      ? <><b className="ok">Right.</b> {w.kanji}{detail ? ` (${detail})` : ''}</>
+      : tried.length && picked === result.answer
+        ? <><b className="no">Got it on try {tried.length + 1}.</b> It still counts as a miss.</>
+        : <><b className="no">The answer is {result.answer}.</b> {w.kanji}{detail ? ` (${detail})` : ''}</>
+  }
 
   return (
     <>
-      <div className="flash-card quiz-card-enter" style={{
-        position: 'relative', overflow: 'hidden',
-        borderColor: flash === 'correct' ? 'var(--green)' : flash === 'wrong' ? 'var(--red)' : 'var(--card-border)',
-        background: flash === 'correct' ? 'rgba(20,169,107,0.08)' : flash === 'wrong' ? 'rgba(232,64,64,0.06)' : undefined,
-        transition: 'background 0.2s, border-color 0.2s',
-      }}>
-        <div className="card-level-row">
-          <LevelBadge level={question.level} />
-          <span className="pos-tag">{[question.pos, question.topic_en].filter(Boolean).join(' · ')}</span>
-        </div>
-        <div className="card-body">
-          <Prompt q={question} w={solved ? result.word : null} />
-        </div>
+      <div className="tango">
+        <div className="tango-meta"><span className="muted" style={{ fontSize: 12 }}>{question.topic_en}</span><LevelTag level={question.level} /></div>
+        <Prompt q={question} w={solved ? result.word : null} />
       </div>
 
-      <div style={{ fontSize: 11, color: 'var(--t3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10, marginTop: 4, fontFamily: 'var(--mono)' }}>
-        {INSTRUCTION[question.mode]}
-      </div>
-
-      <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 9 }}>
+      <h2 className="group-title" style={{ marginTop: 0 }}>{ASK[question.mode]}</h2>
+      <div className="group">
         {question.choices.map(c => (
-          <li key={c}>
-            <QuizQuestionButton text={c} state={stateOf(c)} jp={JP_CHOICES.has(question.mode)}
-              onClick={handleClick} disabled={solved || busy || tried.includes(c)} />
-          </li>
+          <QuizQuestionButton key={c} text={c} state={stateOf(c)} jp={JP_CHOICES.has(question.mode)}
+            onClick={handleClick} disabled={solved || busy || tried.includes(c)} />
         ))}
-      </ul>
-
-      {/* Retry mode: wrong pick, keep going */}
-      {!solved && tried.length > 0 && (
-        <p className="quiz-feedback-enter" style={{ marginTop: 12, fontSize: 13, color: 'var(--red)', fontFamily: 'var(--sans)', textAlign: 'center' }}>
-          Sorry, that's not right. Try again!
-        </p>
-      )}
-
-      {/* Result */}
-      {solved && (
-        <div className="quiz-feedback-enter" style={{
-          marginTop: 14, padding: '10px 14px', borderRadius: 10,
-          background: firstCorrect ? 'var(--green-s)' : 'var(--red-s)',
-          border: `1px solid ${firstCorrect ? 'rgba(20,169,107,0.3)' : 'rgba(232,64,64,0.3)'}`,
-          display: 'flex', alignItems: 'center', gap: 10,
-        }}>
-          <span style={{ fontSize: 16, fontWeight: 700, color: firstCorrect ? 'var(--green)' : 'var(--red)' }}>
-            {firstCorrect ? '✓' : '✗'}
-          </span>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: firstCorrect ? 'var(--green)' : 'var(--red)' }}>
-              {firstCorrect ? 'Correct!' : tried.length && picked === result.answer
-                ? `Got it on try ${tried.length + 1} (counts as a miss)`
-                : `Answer: ${result.answer}`}
-            </div>
-            <div style={{ fontSize: 11, color: 'var(--t3)', fontFamily: 'var(--mono)', marginTop: 1 }}>
-              {result.word.kanji}
-              {result.word.reading ? ` · ${result.word.reading}` : ''}
-              {result.word.romaji ? ` · ${result.word.romaji}` : ''}
-              {result.word.hint ? `  —  ${result.word.hint}` : ''}
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
+      {feedback && <p className="feedback" role="status">{feedback}</p>}
     </>
   )
 }
