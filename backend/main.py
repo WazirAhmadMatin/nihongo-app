@@ -394,7 +394,8 @@ async def telegram_setup(request: Request, key: Optional[str] = None):
                                drop_pending_updates=True)
     await bot.post_init(app_)
     info = await app_.bot.get_webhook_info()
-    return {"ok": True, "webhook": info.url, "pending_updates": info.pending_update_count}
+    return {"ok": True, "webhook": info.url, "pending_updates": info.pending_update_count,
+            "menu_button": bot.WEBAPP_URL if bot.WEBAPP_URL.startswith("https://") else "not set (add WEBAPP_URL)"}
 
 
 @app.get("/cron")

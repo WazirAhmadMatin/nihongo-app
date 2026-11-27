@@ -18,7 +18,8 @@ What it does
 import html, logging, os, random
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from telegram import (BotCommand, InlineKeyboardButton, InlineKeyboardMarkup, Update, WebAppInfo)
+from telegram import (BotCommand, InlineKeyboardButton, InlineKeyboardMarkup, MenuButtonWebApp,
+                      Update, WebAppInfo)
 from telegram.constants import ParseMode
 from telegram.ext import (Application, ApplicationBuilder, CallbackQueryHandler, CommandHandler,
                           ContextTypes, MessageHandler, PollAnswerHandler, filters)
@@ -409,6 +410,10 @@ async def run_scheduled(bot) -> dict:
 # ── Setup ──────────────────────────────────────────────────────────────────────
 async def post_init(app: Application):
     await app.bot.set_my_commands([BotCommand(c, d[:256]) for c, d in COMMANDS])
+    # The blue button next to the message box opens the Mini App (no BotFather setup needed)
+    if WEBAPP_URL.startswith("https://") and "your-frontend" not in WEBAPP_URL:
+        await app.bot.set_chat_menu_button(
+            menu_button=MenuButtonWebApp(text="Open Nihongo", web_app=WebAppInfo(url=WEBAPP_URL)))
 
 
 def build_app(polling: bool = True) -> Application:
