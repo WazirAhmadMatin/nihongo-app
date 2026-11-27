@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.env
+word_images/
+image_mapping.csv
+jlpt_vocabulary_enriched.csv
+data/users.sqlite*
